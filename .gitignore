@@ -34,3 +34,21 @@ ENV/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Environment & Config
+.env
+.env.*
+*.log
+
+# Local generated launchers & sheets
+netbox-excel-importer
+run.sh
+Netbox_Worksheet.xlsx
+
+# Legacy workspace files
+env copy
+generate_template.py
+install/
+install_offline.sh
+netbox_sync.py
+requirements.txt

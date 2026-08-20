@@ -2,8 +2,8 @@
 import os
 import unittest
 from pathlib import Path
-from src.netbox_importer.template_generator import create_template_excel
-from src.netbox_importer.validator import validate_excel_file, _clean_str
+from netbox_importer.template_generator import create_template_excel
+from netbox_importer.validator import validate_excel_file, _clean_str
 
 
 class TestValidator(unittest.TestCase):

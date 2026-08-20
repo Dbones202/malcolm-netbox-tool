@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-08-20
+
+### Added
+- **Self-Healing Multi-Tier Offline Installer (`install.sh`)**:
+  - Implemented 3-tier installation engine for air-gapped Linux environments.
+  - **Tier 1 (Standard `venv`)**: Uses native `python3 -m venv`.
+  - **Tier 2 (Bundled `virtualenv`)**: Automatically falls back to running standalone `virtualenv` wheels loaded directly from `./wheels` on `sys.path` if the OS lacks `python3-venv` / `ensurepip` (e.g. minimal Debian/Ubuntu/Malcolm installations).
+  - **Tier 3 (Isolated `lib/` Target)**: Falls back to installing into an isolated `./lib` target folder if system filesystem policy restricts creating virtual environments.
+  - Automated executable wrapper creation (`netbox-excel-importer` and `run.sh`) allowing direct CLI execution without manual venv activation.
+- **Enhanced Offline Bundler (`build_offline_bundle.py`)**:
+  - Automatically packages pure-Python universal dependencies alongside multi-version Linux binary wheels (`manylinux2014_x86_64`, `manylinux_2_17_x86_64`, `manylinux_2_28_x86_64`, `manylinux2014_aarch64`, `manylinux_2_17_aarch64`) for Python 3.8 through 3.14.
+  - Packages standalone `virtualenv`, `distlib`, `filelock`, `platformdirs`, and `python-discovery` to guarantee self-contained installation.
+  - Automatically compiles `netbox_excel_importer` into a wheel package directly into `./wheels`.
+
+### Fixed
+- Fixed relative package imports in unit test suite (`tests/test_validator.py`).
+- Synchronized repository and package metadata across `VERSION`, `pyproject.toml`, and `src/netbox_importer/`.
+
+---
+
 ## [1.2.0] - 2026-08-07
 
 ### Added
