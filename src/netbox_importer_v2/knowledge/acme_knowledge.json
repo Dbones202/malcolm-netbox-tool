@@ -1,0 +1,800 @@
+{
+  "site": "Acme",
+  "comment": "Human-intel layer for the ACME ICS range. Merged with nmap_facts.json by master_builder.py. Edit this to correct identity/roles/flows; re-run the builder to regenerate the master.",
+  "prefixes": [
+    {
+      "prefix": "172.16.220.0/24",
+      "zone": "Corporate",
+      "purdue": "L4-Enterprise",
+      "gateway": "172.16.220.200",
+      "dhcp_ranges": [
+        "172.16.220.188-198",
+        "172.16.220.225-239"
+      ]
+    },
+    {
+      "prefix": "10.15.15.0/24",
+      "zone": "Corporate-DMZ",
+      "purdue": "L3.5-DMZ",
+      "gateway": "10.15.15.200",
+      "usable": "10.15.15.201-220"
+    },
+    {
+      "prefix": "10.5.5.0/24",
+      "zone": "PCS-DMZ",
+      "purdue": "L3.5-DMZ",
+      "gateway": "10.5.5.100",
+      "usable": "10.5.5.201-220"
+    },
+    {
+      "prefix": "192.168.0.0/16",
+      "zone": "PCS",
+      "purdue": "L0-3-container",
+      "gateway": "192.168.10.100",
+      "usable": "192.168.0.201-220"
+    },
+    {
+      "prefix": "192.168.0.0/24",
+      "zone": "PCS-Process",
+      "purdue": "L0-1"
+    },
+    {
+      "prefix": "192.168.32.0/24",
+      "zone": "PCS-Supervisory",
+      "purdue": "L2"
+    },
+    {
+      "prefix": "192.168.1.0/24",
+      "zone": "PCS-Field-APL",
+      "purdue": "L1"
+    },
+    {
+      "prefix": "192.168.42.0/24",
+      "zone": "PCS-Field-APL",
+      "purdue": "L1"
+    },
+    {
+      "prefix": "192.168.10.0/24",
+      "zone": "PCS-Gateway",
+      "purdue": "L3"
+    },
+    {
+      "prefix": "172.16.221.0/24",
+      "zone": "Monitoring",
+      "purdue": "Out-of-band",
+      "gateway": "172.16.221.200"
+    },
+    {
+      "prefix": "134.20.24.0/24",
+      "zone": "External",
+      "purdue": "L5-WAN"
+    }
+  ],
+  "inventory": {
+    "finance-1": {
+      "user": "henry",
+      "full_name": "Henry Adams",
+      "email": "henry.adams@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "finance-2": {
+      "user": "jane",
+      "full_name": "Jane Carter",
+      "email": "jane.carter@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "finance-3": {
+      "user": "robert",
+      "full_name": "Robert Davis",
+      "email": "robert.davis@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "mgmt-1": {
+      "user": "michael",
+      "full_name": "Michael Johnson",
+      "email": "michael.johnson@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "mgmt-2": {
+      "user": "sarah",
+      "full_name": "Sarah Lewis",
+      "email": "sarah.lewis@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "mgmt-3": {
+      "user": "emily",
+      "full_name": "Emily Clark",
+      "email": "emily.clark@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "sales-1": {
+      "user": "andrew",
+      "full_name": "Andrew Harris",
+      "email": "andrew.harris@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "sales-2": {
+      "user": "karen",
+      "full_name": "Karen Taylor",
+      "email": "karen.taylor@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "sales-3": {
+      "user": "james",
+      "full_name": "James Anderson",
+      "email": "james.anderson@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "sales-4": {
+      "user": "susan",
+      "full_name": "Susan Williams",
+      "email": "susan.williams@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "user-1": {
+      "user": "laura",
+      "full_name": "Laura Martin",
+      "email": "laura.martin@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "user-2": {
+      "user": "steven",
+      "full_name": "Steven Thompson",
+      "email": "steven.thompson@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "user-3": {
+      "user": "megan",
+      "full_name": "Megan Brown",
+      "email": "megan.brown@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "user-4": {
+      "user": "jessica",
+      "full_name": "Jessica Moore",
+      "email": "jessica.moore@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "hr-1": {
+      "user": "olivia",
+      "full_name": "Olivia Turner",
+      "email": "olivia.turner@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "hr-2": {
+      "user": "benjamin",
+      "full_name": "Benjamin Parker",
+      "email": "benjamin.parker@acme.com",
+      "os": "Windows 10 Professional"
+    },
+    "ews-1": {
+      "user": "laura",
+      "full_name": "Laura Martin",
+      "email": "laura.martin@acme.com",
+      "os": "Windows XP Pro SP2"
+    },
+    "ews-2": {
+      "user": "steven",
+      "full_name": "Steven Thompson",
+      "email": "steven.thompson@acme.com",
+      "os": "Windows XP Pro SP2"
+    },
+    "ews-3": {
+      "user": "megan",
+      "full_name": "Megan Brown",
+      "email": "megan.brown@acme.com",
+      "os": "Windows XP Pro SP2"
+    },
+    "ews-4": {
+      "user": "jessica",
+      "full_name": "Jessica Moore",
+      "email": "jessica.moore@acme.com",
+      "os": "Windows XP Pro SP2"
+    }
+  },
+  "annotations": {
+    "192.168.0.3": {
+      "name": "asc-l81-plc",
+      "role": "PLC",
+      "mfr": "Rockwell Automation",
+      "model": "ControlLogix 1756-L81E",
+      "merge_ips": [
+        "192.168.0.7",
+        "192.168.0.8"
+      ],
+      "notes": "ASC L81E PLC chassis (multi-module)",
+      "iface_names": {
+        "192.168.0.3": "ENBT",
+        "192.168.0.7": "EN4TR",
+        "192.168.0.8": "EN4TR1"
+      }
+    },
+    "192.168.0.6": {
+      "name": "asc-l55-plc",
+      "role": "PLC",
+      "mfr": "Rockwell Automation",
+      "model": "CompactLogix L55"
+    },
+    "192.168.0.51": {
+      "name": "ews-1",
+      "role": "EWS"
+    },
+    "192.168.0.52": {
+      "name": "ews-2",
+      "role": "EWS"
+    },
+    "192.168.0.53": {
+      "name": "ews-3",
+      "role": "EWS"
+    },
+    "192.168.0.54": {
+      "name": "ews-4",
+      "role": "EWS"
+    },
+    "192.168.0.97": {
+      "name": "hmi-asc",
+      "role": "HMI",
+      "software": "RSView32"
+    },
+    "192.168.0.155": {
+      "name": "sign-asc",
+      "role": "Network-Display",
+      "mfr": "Facts Engineering",
+      "model": "DirectLOGIC LED Sign",
+      "notes": "Delta LED display, Modbus TCP"
+    },
+    "192.168.0.156": {
+      "name": "sign-mgmt",
+      "role": "Network-Display",
+      "mfr": "Facts Engineering",
+      "model": "DirectLOGIC LED Sign",
+      "notes": "Omega LED display, Modbus TCP"
+    },
+    "192.168.32.3": {
+      "name": "acd-plc",
+      "role": "PLC",
+      "mfr": "GE Intelligent Platforms",
+      "model": "RX3i CPE330"
+    },
+    "192.168.32.5": {
+      "name": "apl-rtu-2",
+      "role": "RTU",
+      "mfr": "Siemens",
+      "model": "S7-1200",
+      "extra_ips": [
+        "192.168.42.5"
+      ],
+      "notes": "AP&L RTU 2, dual-homed"
+    },
+    "192.168.32.9": {
+      "name": "hmi-acs",
+      "role": "HMI",
+      "software": "InduSoft"
+    },
+    "192.168.32.12": {
+      "name": "acs-s7-1500-plc",
+      "role": "PLC",
+      "mfr": "Siemens",
+      "model": "S7-1500 (S7-1515)"
+    },
+    "192.168.32.43": {
+      "name": "acs-remote-io-1",
+      "role": "Remote-IO",
+      "mfr": "Turck"
+    },
+    "192.168.32.102": {
+      "name": "acs-s7-315-plc",
+      "role": "PLC",
+      "mfr": "Siemens",
+      "model": "S7-315"
+    },
+    "192.168.32.105": {
+      "name": "asc-remote-io-eip",
+      "role": "Remote-IO",
+      "mfr": "Turck",
+      "notes": "EtherNet/IP remote I/O"
+    },
+    "192.168.32.171": {
+      "name": "acs-remote-io-pn",
+      "role": "Remote-IO",
+      "mfr": "Turck",
+      "notes": "PROFINET remote I/O"
+    },
+    "10.5.5.35": {
+      "name": "rssql-asc",
+      "role": "Database",
+      "notes": "PCS historian / RSSQL"
+    },
+    "10.15.15.200": {
+      "name": "fw-corp",
+      "role": "Firewall",
+      "mfr": "Netgate",
+      "model": "pfSense",
+      "merge_ips": [
+        "172.16.220.200"
+      ],
+      "extra_ips": [
+        "134.20.24.87"
+      ],
+      "notes": "Corporate firewall (3 NIC)",
+      "platform": "pfSense"
+    },
+    "172.16.220.100": {
+      "name": "fw-ics",
+      "role": "Firewall",
+      "mfr": "Netgate",
+      "model": "pfSense",
+      "merge_ips": [
+        "10.5.5.100"
+      ],
+      "extra_ips": [
+        "192.168.10.100"
+      ],
+      "notes": "ICS firewall (3 NIC)",
+      "platform": "pfSense"
+    },
+    "172.16.220.180": {
+      "name": "fw-ids",
+      "role": "Firewall",
+      "mfr": "Netgate",
+      "model": "pfSense",
+      "extra_ips": [
+        "172.16.221.200"
+      ],
+      "notes": "IDS firewall (SPAN aggregation)",
+      "platform": "pfSense"
+    }
+  },
+  "extra_devices": [
+    {
+      "name": "indusoft-overview",
+      "role": "HMI",
+      "zone": "PCS-Process",
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.244/24"
+          ],
+          "primary": true
+        }
+      ],
+      "notes": "Process overview HMI (not in scans)"
+    },
+    {
+      "name": "hmi-acd",
+      "role": "HMI",
+      "zone": "PCS-Supervisory",
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.10/24"
+          ],
+          "primary": true
+        }
+      ]
+    },
+    {
+      "name": "apl-rtu",
+      "role": "RTU",
+      "zone": "PCS-Field-APL",
+      "model": "SIXNET",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.40/24"
+          ],
+          "primary": true
+        }
+      ],
+      "notes": "AP&L RTU (SIXnet), DNP3"
+    },
+    {
+      "name": "ioserver-apl",
+      "role": "Server",
+      "zone": "PCS-Field-APL",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.23/24"
+          ],
+          "primary": true
+        }
+      ],
+      "notes": "AP&L IO server"
+    },
+    {
+      "name": "iccp-apl",
+      "role": "Server",
+      "zone": "PCS-DMZ",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.5.5.34/24"
+          ],
+          "primary": true
+        }
+      ],
+      "notes": "ICCP server"
+    },
+    {
+      "name": "security-onion",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "interfaces": [],
+      "notes": "Security Onion manager (IP TBD)"
+    },
+    {
+      "name": "malcolm",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "interfaces": [],
+      "notes": "Malcolm (IP TBD)"
+    },
+    {
+      "name": "arkime",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "interfaces": [],
+      "notes": "Arkime (IP TBD)"
+    },
+    {
+      "name": "netbox",
+      "role": "Server",
+      "zone": "Monitoring",
+      "interfaces": [],
+      "notes": "NetBox host (IP TBD)"
+    },
+    {
+      "name": "hmi-apl",
+      "role": "HMI",
+      "zone": "PCS-Field-APL",
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.87/24"
+          ],
+          "primary": true
+        }
+      ],
+      "notes": "AP&L HMI (day-1 inventory)"
+    }
+  ],
+  "coverage": {
+    "fleet_agent": [
+      "172.16.220.16",
+      "172.16.220.17",
+      "172.16.220.20",
+      "172.16.220.150",
+      "172.16.220.151",
+      "172.16.220.152",
+      "172.16.220.153",
+      "172.16.220.154",
+      "172.16.220.155",
+      "172.16.220.156",
+      "172.16.220.160",
+      "172.16.220.161",
+      "172.16.220.162",
+      "172.16.220.163",
+      "172.16.220.164",
+      "172.16.220.181",
+      "172.16.220.182",
+      "172.16.220.183",
+      "172.16.220.184",
+      "172.16.220.199",
+      "10.15.15.20",
+      "10.15.15.50"
+    ],
+    "malcolm_syslog": [
+      "192.168.32.9",
+      "192.168.32.10",
+      "10.5.5.35",
+      "10.5.5.117",
+      "10.5.5.153"
+    ]
+  },
+  "dataflows": [
+    {
+      "application": "ASC",
+      "name": "HMI-ACS to ASC L81 (CIP I/O, fails)",
+      "src": "hmi-acs",
+      "dst": "asc-l81-plc",
+      "protocol": "EtherNet/IP I/O (CIP, fails)",
+      "port": 2222
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to syslog",
+      "src": "asc-l81-plc",
+      "dst": "syslog",
+      "protocol": "syslog",
+      "port": 514,
+      "transport": "udp"
+    },
+    {
+      "application": "ASC",
+      "name": "ASC EtherNet/IP Remote I/O to L81",
+      "src": "asc-remote-io-eip",
+      "dst": "asc-l81-plc",
+      "protocol": "EtherNet/IP I/O (CIP)",
+      "port": 2222
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to L55 (CIP explicit msg)",
+      "src": "asc-l81-plc",
+      "dst": "asc-l55-plc",
+      "protocol": "EtherNet/IP (CIP)",
+      "port": 44818
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L55 to Process Overview HMI",
+      "src": "asc-l55-plc",
+      "dst": "indusoft-overview",
+      "protocol": "EtherNet/IP (CIP)",
+      "port": 44818
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to PCS historian (rssql-asc)",
+      "src": "asc-l81-plc",
+      "dst": "rssql-asc",
+      "protocol": "EtherNet/IP (CIP)",
+      "port": 44818
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to RSView32 HMI",
+      "src": "asc-l81-plc",
+      "dst": "hmi-asc",
+      "protocol": "EtherNet/IP (CIP)",
+      "port": 44818
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to Modbus sign #1 (ASC)",
+      "src": "asc-l81-plc",
+      "dst": "sign-asc",
+      "protocol": "Modbus TCP",
+      "port": 502
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L81 to Modbus sign #2 (mgmt)",
+      "src": "asc-l81-plc",
+      "dst": "sign-mgmt",
+      "protocol": "Modbus TCP",
+      "port": 502
+    },
+    {
+      "application": "ASC",
+      "name": "rssql-asc to CORP database-asc",
+      "src": "rssql-asc",
+      "dst": "database-asc",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ASC",
+      "name": "CORP database-asc to CORP DMZ DB",
+      "src": "database-asc",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ASC",
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACS",
+      "name": "AP&L RTU (SIXnet) to Process Overview HMI",
+      "src": "apl-rtu",
+      "dst": "indusoft-overview",
+      "protocol": "Modbus TCP",
+      "port": 502
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-1515 to Process Overview HMI",
+      "src": "acs-s7-1500-plc",
+      "dst": "indusoft-overview",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-315 to S7-1515 (system control signals)",
+      "src": "acs-s7-315-plc",
+      "dst": "acs-s7-1500-plc",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-1515 to syslog",
+      "src": "acs-s7-1500-plc",
+      "dst": "syslog",
+      "protocol": "syslog",
+      "port": 514,
+      "transport": "udp"
+    },
+    {
+      "application": "ACS",
+      "name": "AP&L RTU 2 to ACS S7-1515",
+      "src": "apl-rtu-2",
+      "dst": "acs-s7-1500-plc",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "AP&L RTU 2 to syslog",
+      "src": "apl-rtu-2",
+      "dst": "syslog",
+      "protocol": "syslog",
+      "port": 514,
+      "transport": "udp"
+    },
+    {
+      "application": "ACS",
+      "name": "AP&L RTU 2 to Breaker Panel (DNP3)",
+      "src": "apl-rtu-2",
+      "dst": "apl-breaker-panel",
+      "protocol": "DNP3",
+      "port": 20000
+    },
+    {
+      "application": "ACS",
+      "name": "ioserver-apl to AP&L RTU 2 (DNP3)",
+      "src": "ioserver-apl",
+      "dst": "apl-rtu-2",
+      "protocol": "DNP3",
+      "port": 20000
+    },
+    {
+      "application": "ACS",
+      "name": "ioserver-apl to iccp-apl (SMB)",
+      "src": "ioserver-apl",
+      "dst": "iccp-apl",
+      "protocol": "SMB",
+      "port": 445
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-1515 to PROFINET Remote I/O",
+      "src": "acs-s7-1500-plc",
+      "dst": "acs-remote-io-pn",
+      "protocol": "PROFINET",
+      "port": 34964
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-1515 to Indusoft HMI-ACS",
+      "src": "acs-s7-1500-plc",
+      "dst": "hmi-acs",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "HMI-ACS to ASC L81 (CIP I/O, fails)",
+      "src": "hmi-acs",
+      "dst": "asc-l81-plc",
+      "protocol": "EtherNet/IP I/O (CIP, fails)",
+      "port": 2222
+    },
+    {
+      "application": "ACS",
+      "name": "HMI-ACS to PCS DMZ database-acs",
+      "src": "hmi-acs",
+      "dst": "database-acs",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACS",
+      "name": "PCS DMZ database-acs to CORP DMZ DB",
+      "src": "database-acs",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACS",
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACD",
+      "name": "ACD PLC (CPE330) to Process Overview HMI",
+      "src": "acd-plc",
+      "dst": "indusoft-overview",
+      "protocol": "GE-SRTP",
+      "port": 18245
+    },
+    {
+      "application": "ACD",
+      "name": "ACD PLC (CPE330) to Indusoft HMI-ACD",
+      "src": "acd-plc",
+      "dst": "hmi-acd",
+      "protocol": "GE-SRTP",
+      "port": 18245
+    },
+    {
+      "application": "ACD",
+      "name": "HMI-ACD to PCS DMZ database-acd",
+      "src": "hmi-acd",
+      "dst": "database-acd",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACD",
+      "name": "PCS DMZ database-acd to CORP DMZ DB",
+      "src": "database-acd",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACD",
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L55 to Physical Skid (hard-wired I/O)",
+      "src": "asc-l55-plc",
+      "dst": "asc-physical-skid",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ASC",
+      "name": "ASC Remote I/O to ACS Remote I/O (hard-wired I/O)",
+      "src": "asc-remote-io-eip",
+      "dst": "acs-remote-io-pn",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-315 to Physical Skid (hard-wired I/O)",
+      "src": "acs-s7-315-plc",
+      "dst": "acs-physical-skid",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACS",
+      "name": "ACS Remote I/O to ASC Remote I/O (hard-wired I/O)",
+      "src": "acs-remote-io-pn",
+      "dst": "asc-remote-io-eip",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACD",
+      "name": "ACD PLC to Physical Skid (hard-wired I/O)",
+      "src": "acd-plc",
+      "dst": "acd-physical-skid",
+      "protocol": "Hard-wired I/O"
+    }
+  ]
+}

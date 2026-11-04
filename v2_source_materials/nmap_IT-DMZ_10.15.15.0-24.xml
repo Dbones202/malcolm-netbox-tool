@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?><nmaprun args="nmap -T4 -F 10.15.15.0/24" profile_name="Quick scan" scanner="nmap" start="1750200612" startstr="Tue Jun 17 16:50:12 2025" version="7.94SVN" xmloutputversion="1.04"><scaninfo type="syn" protocol="tcp" numservices="100" services="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"></scaninfo><verbose level="0"></verbose><debugging level="0"></debugging><output type="interactive">Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-06-17 16:50 MDT
+Nmap scan report for database.acme.com (10.15.15.10)
+Host is up (0.00018s latency).
+Not shown: 88 closed tcp ports (reset)
+PORT      STATE SERVICE
+80/tcp    open  http
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+1433/tcp  open  ms-sql-s
+3389/tcp  open  ms-wbt-server
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+49156/tcp open  unknown
+49157/tcp open  unknown
+MAC Address: 00:50:56:91:1F:44 (VMware)
+
+Nmap scan report for www.acme.com (10.15.15.20)
+Host is up (0.00027s latency).
+Not shown: 94 closed tcp ports (reset)
+PORT     STATE SERVICE
+21/tcp   open  ftp
+80/tcp   open  http
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3389/tcp open  ms-wbt-server
+MAC Address: 00:50:56:91:D4:4C (VMware)
+
+Nmap scan report for dns.acme.com (10.15.15.50)
+Host is up (0.00016s latency).
+Not shown: 99 closed tcp ports (reset)
+PORT   STATE SERVICE
+53/tcp open  domain
+MAC Address: 00:50:56:91:C2:6F (VMware)
+
+Nmap scan report for firewall-corp.acme.com (10.15.15.200)
+Host is up (0.00041s latency).
+Not shown: 97 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+53/tcp   open  domain
+80/tcp   open  http
+3000/tcp open  ppp
+MAC Address: 00:50:56:91:32:ED (VMware)
+
+Nmap scan report for 10.15.15-201.acme.com (10.15.15.201)
+Host is up (0.00016s latency).
+Not shown: 99 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+MAC Address: 00:50:56:91:97:06 (VMware)
+
+Nmap scan report for 10.15.15-240.acme.com (10.15.15.240)
+Host is up (0.0000030s latency).
+All 100 scanned ports on 10.15.15-240.acme.com (10.15.15.240) are in ignored states.
+Not shown: 100 closed tcp ports (reset)
+
+Nmap done: 256 IP addresses (6 hosts up) scanned in 4.00 seconds
+</output><host comment=""><status state="up"></status><address addr="10.15.15.10" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:1F:44" vendor="VMware" addrtype="mac"></address><hostnames><hostname name="database.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="88" state="closed"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="http"></service></port><port portid="135" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="msrpc"></service></port><port portid="139" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="netbios-ssn"></service></port><port portid="445" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="microsoft-ds"></service></port><port portid="1433" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="ms-sql-s"></service></port><port portid="3389" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="ms-wbt-server"></service></port><port portid="49152" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49153" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49154" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49155" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49156" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49157" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="10.15.15.20" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:D4:4C" vendor="VMware" addrtype="mac"></address><hostnames><hostname name="www.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="94" state="closed"></extraports><port portid="21" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="ftp"></service></port><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="http"></service></port><port portid="135" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="msrpc"></service></port><port portid="139" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="netbios-ssn"></service></port><port portid="445" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="microsoft-ds"></service></port><port portid="3389" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="ms-wbt-server"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="10.15.15.50" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:C2:6F" vendor="VMware" addrtype="mac"></address><hostnames><hostname name="dns.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="99" state="closed"></extraports><port portid="53" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="domain"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="10.15.15.200" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:32:ED" vendor="VMware" addrtype="mac"></address><hostnames><hostname name="firewall-corp.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="97" state="filtered"></extraports><port portid="53" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="domain"></service></port><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="http"></service></port><port portid="3000" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="ppp"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="10.15.15.201" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:97:06" vendor="VMware" addrtype="mac"></address><hostnames><hostname name="10.15.15-201.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="99" state="closed"></extraports><port portid="22" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="ssh"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="10.15.15.240" vendor="" addrtype="ipv4"></address><hostnames><hostname name="10.15.15-240.acme.com" type="PTR"></hostname></hostnames><ports><extraports count="100" state="closed"></extraports></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><runstats><finished time="1750200615" timestr="Tue Jun 17 16:50:15 2025"></finished><hosts up="6" down="250" total="256"></hosts></runstats></nmaprun>

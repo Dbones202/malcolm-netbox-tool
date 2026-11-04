@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?><nmaprun args="nmap -T4 -F 192.168.32.0/24" profile_name="Quick scan" scanner="nmap" start="1750450031" startstr="Fri Jun 20 14:07:11 2025" version="7.94SVN" xmloutputversion="1.04"><scaninfo type="syn" protocol="tcp" numservices="100" services="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"></scaninfo><verbose level="0"></verbose><debugging level="0"></debugging><output type="interactive">Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-06-20 14:07 MDT
+Warning: 192.168.32.102 giving up on port because retransmission cap hit (6).
+Nmap scan report for 192.168.32.3
+Host is up (0.00098s latency).
+Not shown: 99 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+80/tcp open  http
+MAC Address: 00:09:91:BA:CD:3E (Intelligent Platforms)
+
+Nmap scan report for 192.168.32.5
+Host is up (0.033s latency).
+Not shown: 98 closed tcp ports (reset)
+PORT    STATE SERVICE
+80/tcp  open  http
+443/tcp open  https
+MAC Address: 38:4B:24:8A:D2:69 (Siemens AG)
+
+Nmap scan report for 192.168.32.9
+Host is up (0.00018s latency).
+Not shown: 92 closed tcp ports (reset)
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+3389/tcp  open  ms-wbt-server
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+MAC Address: 00:50:56:91:1C:13 (VMware)
+
+Nmap scan report for 192.168.32.12
+Host is up (0.00080s latency).
+All 100 scanned ports on 192.168.32.12 are in ignored states.
+Not shown: 100 closed tcp ports (reset)
+MAC Address: 30:B8:51:4B:D5:AB (Unknown)
+
+Nmap scan report for 192.168.32.43
+Host is up (0.000054s latency).
+All 100 scanned ports on 192.168.32.43 are in ignored states.
+Not shown: 100 closed tcp ports (reset)
+MAC Address: 00:07:46:34:55:10 (Turck)
+
+Nmap scan report for 192.168.32.102
+Host is up (0.00088s latency).
+Not shown: 96 closed tcp ports (reset)
+PORT     STATE    SERVICE
+80/tcp   open     http
+81/tcp   filtered hosts2-ns
+3000/tcp filtered ppp
+4899/tcp filtered radmin
+MAC Address: 30:2F:1E:65:B7:D4 (Unknown)
+
+Nmap scan report for 192.168.32.105
+Host is up (0.00033s latency).
+Not shown: 99 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+80/tcp open  http
+MAC Address: 00:07:46:51:07:E2 (Turck)
+
+Nmap scan report for 192.168.32.171
+Host is up (0.00020s latency).
+Not shown: 99 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+80/tcp open  http
+MAC Address: 00:07:46:50:DF:93 (Turck)
+
+Nmap done: 256 IP addresses (8 hosts up) scanned in 24.01 seconds
+</output><host comment=""><status state="up"></status><address addr="192.168.32.3" vendor="" addrtype="ipv4"></address><address addr="00:09:91:BA:CD:3E" vendor="Intelligent Platforms" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="99" state="filtered"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="63"></state><service conf="3" method="table" name="http"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.5" vendor="" addrtype="ipv4"></address><address addr="38:4B:24:8A:D2:69" vendor="Siemens AG" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="98" state="closed"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="http"></service></port><port portid="443" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="64"></state><service conf="3" method="table" name="https"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.9" vendor="" addrtype="ipv4"></address><address addr="00:50:56:91:1C:13" vendor="VMware" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="92" state="closed"></extraports><port portid="135" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="msrpc"></service></port><port portid="139" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="netbios-ssn"></service></port><port portid="445" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="microsoft-ds"></service></port><port portid="3389" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="ms-wbt-server"></service></port><port portid="49152" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49153" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49154" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port><port portid="49155" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.12" vendor="" addrtype="ipv4"></address><address addr="30:B8:51:4B:D5:AB" vendor="" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="100" state="closed"></extraports></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.43" vendor="" addrtype="ipv4"></address><address addr="00:07:46:34:55:10" vendor="Turck" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="100" state="closed"></extraports></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.102" vendor="" addrtype="ipv4"></address><address addr="30:2F:1E:65:B7:D4" vendor="" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="96" state="closed"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="60"></state><service conf="3" method="table" name="http"></service></port><port portid="81" protocol="tcp"><state state="filtered" reason="no-response" reason_ttl="0"></state><service conf="3" method="table" name="hosts2-ns"></service></port><port portid="3000" protocol="tcp"><state state="filtered" reason="no-response" reason_ttl="0"></state><service conf="3" method="table" name="ppp"></service></port><port portid="4899" protocol="tcp"><state state="filtered" reason="no-response" reason_ttl="0"></state><service conf="3" method="table" name="radmin"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.105" vendor="" addrtype="ipv4"></address><address addr="00:07:46:51:07:E2" vendor="Turck" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="99" state="filtered"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="http"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><host comment=""><status state="up"></status><address addr="192.168.32.171" vendor="" addrtype="ipv4"></address><address addr="00:07:46:50:DF:93" vendor="Turck" addrtype="mac"></address><hostnames></hostnames><ports><extraports count="99" state="filtered"></extraports><port portid="80" protocol="tcp"><state state="open" reason="syn-ack" reason_ttl="128"></state><service conf="3" method="table" name="http"></service></port></ports><os></os><uptime seconds="" lastboot=""></uptime><tcpsequence index="" difficulty="" values=""></tcpsequence><ipidsequence class="" values=""></ipidsequence><tcptssequence class="" values=""></tcptssequence></host><runstats><finished time="1750450055" timestr="Fri Jun 20 14:07:35 2025"></finished><hosts up="9" down="247" total="256"></hosts></runstats></nmaprun>

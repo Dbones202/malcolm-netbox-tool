@@ -52,3 +52,6 @@ install/
 install_offline.sh
 netbox_sync.py
 requirements.txt
+
+# v2 discovery/scoring reports (may contain host details)
+v2_reports/
