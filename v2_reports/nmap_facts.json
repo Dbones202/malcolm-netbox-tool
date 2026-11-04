@@ -1,0 +1,3673 @@
+{
+  "10.5.5.35": {
+    "ip": "10.5.5.35",
+    "mac": "00:50:56:91:FB:62",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "rssql.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "10.5.5.100": {
+    "ip": "10.5.5.100",
+    "mac": "00:50:56:91:78:85",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "firewall-pcs.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3000,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ppp",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 3000,
+        "protocol": "tcp",
+        "label": "firewall-mgmt"
+      }
+    ]
+  },
+  "10.5.5.117": {
+    "ip": "10.5.5.117",
+    "mac": "00:50:56:91:AD:A5",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "database-acd.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-sql-s",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49155,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "label": "MS-SQL"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "10.5.5.153": {
+    "ip": "10.5.5.153",
+    "mac": "00:50:56:91:EF:92",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "database-acs.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-sql-s",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49155,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "label": "MS-SQL"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "10.5.5.201": {
+    "ip": "10.5.5.201",
+    "mac": "00:50:56:91:38:EC",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "10.5.5-201.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ssh",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "label": "SSH"
+      }
+    ]
+  },
+  "10.5.5.240": {
+    "ip": "10.5.5.240",
+    "mac": null,
+    "mac_vendor": null,
+    "hostnames": [
+      "10.5.5-240.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_PCS-DMZ_10.5.5.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "10.15.15.10": {
+    "ip": "10.15.15.10",
+    "mac": "00:50:56:91:1F:44",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "database.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-sql-s",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49155,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49156,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49157,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "label": "MS-SQL"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "10.15.15.20": {
+    "ip": "10.15.15.20",
+    "mac": "00:50:56:91:D4:4C",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "www.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 21,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ftp",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 21,
+        "protocol": "tcp",
+        "label": "FTP"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "10.15.15.50": {
+    "ip": "10.15.15.50",
+    "mac": "00:50:56:91:C2:6F",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "dns.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      }
+    ]
+  },
+  "10.15.15.200": {
+    "ip": "10.15.15.200",
+    "mac": "00:50:56:91:32:ED",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "firewall-corp.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3000,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ppp",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 3000,
+        "protocol": "tcp",
+        "label": "firewall-mgmt"
+      }
+    ]
+  },
+  "10.15.15.201": {
+    "ip": "10.15.15.201",
+    "mac": "00:50:56:91:97:06",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "10.15.15-201.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ssh",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "label": "SSH"
+      }
+    ]
+  },
+  "10.15.15.240": {
+    "ip": "10.15.15.240",
+    "mac": null,
+    "mac_vendor": null,
+    "hostnames": [
+      "10.15.15-240.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT-DMZ_10.15.15.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "172.16.220.3": {
+    "ip": "172.16.220.3",
+    "mac": "00:50:56:91:73:23",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "mail.acme.com"
+    ],
+    "os_guess": "Linux 4.15 - 5.8",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 25,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "smtp",
+        "product": "Postfix smtpd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 110,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "pop3",
+        "product": "Zimbra Collabration Suite pop3d",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 143,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "imap-proxy",
+        "product": "Zimbra imapd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ldap",
+        "product": "OpenLDAP",
+        "version": "2.2.X - 2.3.X",
+        "extrainfo": ""
+      },
+      {
+        "port": 443,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "nginx",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 465,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "smtp",
+        "product": "Postfix smtpd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 587,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "smtp",
+        "product": "Postfix smtpd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 993,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "imap-proxy",
+        "product": "Zimbra imapd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 995,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "pop3",
+        "product": "Zimbra Collabration Suite pop3d",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 25,
+        "protocol": "tcp",
+        "label": "SMTP"
+      },
+      {
+        "port": 110,
+        "protocol": "tcp",
+        "label": "POP3"
+      },
+      {
+        "port": 143,
+        "protocol": "tcp",
+        "label": "IMAP"
+      },
+      {
+        "port": 389,
+        "protocol": "tcp",
+        "label": "LDAP"
+      },
+      {
+        "port": 443,
+        "protocol": "tcp",
+        "label": "HTTPS"
+      },
+      {
+        "port": 465,
+        "protocol": "tcp",
+        "label": "SMTPS"
+      },
+      {
+        "port": 587,
+        "protocol": "tcp",
+        "label": "SMTP-submission"
+      },
+      {
+        "port": 993,
+        "protocol": "tcp",
+        "label": "IMAPS"
+      },
+      {
+        "port": 995,
+        "protocol": "tcp",
+        "label": "POP3S"
+      }
+    ]
+  },
+  "172.16.220.13": {
+    "ip": "172.16.220.13",
+    "mac": "00:50:56:91:FA:CC",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "internal-dns.acme.com"
+    ],
+    "os_guess": "Linux 3.1",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "ISC BIND",
+        "version": "9.18.28-0ubuntu0.24.04.1",
+        "extrainfo": "Ubuntu Linux"
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      }
+    ]
+  },
+  "172.16.220.16": {
+    "ip": "172.16.220.16",
+    "mac": "00:50:56:91:CE:CC",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "file.acme.com"
+    ],
+    "os_guess": "Microsoft Windows Server 2016",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 111,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "rpcbind",
+        "product": "",
+        "version": "2-4",
+        "extrainfo": "RPC #100000"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Microsoft Windows Server 2008 R2 - 2012 microsoft-ds",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "Microsoft Terminal Services",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 111,
+        "protocol": "tcp",
+        "label": "rpcbind"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.17": {
+    "ip": "172.16.220.17",
+    "mac": "00:50:56:91:18:FC",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "database-asc.acme.com"
+    ],
+    "os_guess": "Microsoft Windows Server 2016 build 10586 - 14393",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Microsoft Windows Server 2008 R2 - 2012 microsoft-ds",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-sql-s",
+        "product": "Microsoft SQL Server 2016",
+        "version": "13.00.6404.00; SP3+",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "Microsoft Terminal Services",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 1433,
+        "protocol": "tcp",
+        "label": "MS-SQL"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.20": {
+    "ip": "172.16.220.20",
+    "mac": "00:50:56:91:79:9D",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "ad.acme.com"
+    ],
+    "os_guess": "Microsoft Windows Server 2016",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 88,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "kerberos-sec",
+        "product": "Microsoft Windows Kerberos",
+        "version": "",
+        "extrainfo": "server time: 2025-06-10 22:23:07Z"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ldap",
+        "product": "Microsoft Windows Active Directory LDAP",
+        "version": "",
+        "extrainfo": "Domain: acme.com, Site: Default-First-Site-Name"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows Server 2016 Standard 14393 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 464,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "kpasswd5",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 593,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ncacn_http",
+        "product": "Microsoft Windows RPC over HTTP",
+        "version": "1.0",
+        "extrainfo": ""
+      },
+      {
+        "port": 636,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "tcpwrapped",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "Microsoft Terminal Services",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 88,
+        "protocol": "tcp",
+        "label": "Kerberos"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 389,
+        "protocol": "tcp",
+        "label": "LDAP"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 464,
+        "protocol": "tcp",
+        "label": "kpasswd"
+      },
+      {
+        "port": 593,
+        "protocol": "tcp",
+        "label": "RPC-HTTP"
+      },
+      {
+        "port": 636,
+        "protocol": "tcp",
+        "label": "LDAPS"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.100": {
+    "ip": "172.16.220.100",
+    "mac": "00:50:56:91:DE:27",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "firewall-ot.acme.com"
+    ],
+    "os_guess": "FreeBSD 11.2-RELEASE",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "Unbound",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "nginx",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "172.16.220.150": {
+    "ip": "172.16.220.150",
+    "mac": "00:50:56:91:3F:B7",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "finance-1.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.151": {
+    "ip": "172.16.220.151",
+    "mac": "00:50:56:91:82:CE",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "finance-2.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.152": {
+    "ip": "172.16.220.152",
+    "mac": "00:50:56:91:41:96",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "finance-3.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.153": {
+    "ip": "172.16.220.153",
+    "mac": "00:50:56:91:B7:6F",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "sales-1.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.154": {
+    "ip": "172.16.220.154",
+    "mac": "00:50:56:91:47:D0",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "sales-2.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.155": {
+    "ip": "172.16.220.155",
+    "mac": "00:50:56:91:9B:20",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "sales-3.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.156": {
+    "ip": "172.16.220.156",
+    "mac": "00:50:56:91:65:4F",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "sales-4.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.160": {
+    "ip": "172.16.220.160",
+    "mac": "00:50:56:91:B9:48",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "mgmt-1.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.161": {
+    "ip": "172.16.220.161",
+    "mac": "00:50:56:91:8B:68",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "mgmt-2.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.162": {
+    "ip": "172.16.220.162",
+    "mac": "00:50:56:91:07:D7",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "mgmt-3.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.163": {
+    "ip": "172.16.220.163",
+    "mac": "00:50:56:91:E7:50",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "hr-1.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.164": {
+    "ip": "172.16.220.164",
+    "mac": "00:50:56:91:3C:3F",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "hr-2.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.180": {
+    "ip": "172.16.220.180",
+    "mac": "00:50:56:91:58:D1",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "firewall-ids.acme.com"
+    ],
+    "os_guess": "FreeBSD 11.2-RELEASE",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "Unbound",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "nginx",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "172.16.220.181": {
+    "ip": "172.16.220.181",
+    "mac": "00:50:56:91:8C:97",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "user-1.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.182": {
+    "ip": "172.16.220.182",
+    "mac": "00:50:56:91:2F:C3",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "user-2.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.183": {
+    "ip": "172.16.220.183",
+    "mac": "00:50:56:91:39:63",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "user-3.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.184": {
+    "ip": "172.16.220.184",
+    "mac": "00:50:56:91:A6:A0",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "user-4.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Windows 10 Pro 10240 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: ACME"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.188": {
+    "ip": "172.16.220.188",
+    "mac": null,
+    "mac_vendor": null,
+    "hostnames": [
+      "172-16-220-188.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "172.16.220.190": {
+    "ip": "172.16.220.190",
+    "mac": "00:50:56:91:86:53",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "172-16-220-190.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "172.16.220.191": {
+    "ip": "172.16.220.191",
+    "mac": "00:50:56:91:8E:E7",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "172-16-220-191.acme.com"
+    ],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "172.16.220.193": {
+    "ip": "172.16.220.193",
+    "mac": "00:50:56:91:0C:D4",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "172-16-220-193.acme.com"
+    ],
+    "os_guess": "Linux 4.15 - 5.8",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ssh",
+        "product": "OpenSSH",
+        "version": "9.6p1 Ubuntu 3ubuntu13.5",
+        "extrainfo": "Ubuntu Linux; protocol 2.0"
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "label": "SSH"
+      }
+    ]
+  },
+  "172.16.220.195": {
+    "ip": "172.16.220.195",
+    "mac": "00:50:56:91:AB:E6",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "172-16-220-195.acme.com"
+    ],
+    "os_guess": "Microsoft Windows 10 1507 - 1607",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Microsoft Windows 7 - 10 microsoft-ds",
+        "version": "",
+        "extrainfo": "workgroup: WORKGROUP"
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      }
+    ]
+  },
+  "172.16.220.196": {
+    "ip": "172.16.220.196",
+    "mac": "00:50:56:91:CA:C1",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "172-16-220-196.acme.com"
+    ],
+    "os_guess": "Linux 4.15 - 5.8",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ssh",
+        "product": "OpenSSH",
+        "version": "8.9p1 Ubuntu 3ubuntu0.1",
+        "extrainfo": "Ubuntu Linux; protocol 2.0"
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 22,
+        "protocol": "tcp",
+        "label": "SSH"
+      }
+    ]
+  },
+  "172.16.220.199": {
+    "ip": "172.16.220.199",
+    "mac": "00:50:56:91:58:3C",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "internal-ftp.acme.com"
+    ],
+    "os_guess": "Microsoft Windows Server 2016",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 21,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ftp",
+        "product": "Microsoft ftpd",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "Microsoft Windows RPC",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "Microsoft Windows netbios-ssn",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "Microsoft Windows Server 2008 R2 - 2012 microsoft-ds",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "Microsoft Terminal Services",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 21,
+        "protocol": "tcp",
+        "label": "FTP"
+      },
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "172.16.220.200": {
+    "ip": "172.16.220.200",
+    "mac": "00:50:56:91:82:34",
+    "mac_vendor": "VMware",
+    "hostnames": [
+      "firewall-it.acme.com"
+    ],
+    "os_guess": "FreeBSD 11.2-RELEASE",
+    "scan_sources": [
+      "nmap_IT_172.16.220.0-24_detailed.xml"
+    ],
+    "ports": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "domain",
+        "product": "Unbound",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "nginx",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 53,
+        "protocol": "tcp",
+        "label": "DNS"
+      },
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.0.3": {
+    "ip": "192.168.0.3",
+    "mac": "00:1D:9C:D8:42:DA",
+    "mac_vendor": "Rockwell Automation",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.0.7": {
+    "ip": "192.168.0.7",
+    "mac": "08:61:95:E5:1C:99",
+    "mac_vendor": "Rockwell Automation",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.0.51": {
+    "ip": "192.168.0.51",
+    "mac": "00:50:56:91:A7:14",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.0.52": {
+    "ip": "192.168.0.52",
+    "mac": "00:50:56:91:47:5E",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.0.53": {
+    "ip": "192.168.0.53",
+    "mac": "00:50:56:91:35:8F",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.0.54": {
+    "ip": "192.168.0.54",
+    "mac": "00:50:56:91:7B:5E",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 554,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "rtsp",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49155,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.0.97": {
+    "ip": "192.168.0.97",
+    "mac": "00:50:56:91:64:4B",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.0.155": {
+    "ip": "192.168.0.155",
+    "mac": "60:52:D0:08:17:AC",
+    "mac_vendor": "Facts Engineering",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.0.156": {
+    "ip": "192.168.0.156",
+    "mac": "60:52:D0:08:24:44",
+    "mac_vendor": "Facts Engineering",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.0.210": {
+    "ip": "192.168.0.210",
+    "mac": null,
+    "mac_vendor": null,
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.0.220": {
+    "ip": "192.168.0.220",
+    "mac": "00:50:56:91:2A:14",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L0_192.168.0.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.32.3": {
+    "ip": "192.168.32.3",
+    "mac": "00:09:91:BA:CD:3E",
+    "mac_vendor": "Intelligent Platforms",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.32.5": {
+    "ip": "192.168.32.5",
+    "mac": "38:4B:24:8A:D2:69",
+    "mac_vendor": "Siemens AG",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 443,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "https",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      },
+      {
+        "port": 443,
+        "protocol": "tcp",
+        "label": "HTTPS"
+      }
+    ]
+  },
+  "192.168.32.9": {
+    "ip": "192.168.32.9",
+    "mac": "00:50:56:91:1C:13",
+    "mac_vendor": "VMware",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "msrpc",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "netbios-ssn",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "microsoft-ds",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "ms-wbt-server",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49152,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49153,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49154,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 49155,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 135,
+        "protocol": "tcp",
+        "label": "MSRPC"
+      },
+      {
+        "port": 139,
+        "protocol": "tcp",
+        "label": "NetBIOS-SSN"
+      },
+      {
+        "port": 445,
+        "protocol": "tcp",
+        "label": "SMB"
+      },
+      {
+        "port": 3389,
+        "protocol": "tcp",
+        "label": "RDP"
+      }
+    ]
+  },
+  "192.168.32.12": {
+    "ip": "192.168.32.12",
+    "mac": "30:B8:51:4B:D5:AB",
+    "mac_vendor": null,
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.32.43": {
+    "ip": "192.168.32.43",
+    "mac": "00:07:46:34:55:10",
+    "mac_vendor": "Turck",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [],
+    "curated_services": []
+  },
+  "192.168.32.102": {
+    "ip": "192.168.32.102",
+    "mac": "30:2F:1E:65:B7:D4",
+    "mac_vendor": null,
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 81,
+        "protocol": "tcp",
+        "state": "filtered",
+        "service": "hosts2-ns",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 3000,
+        "protocol": "tcp",
+        "state": "filtered",
+        "service": "ppp",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      },
+      {
+        "port": 4899,
+        "protocol": "tcp",
+        "state": "filtered",
+        "service": "radmin",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.32.105": {
+    "ip": "192.168.32.105",
+    "mac": "00:07:46:51:07:E2",
+    "mac_vendor": "Turck",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  },
+  "192.168.32.171": {
+    "ip": "192.168.32.171",
+    "mac": "00:07:46:50:DF:93",
+    "mac_vendor": "Turck",
+    "hostnames": [],
+    "os_guess": null,
+    "scan_sources": [
+      "nmap_OT-L3_192.168.32.0-24.xml"
+    ],
+    "ports": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "state": "open",
+        "service": "http",
+        "product": "",
+        "version": "",
+        "extrainfo": ""
+      }
+    ],
+    "curated_services": [
+      {
+        "port": 80,
+        "protocol": "tcp",
+        "label": "HTTP"
+      }
+    ]
+  }
+}

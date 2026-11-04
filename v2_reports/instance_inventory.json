@@ -1,0 +1,3824 @@
+{
+  "_api": "https://192.168.1.177/api",
+  "sites": [
+    {
+      "name": "Acme",
+      "slug": "acme"
+    },
+    {
+      "name": "home",
+      "slug": "home"
+    }
+  ],
+  "device_roles": [
+    {
+      "name": "Database",
+      "slug": "database"
+    },
+    {
+      "name": "DNS-Server",
+      "slug": "dns-server"
+    },
+    {
+      "name": "Domain-Controller",
+      "slug": "domain-controller"
+    },
+    {
+      "name": "EWS",
+      "slug": "ews"
+    },
+    {
+      "name": "File-Server",
+      "slug": "file-server"
+    },
+    {
+      "name": "Firewall",
+      "slug": "firewall"
+    },
+    {
+      "name": "FTP-Server",
+      "slug": "ftp-server"
+    },
+    {
+      "name": "HMI",
+      "slug": "hmi"
+    },
+    {
+      "name": "Host",
+      "slug": "host"
+    },
+    {
+      "name": "IDS-Sensor",
+      "slug": "ids-sensor"
+    },
+    {
+      "name": "Mail-Server",
+      "slug": "mail-server"
+    },
+    {
+      "name": "Network-Display",
+      "slug": "network-display"
+    },
+    {
+      "name": "PLC",
+      "slug": "plc"
+    },
+    {
+      "name": "Remote-IO",
+      "slug": "remote-io"
+    },
+    {
+      "name": "RTU",
+      "slug": "rtu"
+    },
+    {
+      "name": "Server",
+      "slug": "server"
+    },
+    {
+      "name": "Web-Server",
+      "slug": "web-server"
+    },
+    {
+      "name": "Workstation",
+      "slug": "workstation"
+    }
+  ],
+  "manufacturers": [
+    {
+      "name": "Facts Engineering",
+      "slug": "facts-engineering"
+    },
+    {
+      "name": "GE Intelligent Platforms",
+      "slug": "ge-intelligent-platforms"
+    },
+    {
+      "name": "Netgate",
+      "slug": "netgate"
+    },
+    {
+      "name": "Rockwell Automation",
+      "slug": "rockwell-automation"
+    },
+    {
+      "name": "Siemens",
+      "slug": "siemens"
+    },
+    {
+      "name": "Turck",
+      "slug": "turck"
+    },
+    {
+      "name": "unknown",
+      "slug": "unknown"
+    },
+    {
+      "name": "VMware",
+      "slug": "vmware"
+    }
+  ],
+  "device_types": [
+    {
+      "model": "DirectLOGIC LED Sign",
+      "slug": "facts-engineering-directlogic-led-sign",
+      "manufacturer": "Facts Engineering"
+    },
+    {
+      "model": "RX3i CPE330",
+      "slug": "ge-intelligent-platforms-rx3i-cpe330",
+      "manufacturer": "GE Intelligent Platforms"
+    },
+    {
+      "model": "pfSense",
+      "slug": "netgate-pfsense",
+      "manufacturer": "Netgate"
+    },
+    {
+      "model": "CompactLogix L55",
+      "slug": "rockwell-automation-compactlogix-l55",
+      "manufacturer": "Rockwell Automation"
+    },
+    {
+      "model": "ControlLogix 1756-L81E",
+      "slug": "rockwell-automation-controllogix-1756-l81e",
+      "manufacturer": "Rockwell Automation"
+    },
+    {
+      "model": "S7-1200",
+      "slug": "siemens-s7-1200",
+      "manufacturer": "Siemens"
+    },
+    {
+      "model": "S7-1500 (S7-1515)",
+      "slug": "siemens-s7-1500-s7-1515",
+      "manufacturer": "Siemens"
+    },
+    {
+      "model": "S7-315",
+      "slug": "siemens-s7-315",
+      "manufacturer": "Siemens"
+    },
+    {
+      "model": "Generic Device",
+      "slug": "turck-generic-device",
+      "manufacturer": "Turck"
+    },
+    {
+      "model": "SIXNET",
+      "slug": "unknown-sixnet",
+      "manufacturer": "unknown"
+    },
+    {
+      "model": "VMware Virtual Machine",
+      "slug": "vmware-vmware-virtual-machine",
+      "manufacturer": "VMware"
+    }
+  ],
+  "platforms": [
+    {
+      "name": "pfSense",
+      "slug": "pfsense"
+    },
+    {
+      "name": "Windows 10 Professional",
+      "slug": "windows-10-professional"
+    },
+    {
+      "name": "Windows XP Pro SP2",
+      "slug": "windows-xp-pro-sp2"
+    }
+  ],
+  "vlans": [
+    {
+      "vid": 30,
+      "name": "Wireless"
+    }
+  ],
+  "prefixes": [
+    {
+      "prefix": "10.5.5.0/24",
+      "description": "PCS-DMZ",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-DMZ"
+    },
+    {
+      "prefix": "10.15.15.0/24",
+      "description": "Corporate-DMZ",
+      "site": null,
+      "vlan": null,
+      "role": "Corporate-DMZ"
+    },
+    {
+      "prefix": "134.20.24.0/24",
+      "description": "External",
+      "site": null,
+      "vlan": null,
+      "role": "External"
+    },
+    {
+      "prefix": "172.16.220.0/24",
+      "description": "Corporate",
+      "site": null,
+      "vlan": null,
+      "role": "Corporate"
+    },
+    {
+      "prefix": "172.16.221.0/24",
+      "description": "Monitoring",
+      "site": null,
+      "vlan": null,
+      "role": "Monitoring"
+    },
+    {
+      "prefix": "192.168.0.0/16",
+      "description": "PCS",
+      "site": null,
+      "vlan": null,
+      "role": "PCS"
+    },
+    {
+      "prefix": "192.168.0.0/24",
+      "description": "PCS-Process",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-Process"
+    },
+    {
+      "prefix": "192.168.1.0/24",
+      "description": "PCS-Field-APL",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-Field-APL"
+    },
+    {
+      "prefix": "192.168.10.0/24",
+      "description": "PCS-Gateway",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-Gateway"
+    },
+    {
+      "prefix": "192.168.32.0/24",
+      "description": "PCS-Supervisory",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-Supervisory"
+    },
+    {
+      "prefix": "192.168.42.0/24",
+      "description": "PCS-Field-APL",
+      "site": null,
+      "vlan": null,
+      "role": "PCS-Field-APL"
+    }
+  ],
+  "devices": [
+    {
+      "name": "acd-plc",
+      "role": "PLC",
+      "device_type": "RX3i CPE330",
+      "manufacturer": "GE Intelligent Platforms",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.3/24"
+    },
+    {
+      "name": "acs-remote-io-1",
+      "role": "Remote-IO",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.43/24"
+    },
+    {
+      "name": "acs-remote-io-pn",
+      "role": "Remote-IO",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.171/24"
+    },
+    {
+      "name": "acs-s7-315-plc",
+      "role": "PLC",
+      "device_type": "S7-315",
+      "manufacturer": "Siemens",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.102/24"
+    },
+    {
+      "name": "acs-s7-1500-plc",
+      "role": "PLC",
+      "device_type": "S7-1500 (S7-1515)",
+      "manufacturer": "Siemens",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.12/24"
+    },
+    {
+      "name": "ad",
+      "role": "Domain-Controller",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.20/24"
+    },
+    {
+      "name": "apl-rtu",
+      "role": "RTU",
+      "device_type": "SIXNET",
+      "manufacturer": "unknown",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.1.40/24"
+    },
+    {
+      "name": "apl-rtu-2",
+      "role": "RTU",
+      "device_type": "S7-1200",
+      "manufacturer": "Siemens",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.5/24"
+    },
+    {
+      "name": "arkime",
+      "role": "IDS-Sensor",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": null
+    },
+    {
+      "name": "asc-l55-plc",
+      "role": "PLC",
+      "device_type": "CompactLogix L55",
+      "manufacturer": "Rockwell Automation",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.6/24"
+    },
+    {
+      "name": "asc-l81-plc",
+      "role": "PLC",
+      "device_type": "ControlLogix 1756-L81E",
+      "manufacturer": "Rockwell Automation",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.3/24"
+    },
+    {
+      "name": "asc-remote-io-eip",
+      "role": "Remote-IO",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.105/24"
+    },
+    {
+      "name": "database",
+      "role": "Database",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.10/24"
+    },
+    {
+      "name": "database-acd",
+      "role": "Database",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.117/24"
+    },
+    {
+      "name": "database-acs",
+      "role": "Database",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.153/24"
+    },
+    {
+      "name": "database-asc",
+      "role": "Database",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.17/24"
+    },
+    {
+      "name": "dns",
+      "role": "DNS-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.50/24"
+    },
+    {
+      "name": "ews-1",
+      "role": "EWS",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.51/24"
+    },
+    {
+      "name": "ews-2",
+      "role": "EWS",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.52/24"
+    },
+    {
+      "name": "ews-3",
+      "role": "EWS",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.53/24"
+    },
+    {
+      "name": "ews-4",
+      "role": "EWS",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.54/24"
+    },
+    {
+      "name": "file",
+      "role": "File-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.16/24"
+    },
+    {
+      "name": "finance-1",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.150/24"
+    },
+    {
+      "name": "finance-2",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.151/24"
+    },
+    {
+      "name": "finance-3",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.152/24"
+    },
+    {
+      "name": "fw-corp",
+      "role": "Firewall",
+      "device_type": "pfSense",
+      "manufacturer": "Netgate",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.200/24"
+    },
+    {
+      "name": "fw-ics",
+      "role": "Firewall",
+      "device_type": "pfSense",
+      "manufacturer": "Netgate",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.100/24"
+    },
+    {
+      "name": "fw-ids",
+      "role": "Firewall",
+      "device_type": "pfSense",
+      "manufacturer": "Netgate",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.180/24"
+    },
+    {
+      "name": "hmi-acd",
+      "role": "HMI",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.10/24"
+    },
+    {
+      "name": "hmi-acs",
+      "role": "HMI",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.32.9/24"
+    },
+    {
+      "name": "hmi-apl",
+      "role": "HMI",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.1.87/24"
+    },
+    {
+      "name": "hmi-asc",
+      "role": "HMI",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.97/24"
+    },
+    {
+      "name": "host-10-5-5-201",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.201/24"
+    },
+    {
+      "name": "host-10-5-5-240",
+      "role": "Host",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.240/24"
+    },
+    {
+      "name": "host-10-15-15-201",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.201/24"
+    },
+    {
+      "name": "host-10-15-15-240",
+      "role": "Host",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.240/24"
+    },
+    {
+      "name": "host-172-16-220-188",
+      "role": "Host",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.188/24"
+    },
+    {
+      "name": "host-172-16-220-190",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.190/24"
+    },
+    {
+      "name": "host-172-16-220-191",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.191/24"
+    },
+    {
+      "name": "host-172-16-220-193",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.193/24"
+    },
+    {
+      "name": "host-172-16-220-195",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.195/24"
+    },
+    {
+      "name": "host-172-16-220-196",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.196/24"
+    },
+    {
+      "name": "host-192-168-0-210",
+      "role": "Host",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.210/24"
+    },
+    {
+      "name": "host-192-168-0-220",
+      "role": "Host",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.220/24"
+    },
+    {
+      "name": "hr-1",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.163/24"
+    },
+    {
+      "name": "hr-2",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.164/24"
+    },
+    {
+      "name": "iccp-apl",
+      "role": "Server",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.34/24"
+    },
+    {
+      "name": "indusoft-overview",
+      "role": "HMI",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.244/24"
+    },
+    {
+      "name": "internal-dns",
+      "role": "DNS-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.13/24"
+    },
+    {
+      "name": "internal-ftp",
+      "role": "FTP-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.199/24"
+    },
+    {
+      "name": "ioserver-apl",
+      "role": "Server",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.1.23/24"
+    },
+    {
+      "name": "mail",
+      "role": "Mail-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.3/24"
+    },
+    {
+      "name": "malcolm",
+      "role": "IDS-Sensor",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": null
+    },
+    {
+      "name": "mgmt-1",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.160/24"
+    },
+    {
+      "name": "mgmt-2",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.161/24"
+    },
+    {
+      "name": "mgmt-3",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.162/24"
+    },
+    {
+      "name": "netbox",
+      "role": "Server",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": null
+    },
+    {
+      "name": "rssql-asc",
+      "role": "Database",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.5.5.35/24"
+    },
+    {
+      "name": "sales-1",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.153/24"
+    },
+    {
+      "name": "sales-2",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.154/24"
+    },
+    {
+      "name": "sales-3",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.155/24"
+    },
+    {
+      "name": "sales-4",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.156/24"
+    },
+    {
+      "name": "security-onion",
+      "role": "IDS-Sensor",
+      "device_type": "Generic Device",
+      "manufacturer": "Turck",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": null
+    },
+    {
+      "name": "sign-asc",
+      "role": "Network-Display",
+      "device_type": "DirectLOGIC LED Sign",
+      "manufacturer": "Facts Engineering",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.155/24"
+    },
+    {
+      "name": "sign-mgmt",
+      "role": "Network-Display",
+      "device_type": "DirectLOGIC LED Sign",
+      "manufacturer": "Facts Engineering",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "192.168.0.156/24"
+    },
+    {
+      "name": "user-1",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.181/24"
+    },
+    {
+      "name": "user-2",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.182/24"
+    },
+    {
+      "name": "user-3",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.183/24"
+    },
+    {
+      "name": "user-4",
+      "role": "Workstation",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "172.16.220.184/24"
+    },
+    {
+      "name": "www",
+      "role": "Web-Server",
+      "device_type": "VMware Virtual Machine",
+      "manufacturer": "VMware",
+      "site": "Acme",
+      "status": null,
+      "primary_ip": "10.15.15.20/24"
+    }
+  ],
+  "interfaces": [
+    {
+      "device": "acd-plc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:09:91:BA:CD:3E",
+      "mac_legacy": "00:09:91:BA:CD:3E"
+    },
+    {
+      "device": "acs-remote-io-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:07:46:34:55:10",
+      "mac_legacy": "00:07:46:34:55:10"
+    },
+    {
+      "device": "acs-remote-io-pn",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:07:46:50:DF:93",
+      "mac_legacy": "00:07:46:50:DF:93"
+    },
+    {
+      "device": "acs-s7-315-plc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "30:2F:1E:65:B7:D4",
+      "mac_legacy": "30:2F:1E:65:B7:D4"
+    },
+    {
+      "device": "acs-s7-1500-plc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "30:B8:51:4B:D5:AB",
+      "mac_legacy": "30:B8:51:4B:D5:AB"
+    },
+    {
+      "device": "ad",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:79:9D",
+      "mac_legacy": "00:50:56:91:79:9D"
+    },
+    {
+      "device": "apl-rtu",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "apl-rtu-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "38:4B:24:8A:D2:69",
+      "mac_legacy": "38:4B:24:8A:D2:69"
+    },
+    {
+      "device": "apl-rtu-2",
+      "name": "eth1",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "asc-l55-plc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "asc-l81-plc",
+      "name": "EN4TR",
+      "type": null,
+      "primary_mac": "08:61:95:E5:1C:99",
+      "mac_legacy": "08:61:95:E5:1C:99"
+    },
+    {
+      "device": "asc-l81-plc",
+      "name": "EN4TR1",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "asc-l81-plc",
+      "name": "ENBT",
+      "type": null,
+      "primary_mac": "00:1D:9C:D8:42:DA",
+      "mac_legacy": "00:1D:9C:D8:42:DA"
+    },
+    {
+      "device": "asc-remote-io-eip",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:07:46:51:07:E2",
+      "mac_legacy": "00:07:46:51:07:E2"
+    },
+    {
+      "device": "database",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:1F:44",
+      "mac_legacy": "00:50:56:91:1F:44"
+    },
+    {
+      "device": "database-acd",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:AD:A5",
+      "mac_legacy": "00:50:56:91:AD:A5"
+    },
+    {
+      "device": "database-acs",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:EF:92",
+      "mac_legacy": "00:50:56:91:EF:92"
+    },
+    {
+      "device": "database-asc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:18:FC",
+      "mac_legacy": "00:50:56:91:18:FC"
+    },
+    {
+      "device": "dns",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:C2:6F",
+      "mac_legacy": "00:50:56:91:C2:6F"
+    },
+    {
+      "device": "ews-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:A7:14",
+      "mac_legacy": "00:50:56:91:A7:14"
+    },
+    {
+      "device": "ews-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:47:5E",
+      "mac_legacy": "00:50:56:91:47:5E"
+    },
+    {
+      "device": "ews-3",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:35:8F",
+      "mac_legacy": "00:50:56:91:35:8F"
+    },
+    {
+      "device": "ews-4",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:7B:5E",
+      "mac_legacy": "00:50:56:91:7B:5E"
+    },
+    {
+      "device": "file",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:CE:CC",
+      "mac_legacy": "00:50:56:91:CE:CC"
+    },
+    {
+      "device": "finance-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:3F:B7",
+      "mac_legacy": "00:50:56:91:3F:B7"
+    },
+    {
+      "device": "finance-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:82:CE",
+      "mac_legacy": "00:50:56:91:82:CE"
+    },
+    {
+      "device": "finance-3",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:41:96",
+      "mac_legacy": "00:50:56:91:41:96"
+    },
+    {
+      "device": "fw-corp",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:32:ED",
+      "mac_legacy": "00:50:56:91:32:ED"
+    },
+    {
+      "device": "fw-corp",
+      "name": "eth1",
+      "type": null,
+      "primary_mac": "00:50:56:91:82:34",
+      "mac_legacy": "00:50:56:91:82:34"
+    },
+    {
+      "device": "fw-corp",
+      "name": "eth2",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "fw-ics",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:DE:27",
+      "mac_legacy": "00:50:56:91:DE:27"
+    },
+    {
+      "device": "fw-ics",
+      "name": "eth1",
+      "type": null,
+      "primary_mac": "00:50:56:91:78:85",
+      "mac_legacy": "00:50:56:91:78:85"
+    },
+    {
+      "device": "fw-ics",
+      "name": "eth2",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "fw-ids",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:58:D1",
+      "mac_legacy": "00:50:56:91:58:D1"
+    },
+    {
+      "device": "fw-ids",
+      "name": "eth1",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "hmi-acd",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "hmi-acs",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:1C:13",
+      "mac_legacy": "00:50:56:91:1C:13"
+    },
+    {
+      "device": "hmi-apl",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "hmi-asc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:64:4B",
+      "mac_legacy": "00:50:56:91:64:4B"
+    },
+    {
+      "device": "host-10-5-5-201",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:38:EC",
+      "mac_legacy": "00:50:56:91:38:EC"
+    },
+    {
+      "device": "host-10-5-5-240",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "host-10-15-15-201",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:97:06",
+      "mac_legacy": "00:50:56:91:97:06"
+    },
+    {
+      "device": "host-10-15-15-240",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "host-172-16-220-188",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "host-172-16-220-190",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:86:53",
+      "mac_legacy": "00:50:56:91:86:53"
+    },
+    {
+      "device": "host-172-16-220-191",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:8E:E7",
+      "mac_legacy": "00:50:56:91:8E:E7"
+    },
+    {
+      "device": "host-172-16-220-193",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:0C:D4",
+      "mac_legacy": "00:50:56:91:0C:D4"
+    },
+    {
+      "device": "host-172-16-220-195",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:AB:E6",
+      "mac_legacy": "00:50:56:91:AB:E6"
+    },
+    {
+      "device": "host-172-16-220-196",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:CA:C1",
+      "mac_legacy": "00:50:56:91:CA:C1"
+    },
+    {
+      "device": "host-192-168-0-210",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "host-192-168-0-220",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:2A:14",
+      "mac_legacy": "00:50:56:91:2A:14"
+    },
+    {
+      "device": "hr-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:E7:50",
+      "mac_legacy": "00:50:56:91:E7:50"
+    },
+    {
+      "device": "hr-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:3C:3F",
+      "mac_legacy": "00:50:56:91:3C:3F"
+    },
+    {
+      "device": "iccp-apl",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "indusoft-overview",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "internal-dns",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:FA:CC",
+      "mac_legacy": "00:50:56:91:FA:CC"
+    },
+    {
+      "device": "internal-ftp",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:58:3C",
+      "mac_legacy": "00:50:56:91:58:3C"
+    },
+    {
+      "device": "ioserver-apl",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": null,
+      "mac_legacy": null
+    },
+    {
+      "device": "mail",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:73:23",
+      "mac_legacy": "00:50:56:91:73:23"
+    },
+    {
+      "device": "mgmt-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:B9:48",
+      "mac_legacy": "00:50:56:91:B9:48"
+    },
+    {
+      "device": "mgmt-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:8B:68",
+      "mac_legacy": "00:50:56:91:8B:68"
+    },
+    {
+      "device": "mgmt-3",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:07:D7",
+      "mac_legacy": "00:50:56:91:07:D7"
+    },
+    {
+      "device": "rssql-asc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:FB:62",
+      "mac_legacy": "00:50:56:91:FB:62"
+    },
+    {
+      "device": "sales-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:B7:6F",
+      "mac_legacy": "00:50:56:91:B7:6F"
+    },
+    {
+      "device": "sales-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:47:D0",
+      "mac_legacy": "00:50:56:91:47:D0"
+    },
+    {
+      "device": "sales-3",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:9B:20",
+      "mac_legacy": "00:50:56:91:9B:20"
+    },
+    {
+      "device": "sales-4",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:65:4F",
+      "mac_legacy": "00:50:56:91:65:4F"
+    },
+    {
+      "device": "sign-asc",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "60:52:D0:08:17:AC",
+      "mac_legacy": "60:52:D0:08:17:AC"
+    },
+    {
+      "device": "sign-mgmt",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "60:52:D0:08:24:44",
+      "mac_legacy": "60:52:D0:08:24:44"
+    },
+    {
+      "device": "user-1",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:8C:97",
+      "mac_legacy": "00:50:56:91:8C:97"
+    },
+    {
+      "device": "user-2",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:2F:C3",
+      "mac_legacy": "00:50:56:91:2F:C3"
+    },
+    {
+      "device": "user-3",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:39:63",
+      "mac_legacy": "00:50:56:91:39:63"
+    },
+    {
+      "device": "user-4",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:A6:A0",
+      "mac_legacy": "00:50:56:91:A6:A0"
+    },
+    {
+      "device": "www",
+      "name": "eth0",
+      "type": null,
+      "primary_mac": "00:50:56:91:D4:4C",
+      "mac_legacy": "00:50:56:91:D4:4C"
+    }
+  ],
+  "mac_addresses": [
+    {
+      "mac": "00:07:46:34:55:10",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:07:46:50:DF:93",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:07:46:51:07:E2",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:09:91:BA:CD:3E",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:1D:9C:D8:42:DA",
+      "assigned": "ENBT"
+    },
+    {
+      "mac": "00:50:56:91:07:D7",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:0C:D4",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:18:FC",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:1C:13",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:1F:44",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:2A:14",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:2F:C3",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:32:ED",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:35:8F",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:38:EC",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:39:63",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:3C:3F",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:3F:B7",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:41:96",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:47:5E",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:47:D0",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:58:3C",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:58:D1",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:64:4B",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:65:4F",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:73:23",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:78:85",
+      "assigned": "eth1"
+    },
+    {
+      "mac": "00:50:56:91:79:9D",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:7B:5E",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:82:34",
+      "assigned": "eth1"
+    },
+    {
+      "mac": "00:50:56:91:82:CE",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:86:53",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:8B:68",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:8C:97",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:8E:E7",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:97:06",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:9B:20",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:A6:A0",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:A7:14",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:AB:E6",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:AD:A5",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:B7:6F",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:B9:48",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:C2:6F",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:CA:C1",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:CE:CC",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:D4:4C",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:DE:27",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:E7:50",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:EF:92",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:FA:CC",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "00:50:56:91:FB:62",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "08:61:95:E5:1C:99",
+      "assigned": "EN4TR"
+    },
+    {
+      "mac": "30:2F:1E:65:B7:D4",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "30:B8:51:4B:D5:AB",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "38:4B:24:8A:D2:69",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "60:52:D0:08:17:AC",
+      "assigned": "eth0"
+    },
+    {
+      "mac": "60:52:D0:08:24:44",
+      "assigned": "eth0"
+    }
+  ],
+  "ip_addresses": [
+    {
+      "address": "10.5.5.34/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "10.5.5.35/24",
+      "assigned": "eth0",
+      "dns_name": "rssql.acme.com"
+    },
+    {
+      "address": "10.5.5.100/24",
+      "assigned": "eth1",
+      "dns_name": ""
+    },
+    {
+      "address": "10.5.5.117/24",
+      "assigned": "eth0",
+      "dns_name": "database-acd.acme.com"
+    },
+    {
+      "address": "10.5.5.153/24",
+      "assigned": "eth0",
+      "dns_name": "database-acs.acme.com"
+    },
+    {
+      "address": "10.5.5.201/24",
+      "assigned": "eth0",
+      "dns_name": "10.5.5-201.acme.com"
+    },
+    {
+      "address": "10.5.5.240/24",
+      "assigned": "eth0",
+      "dns_name": "10.5.5-240.acme.com"
+    },
+    {
+      "address": "10.15.15.10/24",
+      "assigned": "eth0",
+      "dns_name": "database.acme.com"
+    },
+    {
+      "address": "10.15.15.20/24",
+      "assigned": "eth0",
+      "dns_name": "www.acme.com"
+    },
+    {
+      "address": "10.15.15.50/24",
+      "assigned": "eth0",
+      "dns_name": "dns.acme.com"
+    },
+    {
+      "address": "10.15.15.200/24",
+      "assigned": "eth0",
+      "dns_name": "firewall-corp.acme.com"
+    },
+    {
+      "address": "10.15.15.201/24",
+      "assigned": "eth0",
+      "dns_name": "10.15.15-201.acme.com"
+    },
+    {
+      "address": "10.15.15.240/24",
+      "assigned": "eth0",
+      "dns_name": "10.15.15-240.acme.com"
+    },
+    {
+      "address": "134.20.24.87/24",
+      "assigned": "eth2",
+      "dns_name": ""
+    },
+    {
+      "address": "172.16.220.3/24",
+      "assigned": "eth0",
+      "dns_name": "mail.acme.com"
+    },
+    {
+      "address": "172.16.220.13/24",
+      "assigned": "eth0",
+      "dns_name": "internal-dns.acme.com"
+    },
+    {
+      "address": "172.16.220.16/24",
+      "assigned": "eth0",
+      "dns_name": "file.acme.com"
+    },
+    {
+      "address": "172.16.220.17/24",
+      "assigned": "eth0",
+      "dns_name": "database-asc.acme.com"
+    },
+    {
+      "address": "172.16.220.20/24",
+      "assigned": "eth0",
+      "dns_name": "ad.acme.com"
+    },
+    {
+      "address": "172.16.220.100/24",
+      "assigned": "eth0",
+      "dns_name": "firewall-ot.acme.com"
+    },
+    {
+      "address": "172.16.220.150/24",
+      "assigned": "eth0",
+      "dns_name": "finance-1.acme.com"
+    },
+    {
+      "address": "172.16.220.151/24",
+      "assigned": "eth0",
+      "dns_name": "finance-2.acme.com"
+    },
+    {
+      "address": "172.16.220.152/24",
+      "assigned": "eth0",
+      "dns_name": "finance-3.acme.com"
+    },
+    {
+      "address": "172.16.220.153/24",
+      "assigned": "eth0",
+      "dns_name": "sales-1.acme.com"
+    },
+    {
+      "address": "172.16.220.154/24",
+      "assigned": "eth0",
+      "dns_name": "sales-2.acme.com"
+    },
+    {
+      "address": "172.16.220.155/24",
+      "assigned": "eth0",
+      "dns_name": "sales-3.acme.com"
+    },
+    {
+      "address": "172.16.220.156/24",
+      "assigned": "eth0",
+      "dns_name": "sales-4.acme.com"
+    },
+    {
+      "address": "172.16.220.160/24",
+      "assigned": "eth0",
+      "dns_name": "mgmt-1.acme.com"
+    },
+    {
+      "address": "172.16.220.161/24",
+      "assigned": "eth0",
+      "dns_name": "mgmt-2.acme.com"
+    },
+    {
+      "address": "172.16.220.162/24",
+      "assigned": "eth0",
+      "dns_name": "mgmt-3.acme.com"
+    },
+    {
+      "address": "172.16.220.163/24",
+      "assigned": "eth0",
+      "dns_name": "hr-1.acme.com"
+    },
+    {
+      "address": "172.16.220.164/24",
+      "assigned": "eth0",
+      "dns_name": "hr-2.acme.com"
+    },
+    {
+      "address": "172.16.220.180/24",
+      "assigned": "eth0",
+      "dns_name": "firewall-ids.acme.com"
+    },
+    {
+      "address": "172.16.220.181/24",
+      "assigned": "eth0",
+      "dns_name": "user-1.acme.com"
+    },
+    {
+      "address": "172.16.220.182/24",
+      "assigned": "eth0",
+      "dns_name": "user-2.acme.com"
+    },
+    {
+      "address": "172.16.220.183/24",
+      "assigned": "eth0",
+      "dns_name": "user-3.acme.com"
+    },
+    {
+      "address": "172.16.220.184/24",
+      "assigned": "eth0",
+      "dns_name": "user-4.acme.com"
+    },
+    {
+      "address": "172.16.220.188/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-188.acme.com"
+    },
+    {
+      "address": "172.16.220.190/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-190.acme.com"
+    },
+    {
+      "address": "172.16.220.191/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-191.acme.com"
+    },
+    {
+      "address": "172.16.220.193/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-193.acme.com"
+    },
+    {
+      "address": "172.16.220.195/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-195.acme.com"
+    },
+    {
+      "address": "172.16.220.196/24",
+      "assigned": "eth0",
+      "dns_name": "172-16-220-196.acme.com"
+    },
+    {
+      "address": "172.16.220.199/24",
+      "assigned": "eth0",
+      "dns_name": "internal-ftp.acme.com"
+    },
+    {
+      "address": "172.16.220.200/24",
+      "assigned": "eth1",
+      "dns_name": ""
+    },
+    {
+      "address": "172.16.221.200/24",
+      "assigned": "eth1",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.3/24",
+      "assigned": "ENBT",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.6/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.7/24",
+      "assigned": "EN4TR",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.8/24",
+      "assigned": "EN4TR1",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.51/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.52/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.53/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.54/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.97/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.155/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.156/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.210/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.220/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.0.244/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.1.23/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.1.40/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.1.87/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.10.100/24",
+      "assigned": "eth2",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.3/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.5/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.9/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.10/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.12/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.43/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.102/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.105/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.32.171/24",
+      "assigned": "eth0",
+      "dns_name": ""
+    },
+    {
+      "address": "192.168.42.5/24",
+      "assigned": "eth1",
+      "dns_name": ""
+    }
+  ],
+  "services": [
+    {
+      "name": "FTP",
+      "protocol": null,
+      "ports": [
+        21
+      ],
+      "parent": null
+    },
+    {
+      "name": "FTP",
+      "protocol": null,
+      "ports": [
+        21
+      ],
+      "parent": null
+    },
+    {
+      "name": "SSH",
+      "protocol": null,
+      "ports": [
+        22
+      ],
+      "parent": null
+    },
+    {
+      "name": "SSH",
+      "protocol": null,
+      "ports": [
+        22
+      ],
+      "parent": null
+    },
+    {
+      "name": "SSH",
+      "protocol": null,
+      "ports": [
+        22
+      ],
+      "parent": null
+    },
+    {
+      "name": "SSH",
+      "protocol": null,
+      "ports": [
+        22
+      ],
+      "parent": null
+    },
+    {
+      "name": "SMTP",
+      "protocol": null,
+      "ports": [
+        25
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNS (TCP)",
+      "protocol": null,
+      "ports": [
+        53
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNS (TCP)",
+      "protocol": null,
+      "ports": [
+        53
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNS (TCP)",
+      "protocol": null,
+      "ports": [
+        53
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNS (TCP)",
+      "protocol": null,
+      "ports": [
+        53
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNS (TCP)",
+      "protocol": null,
+      "ports": [
+        53
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTP",
+      "protocol": null,
+      "ports": [
+        80
+      ],
+      "parent": null
+    },
+    {
+      "name": "Kerberos",
+      "protocol": null,
+      "ports": [
+        88,
+        464
+      ],
+      "parent": null
+    },
+    {
+      "name": "COTP and S7comm",
+      "protocol": null,
+      "ports": [
+        102
+      ],
+      "parent": null
+    },
+    {
+      "name": "COTP and S7comm",
+      "protocol": null,
+      "ports": [
+        102
+      ],
+      "parent": null
+    },
+    {
+      "name": "COTP and S7comm",
+      "protocol": null,
+      "ports": [
+        102
+      ],
+      "parent": null
+    },
+    {
+      "name": "POP3",
+      "protocol": null,
+      "ports": [
+        110
+      ],
+      "parent": null
+    },
+    {
+      "name": "rpcbind",
+      "protocol": null,
+      "ports": [
+        111
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        135,
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        139,
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "IMAP",
+      "protocol": null,
+      "ports": [
+        143
+      ],
+      "parent": null
+    },
+    {
+      "name": "LDAP (TCP)",
+      "protocol": null,
+      "ports": [
+        389
+      ],
+      "parent": null
+    },
+    {
+      "name": "LDAP (TCP)",
+      "protocol": null,
+      "ports": [
+        389
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTPS",
+      "protocol": null,
+      "ports": [
+        443
+      ],
+      "parent": null
+    },
+    {
+      "name": "HTTPS",
+      "protocol": null,
+      "ports": [
+        443
+      ],
+      "parent": null
+    },
+    {
+      "name": "Microsoft-DS (TCP)",
+      "protocol": null,
+      "ports": [
+        445
+      ],
+      "parent": null
+    },
+    {
+      "name": "SMTP SSL/TLS",
+      "protocol": null,
+      "ports": [
+        465,
+        587
+      ],
+      "parent": null
+    },
+    {
+      "name": "Modbus (TCP)",
+      "protocol": null,
+      "ports": [
+        502
+      ],
+      "parent": null
+    },
+    {
+      "name": "Modbus (TCP)",
+      "protocol": null,
+      "ports": [
+        502
+      ],
+      "parent": null
+    },
+    {
+      "name": "Modbus (TCP)",
+      "protocol": null,
+      "ports": [
+        502
+      ],
+      "parent": null
+    },
+    {
+      "name": "RPC-HTTP",
+      "protocol": null,
+      "ports": [
+        593
+      ],
+      "parent": null
+    },
+    {
+      "name": "LDAP SSL/TLS (TCP)",
+      "protocol": null,
+      "ports": [
+        636
+      ],
+      "parent": null
+    },
+    {
+      "name": "IMAP SSL/TLS",
+      "protocol": null,
+      "ports": [
+        993
+      ],
+      "parent": null
+    },
+    {
+      "name": "POP3 SSL/TLS",
+      "protocol": null,
+      "ports": [
+        995
+      ],
+      "parent": null
+    },
+    {
+      "name": "MSSQL",
+      "protocol": null,
+      "ports": [
+        1433
+      ],
+      "parent": null
+    },
+    {
+      "name": "MSSQL",
+      "protocol": null,
+      "ports": [
+        1433
+      ],
+      "parent": null
+    },
+    {
+      "name": "MSSQL",
+      "protocol": null,
+      "ports": [
+        1433
+      ],
+      "parent": null
+    },
+    {
+      "name": "MSSQL",
+      "protocol": null,
+      "ports": [
+        1433
+      ],
+      "parent": null
+    },
+    {
+      "name": "CIP and EtherNet/IP (TCP)",
+      "protocol": null,
+      "ports": [
+        2222
+      ],
+      "parent": null
+    },
+    {
+      "name": "firewall-mgmt",
+      "protocol": null,
+      "ports": [
+        3000
+      ],
+      "parent": null
+    },
+    {
+      "name": "firewall-mgmt",
+      "protocol": null,
+      "ports": [
+        3000
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "RDP",
+      "protocol": null,
+      "ports": [
+        3389
+      ],
+      "parent": null
+    },
+    {
+      "name": "GE-SRTP",
+      "protocol": null,
+      "ports": [
+        18245
+      ],
+      "parent": null
+    },
+    {
+      "name": "GE-SRTP",
+      "protocol": null,
+      "ports": [
+        18245
+      ],
+      "parent": null
+    },
+    {
+      "name": "DNP3",
+      "protocol": null,
+      "ports": [
+        20000
+      ],
+      "parent": null
+    },
+    {
+      "name": "PROFINET",
+      "protocol": null,
+      "ports": [
+        34964
+      ],
+      "parent": null
+    },
+    {
+      "name": "CIP and EtherNet/IP (TCP)",
+      "protocol": null,
+      "ports": [
+        44818
+      ],
+      "parent": null
+    },
+    {
+      "name": "CIP and EtherNet/IP (TCP)",
+      "protocol": null,
+      "ports": [
+        44818
+      ],
+      "parent": null
+    },
+    {
+      "name": "CIP and EtherNet/IP (TCP)",
+      "protocol": null,
+      "ports": [
+        44818
+      ],
+      "parent": null
+    },
+    {
+      "name": "CIP and EtherNet/IP (TCP)",
+      "protocol": null,
+      "ports": [
+        44818
+      ],
+      "parent": null
+    }
+  ],
+  "custom_fields": [
+    {
+      "name": "telemetry",
+      "label": "Telemetry / Log Sources",
+      "type": "longtext",
+      "object_types": [
+        "dcim.device"
+      ],
+      "choice_set": null,
+      "choice_set_id": null
+    },
+    {
+      "name": "logging_siem",
+      "label": "Logging to SIEM",
+      "type": "boolean",
+      "object_types": [
+        "dcim.device"
+      ],
+      "choice_set": null,
+      "choice_set_id": null
+    }
+  ],
+  "custom_field_choice_sets": [],
+  "df_applications": [
+    {
+      "name": "ACD",
+      "role": null,
+      "tenant": null
+    },
+    {
+      "name": "ACS",
+      "role": null,
+      "tenant": null
+    },
+    {
+      "name": "ASC",
+      "role": null,
+      "tenant": null
+    }
+  ],
+  "df_application_roles": [],
+  "df_groups": [],
+  "df_dataflows": [
+    {
+      "name": "ACD PLC (CPE330) to Indusoft HMI-ACD",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [
+        18245
+      ],
+      "sources": [
+        "acd-plc"
+      ],
+      "destinations": [
+        "hmi-acd"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACD PLC (CPE330) to Process Overview HMI",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [
+        18245
+      ],
+      "sources": [
+        "acd-plc"
+      ],
+      "destinations": [
+        "indusoft-overview"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACD PLC to Physical Skid (hard-wired I/O)",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [],
+      "sources": [
+        "acd-plc"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "HMI-ACD to PCS DMZ database-acd",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "hmi-acd"
+      ],
+      "destinations": [
+        "database-acd"
+      ],
+      "status": null
+    },
+    {
+      "name": "PCS DMZ database-acd to CORP DMZ DB",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "database-acd"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    },
+    {
+      "name": "WWW to CORP DMZ DB",
+      "application": "ACD",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "www"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACS Remote I/O to ASC Remote I/O (hard-wired I/O)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [],
+      "sources": [
+        "acs-remote-io-pn"
+      ],
+      "destinations": [
+        "asc-remote-io-eip"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACS S7-1515 to Indusoft HMI-ACS",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        102
+      ],
+      "sources": [
+        "acs-s7-1500-plc"
+      ],
+      "destinations": [
+        "hmi-acs"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACS S7-1515 to Process Overview HMI",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        102
+      ],
+      "sources": [
+        "acs-s7-1500-plc"
+      ],
+      "destinations": [
+        "indusoft-overview"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACS S7-1515 to PROFINET Remote I/O",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        34964
+      ],
+      "sources": [
+        "acs-s7-1500-plc"
+      ],
+      "destinations": [
+        "acs-remote-io-pn"
+      ],
+      "status": null
+    },
+    {
+      "name": "ACS S7-1515 to syslog",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        514
+      ],
+      "sources": [
+        "acs-s7-1500-plc"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "ACS S7-315 to Physical Skid (hard-wired I/O)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [],
+      "sources": [
+        "acs-s7-315-plc"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "ACS S7-315 to S7-1515 (system control signals)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        102
+      ],
+      "sources": [
+        "acs-s7-315-plc"
+      ],
+      "destinations": [
+        "acs-s7-1500-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "AP&L RTU 2 to ACS S7-1515",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        102
+      ],
+      "sources": [
+        "apl-rtu-2"
+      ],
+      "destinations": [
+        "acs-s7-1500-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "AP&L RTU 2 to Breaker Panel (DNP3)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        20000
+      ],
+      "sources": [
+        "apl-rtu-2"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "AP&L RTU 2 to syslog",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        514
+      ],
+      "sources": [
+        "apl-rtu-2"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "AP&L RTU (SIXnet) to Process Overview HMI",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        502
+      ],
+      "sources": [
+        "apl-rtu"
+      ],
+      "destinations": [
+        "indusoft-overview"
+      ],
+      "status": null
+    },
+    {
+      "name": "HMI-ACS to ASC L81 (CIP I/O, fails)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        2222
+      ],
+      "sources": [
+        "hmi-acs"
+      ],
+      "destinations": [
+        "asc-l81-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "HMI-ACS to PCS DMZ database-acs",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "hmi-acs"
+      ],
+      "destinations": [
+        "database-acs"
+      ],
+      "status": null
+    },
+    {
+      "name": "ioserver-apl to AP&L RTU 2 (DNP3)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        20000
+      ],
+      "sources": [
+        "ioserver-apl"
+      ],
+      "destinations": [
+        "apl-rtu-2"
+      ],
+      "status": null
+    },
+    {
+      "name": "ioserver-apl to iccp-apl (SMB)",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        445
+      ],
+      "sources": [
+        "ioserver-apl"
+      ],
+      "destinations": [
+        "iccp-apl"
+      ],
+      "status": null
+    },
+    {
+      "name": "PCS DMZ database-acs to CORP DMZ DB",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "database-acs"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    },
+    {
+      "name": "WWW to CORP DMZ DB",
+      "application": "ACS",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "www"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC EtherNet/IP Remote I/O to L81",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        2222
+      ],
+      "sources": [
+        "asc-remote-io-eip"
+      ],
+      "destinations": [
+        "asc-l81-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L55 to Physical Skid (hard-wired I/O)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [],
+      "sources": [
+        "asc-l55-plc"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "ASC L55 to Process Overview HMI",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        44818
+      ],
+      "sources": [
+        "asc-l55-plc"
+      ],
+      "destinations": [
+        "indusoft-overview"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to L55 (CIP explicit msg)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        44818
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [
+        "asc-l55-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to Modbus sign #1 (ASC)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        502
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [
+        "sign-asc"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to Modbus sign #2 (mgmt)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        502
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [
+        "sign-mgmt"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to PCS historian (rssql-asc)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        44818
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [
+        "rssql-asc"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to RSView32 HMI",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        44818
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [
+        "hmi-asc"
+      ],
+      "status": null
+    },
+    {
+      "name": "ASC L81 to syslog",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        514
+      ],
+      "sources": [
+        "asc-l81-plc"
+      ],
+      "destinations": [],
+      "status": null
+    },
+    {
+      "name": "ASC Remote I/O to ACS Remote I/O (hard-wired I/O)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [],
+      "sources": [
+        "asc-remote-io-eip"
+      ],
+      "destinations": [
+        "acs-remote-io-pn"
+      ],
+      "status": null
+    },
+    {
+      "name": "CORP database-asc to CORP DMZ DB",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "database-asc"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    },
+    {
+      "name": "HMI-ACS to ASC L81 (CIP I/O, fails)",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        2222
+      ],
+      "sources": [
+        "hmi-acs"
+      ],
+      "destinations": [
+        "asc-l81-plc"
+      ],
+      "status": null
+    },
+    {
+      "name": "rssql-asc to CORP database-asc",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "rssql-asc"
+      ],
+      "destinations": [
+        "database-asc"
+      ],
+      "status": null
+    },
+    {
+      "name": "WWW to CORP DMZ DB",
+      "application": "ASC",
+      "protocol": null,
+      "dest_ports": [
+        1433
+      ],
+      "sources": [
+        "www"
+      ],
+      "destinations": [
+        "database"
+      ],
+      "status": null
+    }
+  ],
+  "df_objectalias": [
+    {
+      "name": "acd-plc",
+      "ips": [
+        "192.168.32.3/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "acs-remote-io-pn",
+      "ips": [
+        "192.168.32.171/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "acs-s7-1500-plc",
+      "ips": [
+        "192.168.32.12/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "acs-s7-315-plc",
+      "ips": [
+        "192.168.32.102/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "apl-rtu",
+      "ips": [
+        "192.168.1.40/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "apl-rtu-2",
+      "ips": [
+        "192.168.32.5/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "asc-l55-plc",
+      "ips": [
+        "192.168.0.6/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "asc-l81-plc",
+      "ips": [
+        "192.168.0.3/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "asc-remote-io-eip",
+      "ips": [
+        "192.168.32.105/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "database",
+      "ips": [
+        "10.15.15.10/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "database-acd",
+      "ips": [
+        "10.5.5.117/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "database-acs",
+      "ips": [
+        "10.5.5.153/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "database-asc",
+      "ips": [
+        "172.16.220.17/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "hmi-acd",
+      "ips": [
+        "192.168.32.10/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "hmi-acs",
+      "ips": [
+        "192.168.32.9/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "hmi-asc",
+      "ips": [
+        "192.168.0.97/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "iccp-apl",
+      "ips": [
+        "10.5.5.34/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "indusoft-overview",
+      "ips": [
+        "192.168.0.244/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "ioserver-apl",
+      "ips": [
+        "192.168.1.23/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "rssql-asc",
+      "ips": [
+        "10.5.5.35/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "sign-asc",
+      "ips": [
+        "192.168.0.155/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "sign-mgmt",
+      "ips": [
+        "192.168.0.156/24"
+      ],
+      "prefixes": []
+    },
+    {
+      "name": "www",
+      "ips": [
+        "10.15.15.20/24"
+      ],
+      "prefixes": []
+    }
+  ]
+}

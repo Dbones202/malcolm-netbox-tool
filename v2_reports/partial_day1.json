@@ -1,0 +1,1886 @@
+{
+  "meta": {
+    "name": "ACME Chemical ICS Range",
+    "course": "ICS 311 DtA",
+    "source": "diagram v2.5 / dataflows v1.5 / nmap Jun-2025 / inventory+coverage sheets",
+    "site": "Acme",
+    "profile": {
+      "name": "day1",
+      "desc": "Day-1 student start: scaffold given, nmap-discovered layer removed."
+    }
+  },
+  "prefixes": [
+    {
+      "prefix": "172.16.220.0/24",
+      "zone": "Corporate",
+      "purdue": "L4-Enterprise",
+      "gateway": "172.16.220.200",
+      "dhcp_ranges": [
+        "172.16.220.188-198",
+        "172.16.220.225-239"
+      ]
+    },
+    {
+      "prefix": "10.15.15.0/24",
+      "zone": "Corporate-DMZ",
+      "purdue": "L3.5-DMZ",
+      "gateway": "10.15.15.200",
+      "usable": "10.15.15.201-220"
+    },
+    {
+      "prefix": "10.5.5.0/24",
+      "zone": "PCS-DMZ",
+      "purdue": "L3.5-DMZ",
+      "gateway": "10.5.5.100",
+      "usable": "10.5.5.201-220"
+    },
+    {
+      "prefix": "192.168.0.0/16",
+      "zone": "PCS",
+      "purdue": "L0-3-container",
+      "gateway": "192.168.10.100",
+      "usable": "192.168.0.201-220"
+    },
+    {
+      "prefix": "192.168.0.0/24",
+      "zone": "PCS-Process",
+      "purdue": "L0-1"
+    },
+    {
+      "prefix": "192.168.32.0/24",
+      "zone": "PCS-Supervisory",
+      "purdue": "L2"
+    },
+    {
+      "prefix": "192.168.1.0/24",
+      "zone": "PCS-Field-APL",
+      "purdue": "L1"
+    },
+    {
+      "prefix": "192.168.42.0/24",
+      "zone": "PCS-Field-APL",
+      "purdue": "L1"
+    },
+    {
+      "prefix": "192.168.10.0/24",
+      "zone": "PCS-Gateway",
+      "purdue": "L3"
+    },
+    {
+      "prefix": "172.16.221.0/24",
+      "zone": "Monitoring",
+      "purdue": "Out-of-band",
+      "gateway": "172.16.221.200"
+    },
+    {
+      "prefix": "134.20.24.0/24",
+      "zone": "External",
+      "purdue": "L5-WAN"
+    }
+  ],
+  "device_roles": [
+    "DNS-Server",
+    "Database",
+    "Domain-Controller",
+    "EWS",
+    "FTP-Server",
+    "File-Server",
+    "Firewall",
+    "HMI",
+    "Host",
+    "IDS-Sensor",
+    "Mail-Server",
+    "Network-Display",
+    "PLC",
+    "RTU",
+    "Remote-IO",
+    "Server",
+    "Web-Server",
+    "Workstation"
+  ],
+  "manufacturers": [
+    "Facts Engineering",
+    "GE Intelligent Platforms",
+    "Netgate",
+    "Rockwell Automation",
+    "Siemens",
+    "Turck",
+    "VMware"
+  ],
+  "device_types": [
+    {
+      "manufacturer": "Facts Engineering",
+      "model": "DirectLOGIC LED Sign"
+    },
+    {
+      "manufacturer": "GE Intelligent Platforms",
+      "model": "RX3i CPE330"
+    },
+    {
+      "manufacturer": "Netgate",
+      "model": "pfSense"
+    },
+    {
+      "manufacturer": "Rockwell Automation",
+      "model": "CompactLogix L55"
+    },
+    {
+      "manufacturer": "Rockwell Automation",
+      "model": "ControlLogix 1756-L81E"
+    },
+    {
+      "manufacturer": "Siemens",
+      "model": "S7-1200"
+    },
+    {
+      "manufacturer": "Siemens",
+      "model": "S7-1500 (S7-1515)"
+    },
+    {
+      "manufacturer": "Siemens",
+      "model": "S7-315"
+    },
+    {
+      "manufacturer": "Unknown",
+      "model": "SIXNET"
+    }
+  ],
+  "devices": [
+    {
+      "name": "acd-plc",
+      "role": "PLC",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "GE Intelligent Platforms",
+      "model": "RX3i CPE330",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.3/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "GE-SRTP",
+          "protocol": "tcp",
+          "ports": [
+            18245
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "acs-remote-io-1",
+      "role": "Remote-IO",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Turck",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.43/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "acs-remote-io-pn",
+      "role": "Remote-IO",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Turck",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.171/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "PROFINET",
+          "protocol": "tcp",
+          "ports": [
+            34964
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "PROFINET remote I/O",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "acs-s7-1500-plc",
+      "role": "PLC",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Siemens",
+      "model": "S7-1500 (S7-1515)",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.12/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "S7comm",
+          "protocol": "tcp",
+          "ports": [
+            102
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "acs-s7-315-plc",
+      "role": "PLC",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Siemens",
+      "model": "S7-315",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.102/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "S7comm",
+          "protocol": "tcp",
+          "ports": [
+            102
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ad",
+      "role": "Domain-Controller",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.20/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "ad.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "apl-rtu",
+      "role": "RTU",
+      "zone": "PCS-Field-APL",
+      "manufacturer": null,
+      "model": "SIXNET",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.40/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "AP&L RTU (SIXnet), DNP3",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "apl-rtu-2",
+      "role": "RTU",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Siemens",
+      "model": "S7-1200",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.5/24"
+          ],
+          "mac": null,
+          "primary": true
+        },
+        {
+          "name": "eth1",
+          "ips": [
+            "192.168.42.5/24"
+          ],
+          "mac": null,
+          "primary": false
+        }
+      ],
+      "services": [
+        {
+          "name": "S7comm",
+          "protocol": "tcp",
+          "ports": [
+            102
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "AP&L RTU 2, dual-homed",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "arkime",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [],
+      "services": [],
+      "tags": [],
+      "notes": "Arkime (IP TBD)",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "asc-l55-plc",
+      "role": "PLC",
+      "zone": "PCS-Process",
+      "manufacturer": "Rockwell Automation",
+      "model": "CompactLogix L55",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.6/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "asc-l81-plc",
+      "role": "PLC",
+      "zone": "PCS-Process",
+      "manufacturer": "Rockwell Automation",
+      "model": "ControlLogix 1756-L81E",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.3/24"
+          ],
+          "mac": null,
+          "primary": true
+        },
+        {
+          "name": "eth1",
+          "ips": [
+            "192.168.0.7/24"
+          ],
+          "mac": null,
+          "primary": false
+        },
+        {
+          "name": "eth2",
+          "ips": [
+            "192.168.0.8/24"
+          ],
+          "mac": null,
+          "primary": false
+        }
+      ],
+      "services": [
+        {
+          "name": "EtherNet/IP (CIP)",
+          "protocol": "tcp",
+          "ports": [
+            44818
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "ASC L81E PLC chassis (multi-module)",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "asc-remote-io-eip",
+      "role": "Remote-IO",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "Turck",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.105/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "EtherNet/IP I/O",
+          "protocol": "tcp",
+          "ports": [
+            2222
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "EtherNet/IP remote I/O",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "database",
+      "role": "Database",
+      "zone": "Corporate-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.15.15.10/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "database.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "database-acd",
+      "role": "Database",
+      "zone": "PCS-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.5.5.117/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "database-acd.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "database-acs",
+      "role": "Database",
+      "zone": "PCS-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.5.5.153/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "database-acs.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "database-asc",
+      "role": "Database",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.17/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "database-asc.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "dns",
+      "role": "DNS-Server",
+      "zone": "Corporate-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.15.15.50/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "dns.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ews-1",
+      "role": "EWS",
+      "zone": "PCS-Process",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows XP Pro SP2",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.51/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "owner": {
+        "user": "laura",
+        "full_name": "Laura Martin",
+        "email": "laura.martin@acme.com",
+        "os": "Windows XP Pro SP2"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ews-2",
+      "role": "EWS",
+      "zone": "PCS-Process",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows XP Pro SP2",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.52/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "owner": {
+        "user": "steven",
+        "full_name": "Steven Thompson",
+        "email": "steven.thompson@acme.com",
+        "os": "Windows XP Pro SP2"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ews-3",
+      "role": "EWS",
+      "zone": "PCS-Process",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows XP Pro SP2",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.53/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "owner": {
+        "user": "megan",
+        "full_name": "Megan Brown",
+        "email": "megan.brown@acme.com",
+        "os": "Windows XP Pro SP2"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ews-4",
+      "role": "EWS",
+      "zone": "PCS-Process",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows XP Pro SP2",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.54/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "owner": {
+        "user": "jessica",
+        "full_name": "Jessica Moore",
+        "email": "jessica.moore@acme.com",
+        "os": "Windows XP Pro SP2"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "file",
+      "role": "File-Server",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.16/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "file.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "finance-1",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.150/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "finance-1.acme.com"
+      ],
+      "owner": {
+        "user": "henry",
+        "full_name": "Henry Adams",
+        "email": "henry.adams@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "finance-2",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.151/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "finance-2.acme.com"
+      ],
+      "owner": {
+        "user": "jane",
+        "full_name": "Jane Carter",
+        "email": "jane.carter@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "finance-3",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.152/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "finance-3.acme.com"
+      ],
+      "owner": {
+        "user": "robert",
+        "full_name": "Robert Davis",
+        "email": "robert.davis@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "fw-corp",
+      "role": "Firewall",
+      "zone": "Corporate-DMZ",
+      "manufacturer": "Netgate",
+      "model": "pfSense",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.15.15.200/24"
+          ],
+          "mac": null,
+          "primary": true
+        },
+        {
+          "name": "eth1",
+          "ips": [
+            "172.16.220.200/24"
+          ],
+          "mac": null,
+          "primary": false
+        },
+        {
+          "name": "eth2",
+          "ips": [
+            "134.20.24.87/24"
+          ],
+          "mac": null,
+          "primary": false
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "Corporate firewall (3 NIC)",
+      "hostnames": [
+        "firewall-corp.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "fw-ics",
+      "role": "Firewall",
+      "zone": "Corporate",
+      "manufacturer": "Netgate",
+      "model": "pfSense",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.100/24"
+          ],
+          "mac": null,
+          "primary": true
+        },
+        {
+          "name": "eth1",
+          "ips": [
+            "10.5.5.100/24"
+          ],
+          "mac": null,
+          "primary": false
+        },
+        {
+          "name": "eth2",
+          "ips": [
+            "192.168.10.100/24"
+          ],
+          "mac": null,
+          "primary": false
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "ICS firewall (3 NIC)",
+      "hostnames": [
+        "firewall-ot.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "fw-ids",
+      "role": "Firewall",
+      "zone": "Corporate",
+      "manufacturer": "Netgate",
+      "model": "pfSense",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.180/24"
+          ],
+          "mac": null,
+          "primary": true
+        },
+        {
+          "name": "eth1",
+          "ips": [
+            "172.16.221.200/24"
+          ],
+          "mac": null,
+          "primary": false
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "IDS firewall (SPAN aggregation)",
+      "hostnames": [
+        "firewall-ids.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "hmi-acd",
+      "role": "HMI",
+      "zone": "PCS-Supervisory",
+      "manufacturer": null,
+      "model": null,
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.10/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "hmi-acs",
+      "role": "HMI",
+      "zone": "PCS-Supervisory",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.32.9/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "hmi-asc",
+      "role": "HMI",
+      "zone": "PCS-Process",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "RSView32",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.97/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "hr-1",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.163/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "hr-1.acme.com"
+      ],
+      "owner": {
+        "user": "olivia",
+        "full_name": "Olivia Turner",
+        "email": "olivia.turner@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "hr-2",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.164/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "hr-2.acme.com"
+      ],
+      "owner": {
+        "user": "benjamin",
+        "full_name": "Benjamin Parker",
+        "email": "benjamin.parker@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "iccp-apl",
+      "role": "Server",
+      "zone": "PCS-DMZ",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.5.5.34/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "DNP3",
+          "protocol": "tcp",
+          "ports": [
+            20000
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "ICCP server",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "indusoft-overview",
+      "role": "HMI",
+      "zone": "PCS-Process",
+      "manufacturer": null,
+      "model": null,
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.244/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "Process overview HMI (not in scans)",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "internal-dns",
+      "role": "DNS-Server",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.13/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "internal-dns.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "internal-ftp",
+      "role": "FTP-Server",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.199/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "internal-ftp.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "ioserver-apl",
+      "role": "Server",
+      "zone": "PCS-Field-APL",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.23/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "DNP3",
+          "protocol": "tcp",
+          "ports": [
+            20000
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "AP&L IO server",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "mail",
+      "role": "Mail-Server",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.3/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "mail.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "malcolm",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [],
+      "services": [],
+      "tags": [],
+      "notes": "Malcolm (IP TBD)",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "mgmt-1",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.160/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "mgmt-1.acme.com"
+      ],
+      "owner": {
+        "user": "michael",
+        "full_name": "Michael Johnson",
+        "email": "michael.johnson@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "mgmt-2",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.161/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "mgmt-2.acme.com"
+      ],
+      "owner": {
+        "user": "sarah",
+        "full_name": "Sarah Lewis",
+        "email": "sarah.lewis@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "mgmt-3",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.162/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "mgmt-3.acme.com"
+      ],
+      "owner": {
+        "user": "emily",
+        "full_name": "Emily Clark",
+        "email": "emily.clark@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "netbox",
+      "role": "Server",
+      "zone": "Monitoring",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [],
+      "services": [],
+      "tags": [],
+      "notes": "NetBox host (IP TBD)",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "rssql-asc",
+      "role": "Database",
+      "zone": "PCS-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.5.5.35/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "PCS historian / RSSQL",
+      "hostnames": [
+        "rssql.acme.com"
+      ],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sales-1",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.153/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "sales-1.acme.com"
+      ],
+      "owner": {
+        "user": "andrew",
+        "full_name": "Andrew Harris",
+        "email": "andrew.harris@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sales-2",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.154/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "sales-2.acme.com"
+      ],
+      "owner": {
+        "user": "karen",
+        "full_name": "Karen Taylor",
+        "email": "karen.taylor@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sales-3",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.155/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "sales-3.acme.com"
+      ],
+      "owner": {
+        "user": "james",
+        "full_name": "James Anderson",
+        "email": "james.anderson@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sales-4",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.156/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "sales-4.acme.com"
+      ],
+      "owner": {
+        "user": "susan",
+        "full_name": "Susan Williams",
+        "email": "susan.williams@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "security-onion",
+      "role": "IDS-Sensor",
+      "zone": "Monitoring",
+      "manufacturer": null,
+      "model": null,
+      "software": null,
+      "interfaces": [],
+      "services": [],
+      "tags": [],
+      "notes": "Security Onion manager (IP TBD)",
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sign-asc",
+      "role": "Network-Display",
+      "zone": "PCS-Process",
+      "manufacturer": "Facts Engineering",
+      "model": "DirectLOGIC LED Sign",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.155/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "Modbus TCP",
+          "protocol": "tcp",
+          "ports": [
+            502
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "Delta LED display, Modbus TCP",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "sign-mgmt",
+      "role": "Network-Display",
+      "zone": "PCS-Process",
+      "manufacturer": "Facts Engineering",
+      "model": "DirectLOGIC LED Sign",
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.0.156/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "Modbus TCP",
+          "protocol": "tcp",
+          "ports": [
+            502
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "Omega LED display, Modbus TCP",
+      "hostnames": [],
+      "provenance": "knowledge"
+    },
+    {
+      "name": "user-1",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.181/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "user-1.acme.com"
+      ],
+      "owner": {
+        "user": "laura",
+        "full_name": "Laura Martin",
+        "email": "laura.martin@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "user-2",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.182/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "user-2.acme.com"
+      ],
+      "owner": {
+        "user": "steven",
+        "full_name": "Steven Thompson",
+        "email": "steven.thompson@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "user-3",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.183/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "user-3.acme.com"
+      ],
+      "owner": {
+        "user": "megan",
+        "full_name": "Megan Brown",
+        "email": "megan.brown@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "user-4",
+      "role": "Workstation",
+      "zone": "Corporate",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": "Windows 10 Professional",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "172.16.220.184/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "user-4.acme.com"
+      ],
+      "owner": {
+        "user": "jessica",
+        "full_name": "Jessica Moore",
+        "email": "jessica.moore@acme.com",
+        "os": "Windows 10 Professional"
+      },
+      "provenance": "knowledge"
+    },
+    {
+      "name": "www",
+      "role": "Web-Server",
+      "zone": "Corporate-DMZ",
+      "manufacturer": "VMware",
+      "model": null,
+      "software": null,
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "10.15.15.20/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [],
+      "tags": [],
+      "notes": "",
+      "hostnames": [
+        "www.acme.com"
+      ],
+      "provenance": "knowledge"
+    }
+  ],
+  "dataflows": [
+    {
+      "application": "ASC",
+      "name": "HMI to PLC (RSView32)",
+      "src": "hmi-asc",
+      "dst": "asc-l81-plc",
+      "protocol": "EtherNet/IP (CIP)",
+      "port": 44818
+    },
+    {
+      "application": "ASC",
+      "name": "PLC to remote I/O",
+      "src": "asc-l81-plc",
+      "dst": "asc-remote-io-eip",
+      "protocol": "EtherNet/IP I/O",
+      "port": 2222
+    },
+    {
+      "application": "ASC",
+      "name": "PLC to Modbus sign (ASC)",
+      "src": "asc-l55-plc",
+      "dst": "sign-asc",
+      "protocol": "Modbus TCP",
+      "port": 502
+    },
+    {
+      "application": "ASC",
+      "name": "PLC to Modbus sign (mgmt)",
+      "src": "asc-l55-plc",
+      "dst": "sign-mgmt",
+      "protocol": "Modbus TCP",
+      "port": 502
+    },
+    {
+      "application": "ASC",
+      "name": "Historian SQL (PCS to corp)",
+      "src": "rssql-asc",
+      "dst": "database-asc",
+      "protocol": "MS-SQL",
+      "port": 1433
+    },
+    {
+      "application": "ASC",
+      "name": "Corp DB replication",
+      "src": "database-asc",
+      "dst": "database",
+      "protocol": "MS-SQL",
+      "port": 1433
+    },
+    {
+      "application": "ACS",
+      "name": "HMI to S7-315",
+      "src": "hmi-acs",
+      "dst": "acs-s7-315-plc",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "HMI to S7-1500",
+      "src": "hmi-acs",
+      "dst": "acs-s7-1500-plc",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "HMI to RTU (S7-1200)",
+      "src": "hmi-acs",
+      "dst": "apl-rtu-2",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "PROFINET remote I/O",
+      "src": "acs-s7-315-plc",
+      "dst": "acs-remote-io-pn",
+      "protocol": "PROFINET",
+      "port": 34964
+    },
+    {
+      "application": "ACS",
+      "name": "Historian SQL",
+      "src": "database-acs",
+      "dst": "database",
+      "protocol": "MS-SQL",
+      "port": 1433
+    },
+    {
+      "application": "ACS",
+      "name": "RTU to ICCP (DNP3)",
+      "src": "apl-rtu",
+      "dst": "iccp-apl",
+      "protocol": "DNP3",
+      "port": 20000
+    },
+    {
+      "application": "ACS",
+      "name": "RTU to IO server (DNP3)",
+      "src": "apl-rtu",
+      "dst": "ioserver-apl",
+      "protocol": "DNP3",
+      "port": 20000
+    },
+    {
+      "application": "ACD",
+      "name": "HMI to PLC (GE-SRTP)",
+      "src": "hmi-acd",
+      "dst": "acd-plc",
+      "protocol": "GE-SRTP",
+      "port": 18245
+    },
+    {
+      "application": "ACD",
+      "name": "Historian SQL",
+      "src": "database-acd",
+      "dst": "database",
+      "protocol": "MS-SQL",
+      "port": 1433
+    }
+  ],
+  "coverage_legend": {
+    "security-onion-fleet": "Security Onion Fleet agent (endpoint)",
+    "malcolm-syslog": "Malcolm syslog/PCAP (network)"
+  }
+}

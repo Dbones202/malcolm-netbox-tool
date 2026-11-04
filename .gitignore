@@ -38,12 +38,12 @@ Thumbs.db
 # Environment & Config
 .env
 .env.*
+!.env.example
 *.log
 
 # Local generated launchers & sheets
 netbox-excel-importer
 run.sh
-Netbox_Worksheet.xlsx
 
 # Legacy workspace files
 env copy
@@ -51,7 +51,17 @@ generate_template.py
 install/
 install_offline.sh
 netbox_sync.py
-requirements.txt
+/requirements.txt
 
-# v2 discovery/scoring reports (may contain host details)
-v2_reports/
+# v2 discovery/scoring reports (runtime logs)
+v2_reports/*
+!v2_reports/master.json
+!v2_reports/partial_day1.json
+!v2_reports/nmap_facts.json
+!v2_reports/instance_inventory.json
+
+# Allow deploy bundle files
+!deploy/dta-netbox-v2/requirements.txt
+!deploy/dta-netbox-v2/.env.example
+!deploy/dta-netbox-v2/v2_reports/
+!deploy/dta-netbox-v2/v2_reports/**
