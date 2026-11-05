@@ -134,3 +134,62 @@ Students must identify that these devices are generating traffic from their true
 ======================================================================
 ```
 
+---
+
+## Instructor Operations: Live Dashboard & Remote Administration
+
+The toolset includes a real-time, browser-based split-screen scoreboard designed for classroom projection and instructor monitoring during the exercise.
+
+### 1. Prerequisites (`.env` Setup)
+Ensure `.env` in the repository root has connection details and API tokens configured for both team VMs:
+
+```env
+# Shared connection settings
+NETBOX_VERIFY_SSL=false
+NETBOX_PACE_MS=75
+NETBOX_TIMEOUT=45
+
+# Team Delta Malcolm VM
+DELTA_NETBOX_URL=https://<delta-vm-ip>/netbox
+DELTA_NETBOX_TOKEN=<delta_api_token>
+
+# Team Omega Malcolm VM
+OMEGA_NETBOX_URL=https://<omega-vm-ip>/netbox
+OMEGA_NETBOX_TOKEN=<omega_api_token>
+```
+
+### 2. Starting the Dashboard Server
+Run the dashboard command from the repository root:
+
+```bash
+./netbox-v2.sh dashboard --port 8080
+```
+*(By default, binds to `0.0.0.0:8080`. To customize the interface or port, pass `--host <ip>` or `--port <port>`)*.
+
+Open your browser to:
+```text
+http://localhost:8080
+```
+
+### 3. Dashboard Features & Classroom Usage
+* **Live Split-Screen Display:** Side-by-side comparison of **Team Delta** (Neon Blue) vs. **Team Omega** (Orange).
+* **Automated Background Polling:** Automatically queries each team's NetBox API every 30 seconds to update scores, percentage progress bars, and recent event logs.
+* **Rubric Tracking:** Real-time breakdown across:
+  * **Corrected Data:** (6 tampered devices × 3 pts = 18 pts max)
+  * **Missing Entries:** (9 redacted assets × 2 pts = 18 pts max)
+  * **Missing DataFlows:** (13 withheld flows × 3 pts = 39 pts max)
+
+### 4. Hidden Admin Console & Controls
+The scoreboard includes a built-in admin modal allowing instructors to remotely reset or re-seed either team's VM directly from the browser without opening a terminal.
+
+* **Shortcut to Open:** Press **`Ctrl` + `Shift` + `A`** anywhere on the scoreboard page.
+* **Admin PIN:**
+  ```text
+  instructor
+  ```
+* **Available Remote Controls:**
+  * **Reset to Day 1:** Selectively wipes challenge objects and re-seeds the initial student starting baseline (`partial_day1.json`).
+  * **Seed Complete CTF Inventory:** Populates the full 70-device ground truth / answer key (`master.json`).
+  * **Force Refresh:** Bypasses the 30-second polling timer and immediately queries both student instances.
+
+

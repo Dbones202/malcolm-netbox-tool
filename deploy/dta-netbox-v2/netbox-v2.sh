@@ -4,4 +4,10 @@
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PY="$HERE/venv/bin/python"
 [ -x "$PY" ] || PY="$(command -v python3)"
-PYTHONPATH="$HERE/src" "$PY" -m netbox_importer_v2.cli "$@"
+if [ -d "$HERE/vendor" ]; then
+  export PYTHONPATH="$HERE/src:$HERE/vendor"
+else
+  export PYTHONPATH="$HERE/src"
+fi
+exec "$PY" -m netbox_importer_v2.cli "$@"
+

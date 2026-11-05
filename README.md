@@ -1,6 +1,6 @@
 # Malcolm NetBox Automation & Cyber Range Tooling
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
 ![NetBox](https://img.shields.io/badge/NetBox-v4.2%2B%20%7C%20v4.6%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)

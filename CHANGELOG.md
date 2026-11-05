@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.1] - 2026-11-05
+
+### Added
+- **DtA NetBox v2 Offline Bundler (`build_dta_offline_bundle.py`)**:
+  - Automated packaging of self-contained, air-gapped installation archives (`dta-netbox-v2-offline.zip` and `dta-netbox-v2-offline.tar.gz`).
+  - Bundles the complete v2 toolset, offline wheels, `install.sh`, `netbox-v2.sh`, official KYE Day 1 student scaffold (`partial_day1.json`), and full master answer key (`master.json`).
+- **Instructor Operations & Dashboard Documentation**:
+  - Expanded `KYE_DAY1_CHALLENGE_AND_SCORING.md` with instructions on starting the live split-screen dashboard (`./netbox-v2.sh dashboard --port 8080`), auto-polling behaviors, and remote multi-team evaluation.
+  - Documented the discrete admin modal shortcut (`Ctrl+Shift+A`) and default admin PIN (`instructor`) for resetting and seeding student environments.
+
+### Changed
+- **Self-Healing Runner & Installer Robustness**:
+  - Enhanced `netbox-v2.sh` to automatically add `./vendor` to `PYTHONPATH` when present, guaranteeing zero-dependency operation on minimal Malcolm appliances lacking `python3-venv` / `ensurepip`.
+  - Updated `build_offline_bundle.py` with `--no-build-isolation` to enable deterministic offline wheel builds without network access.
+  - Added temporary Office lock pattern (`~$*`) to `.gitignore`.
+
+---
+
 ## [2.0.0] - 2026-11-04
 
 ### Added

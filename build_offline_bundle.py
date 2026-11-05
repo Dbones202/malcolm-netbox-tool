@@ -46,45 +46,51 @@ LINUX_PLATFORMS = [
 
 
 def download_wheels():
-    print("[1/4] Downloading wheel dependencies for offline Linux installation...")
-
+    existing_wheels = list(WHEELS_DIR.glob("*.whl"))
     pip_exe = sys.executable
 
-    # 1. Download universal / pure-python packages
-    print("      -> Downloading universal & pure-python wheels...")
-    cmd_universal = [
-        pip_exe, "-m", "pip", "download",
-        "-d", str(WHEELS_DIR),
-        *CORE_PACKAGES
-    ]
-    subprocess.run(cmd_universal, check=False)
+    if len(existing_wheels) > 10:
+        print(f"[1/4] Found {len(existing_wheels)} pre-downloaded wheels in {WHEELS_DIR}, reusing...")
+    else:
+        print("[1/4] Downloading wheel dependencies for offline Linux installation...")
+        WHEELS_DIR.mkdir(parents=True, exist_ok=True)
+        # 1. Download universal / pure-python packages
+        print("      -> Downloading universal & pure-python wheels...")
+        cmd_universal = [
+            pip_exe, "-m", "pip", "download",
+            "-d", str(WHEELS_DIR),
+            *CORE_PACKAGES
+        ]
+        subprocess.run(cmd_universal, check=False)
 
-    # 2. Download Linux-specific binary wheels (e.g. charset_normalizer) for supported Python versions
-    print("      -> Downloading Linux binary wheels for multiple Python versions (3.8-3.14, x86_64 & aarch64)...")
-    for py_ver in LINUX_PYTHON_VERSIONS:
-        ver_short = py_ver.replace(".", "")
-        for plat in LINUX_PLATFORMS:
-            cmd_linux = [
-                pip_exe, "-m", "pip", "download",
-                "-d", str(WHEELS_DIR),
-                "--only-binary=:all:",
-                "--platform", plat,
-                "--python-version", py_ver,
-                "--implementation", "cp",
-                "--abi", f"cp{ver_short}",
-                "charset-normalizer",
-            ]
-            subprocess.run(cmd_linux, capture_output=True, check=False)
+        # 2. Download Linux-specific binary wheels (e.g. charset_normalizer) for supported Python versions
+        print("      -> Downloading Linux binary wheels for multiple Python versions (3.8-3.14, x86_64 & aarch64)...")
+        for py_ver in LINUX_PYTHON_VERSIONS:
+            ver_short = py_ver.replace(".", "")
+            for plat in LINUX_PLATFORMS:
+                cmd_linux = [
+                    pip_exe, "-m", "pip", "download",
+                    "-d", str(WHEELS_DIR),
+                    "--only-binary=:all:",
+                    "--platform", plat,
+                    "--python-version", py_ver,
+                    "--implementation", "cp",
+                    "--abi", f"cp{ver_short}",
+                    "charset-normalizer",
+                ]
+                subprocess.run(cmd_linux, capture_output=True, check=False)
 
     # 3. Build wheel for netbox-excel-importer itself
     print("[2/4] Building netbox-excel-importer wheel package...")
     cmd_build_pkg = [
         pip_exe, "-m", "pip", "wheel",
         "--no-deps",
+        "--no-build-isolation",
         "-w", str(WHEELS_DIR),
         str(ROOT_DIR),
     ]
     subprocess.run(cmd_build_pkg, check=True)
+
 
     wheel_count = len(list(WHEELS_DIR.glob("*.whl")))
     print(f"      Total offline wheel packages assembled: {wheel_count}")
@@ -93,9 +99,6 @@ def download_wheels():
 def build_offline_bundle():
     print("=== Building NetBox Importer Offline Deployment Bundle ===")
 
-    # Ensure clean directories
-    if WHEELS_DIR.exists():
-        shutil.rmtree(WHEELS_DIR)
     WHEELS_DIR.mkdir(parents=True, exist_ok=True)
 
     if DIST_DIR.exists():
@@ -113,6 +116,7 @@ def build_offline_bundle():
         "install.sh",
         "install.ps1",
         "test_devices.xlsx",
+        "Netbox_Worksheet.xlsx",
         "src",
     ]
 
