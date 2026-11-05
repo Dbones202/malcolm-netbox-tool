@@ -31,8 +31,8 @@ def _nm(v):
     return v
 
 
-def run_dump(env_file=None) -> Dict[str, Any]:
-    conn = get_connection(env_file=env_file)
+def run_dump(env_file=None, team=None, localhost=False) -> Dict[str, Any]:
+    conn = get_connection(env_file=env_file, team=team, localhost=localhost)
     inv: Dict[str, Any] = {"_api": conn.api_url}
 
     inv["sites"] = [{"name": x["name"], "slug": x["slug"]} for x in fetch_all(conn, "dcim/sites/")]

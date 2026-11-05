@@ -5,8 +5,8 @@
     "source": "diagram v2.5 / dataflows v1.5 / nmap Jun-2025 / inventory+coverage sheets",
     "site": "Acme",
     "profile": {
-      "name": "day1",
-      "desc": "Day-1 student start: scaffold given, nmap-discovered layer removed."
+      "name": "day1_kye",
+      "desc": "KYE Day 1 Student Starting State: 9 Redacted, 6 Tampered, 24 Flows Prepopulated, 13 Withheld."
     }
   },
   "prefixes": [
@@ -147,38 +147,6 @@
   ],
   "devices": [
     {
-      "name": "acd-plc",
-      "role": "PLC",
-      "zone": "PCS-Supervisory",
-      "manufacturer": "GE Intelligent Platforms",
-      "model": "RX3i CPE330",
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "192.168.32.3/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [
-        {
-          "name": "GE-SRTP",
-          "protocol": "tcp",
-          "ports": [
-            18245
-          ],
-          "source": "dataflow"
-        }
-      ],
-      "tags": [],
-      "notes": "",
-      "hostnames": [],
-      "provenance": "knowledge"
-    },
-    {
       "name": "acs-remote-io-1",
       "role": "Remote-IO",
       "zone": "PCS-Supervisory",
@@ -199,6 +167,7 @@
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -231,6 +200,7 @@
       "tags": [],
       "notes": "PROFINET remote I/O",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -252,7 +222,7 @@
       ],
       "services": [
         {
-          "name": "S7comm",
+          "name": "COTP and S7comm",
           "protocol": "tcp",
           "ports": [
             102
@@ -263,6 +233,7 @@
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -282,19 +253,11 @@
           "primary": true
         }
       ],
-      "services": [
-        {
-          "name": "S7comm",
-          "protocol": "tcp",
-          "ports": [
-            102
-          ],
-          "source": "dataflow"
-        }
-      ],
+      "services": [],
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -320,7 +283,10 @@
       "hostnames": [
         "ad.acme.com"
       ],
-      "provenance": "knowledge"
+      "platform": null,
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 8193 Runspace/pipeline state event, 8194 Runspace pool opened, 8195 Provider lifecycle event, 8196 Provider lifecycle event, 8197 Runspace/pipeline state event, 12039 Provider/engine lifecycle event, 40961 PowerShell engine state \u2014 Available/Started, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Service Control Manager 7036; NETLOGON 5774; Microsoft-Windows-DriverFrameworks-UserMode 10000/10002/10100; Microsoft-Windows-UserPnp 20001/20003; Microsoft-Windows-WPDClassInstaller 24576/24577/24579; Display 4107; Microsoft-Windows-GroupPolicy 1502/1503; EventLog 6013; Microsoft-Windows-DistributedCOM 10016\nApplication: Microsoft-Windows-Security-SPP 900/902/903/1003/1014/1066/8198/8200/16384\nVendor noise: Windows Error Reporting 1001 [+2 more]"
     },
     {
       "name": "apl-rtu",
@@ -342,47 +308,8 @@
       "services": [],
       "tags": [],
       "notes": "AP&L RTU (SIXnet), DNP3",
-      "provenance": "knowledge"
-    },
-    {
-      "name": "apl-rtu-2",
-      "role": "RTU",
-      "zone": "PCS-Supervisory",
-      "manufacturer": "Siemens",
-      "model": "S7-1200",
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "192.168.32.5/24"
-          ],
-          "mac": null,
-          "primary": true
-        },
-        {
-          "name": "eth1",
-          "ips": [
-            "192.168.42.5/24"
-          ],
-          "mac": null,
-          "primary": false
-        }
-      ],
-      "services": [
-        {
-          "name": "S7comm",
-          "protocol": "tcp",
-          "ports": [
-            102
-          ],
-          "source": "dataflow"
-        }
-      ],
-      "tags": [],
-      "notes": "AP&L RTU 2, dual-homed",
-      "hostnames": [],
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "arkime",
@@ -395,29 +322,8 @@
       "services": [],
       "tags": [],
       "notes": "Arkime (IP TBD)",
-      "provenance": "knowledge"
-    },
-    {
-      "name": "asc-l55-plc",
-      "role": "PLC",
-      "zone": "PCS-Process",
-      "manufacturer": "Rockwell Automation",
-      "model": "CompactLogix L55",
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "192.168.0.6/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "asc-l81-plc",
@@ -428,7 +334,7 @@
       "software": null,
       "interfaces": [
         {
-          "name": "eth0",
+          "name": "ENBT",
           "ips": [
             "192.168.0.3/24"
           ],
@@ -436,7 +342,7 @@
           "primary": true
         },
         {
-          "name": "eth1",
+          "name": "EN4TR",
           "ips": [
             "192.168.0.7/24"
           ],
@@ -444,7 +350,7 @@
           "primary": false
         },
         {
-          "name": "eth2",
+          "name": "EN4TR1",
           "ips": [
             "192.168.0.8/24"
           ],
@@ -454,10 +360,10 @@
       ],
       "services": [
         {
-          "name": "EtherNet/IP (CIP)",
+          "name": "CIP and EtherNet/IP (TCP)",
           "protocol": "tcp",
           "ports": [
-            44818
+            2222
           ],
           "source": "dataflow"
         }
@@ -465,6 +371,7 @@
       "tags": [],
       "notes": "ASC L81E PLC chassis (multi-module)",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -484,119 +391,11 @@
           "primary": true
         }
       ],
-      "services": [
-        {
-          "name": "EtherNet/IP I/O",
-          "protocol": "tcp",
-          "ports": [
-            2222
-          ],
-          "source": "dataflow"
-        }
-      ],
+      "services": [],
       "tags": [],
       "notes": "EtherNet/IP remote I/O",
       "hostnames": [],
-      "provenance": "knowledge"
-    },
-    {
-      "name": "database",
-      "role": "Database",
-      "zone": "Corporate-DMZ",
-      "manufacturer": "VMware",
-      "model": null,
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "10.15.15.10/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "hostnames": [
-        "database.acme.com"
-      ],
-      "provenance": "knowledge"
-    },
-    {
-      "name": "database-acd",
-      "role": "Database",
-      "zone": "PCS-DMZ",
-      "manufacturer": "VMware",
-      "model": null,
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "10.5.5.117/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "hostnames": [
-        "database-acd.acme.com"
-      ],
-      "provenance": "knowledge"
-    },
-    {
-      "name": "database-acs",
-      "role": "Database",
-      "zone": "PCS-DMZ",
-      "manufacturer": "VMware",
-      "model": null,
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "10.5.5.153/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "hostnames": [
-        "database-acs.acme.com"
-      ],
-      "provenance": "knowledge"
-    },
-    {
-      "name": "database-asc",
-      "role": "Database",
-      "zone": "Corporate",
-      "manufacturer": "VMware",
-      "model": null,
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "172.16.220.17/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "hostnames": [
-        "database-asc.acme.com"
-      ],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -622,6 +421,8 @@
       "hostnames": [
         "dns.acme.com"
       ],
+      "platform": null,
+      "siem": "Security Onion",
       "provenance": "knowledge"
     },
     {
@@ -630,12 +431,12 @@
       "zone": "PCS-Process",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows XP Pro SP2",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
           "ips": [
-            "192.168.0.51/24"
+            "192.168.0.74/24"
           ],
           "mac": null,
           "primary": true
@@ -643,15 +444,17 @@
       ],
       "services": [],
       "tags": [],
-      "notes": "",
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
       "hostnames": [],
+      "platform": "Windows XP Pro SP2",
       "owner": {
         "user": "laura",
         "full_name": "Laura Martin",
         "email": "laura.martin@acme.com",
         "os": "Windows XP Pro SP2"
       },
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "description": "Tomato: Allen Broodly Was Here | "
     },
     {
       "name": "ews-2",
@@ -659,7 +462,7 @@
       "zone": "PCS-Process",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows XP Pro SP2",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -674,6 +477,7 @@
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": "Windows XP Pro SP2",
       "owner": {
         "user": "steven",
         "full_name": "Steven Thompson",
@@ -688,7 +492,7 @@
       "zone": "PCS-Process",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows XP Pro SP2",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -703,13 +507,15 @@
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": "Windows XP Pro SP2",
       "owner": {
         "user": "megan",
         "full_name": "Megan Brown",
         "email": "megan.brown@acme.com",
         "os": "Windows XP Pro SP2"
       },
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nSecurity auditing: 4624 An account was successfully logged on, 4634 An account was logged off, 4648 Logon using explicit credentials, 4662 An operation was performed on an object, 4672 Special privileges assigned to new logon, 4674 An operation was attempted on a privileged ob\u2026, 4688 A new process has been created, 4689 A process has exited, 4719 System audit policy was changed, 4954 Windows Firewall Group Policy settings applied, 4985 The state of a transaction has changed, 5140 A network share object was accessed, 6144 Security policy in the group policy objects h\u2026\nSystem/native: Microsoft-Windows-WindowsUpdateClient 16; Service Control Manager 7036; Microsoft-Windows-GroupPolicy 1502; EventLog 6013\nVendor noise: Windows Error Reporting 1001 [+1 more]"
     },
     {
       "name": "ews-4",
@@ -717,7 +523,7 @@
       "zone": "PCS-Process",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows XP Pro SP2",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -732,13 +538,15 @@
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": "Windows XP Pro SP2",
       "owner": {
         "user": "jessica",
         "full_name": "Jessica Moore",
         "email": "jessica.moore@acme.com",
         "os": "Windows XP Pro SP2"
       },
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nSecurity auditing: 4624 An account was successfully logged on, 4634 An account was logged off, 4648 Logon using explicit credentials, 4672 Special privileges assigned to new logon, 4674 An operation was attempted on a privileged ob\u2026, 4688 A new process has been created, 4689 A process has exited, 4719 System audit policy was changed, 4954 Windows Firewall Group Policy settings applied, 4985 The state of a transaction has changed, 6144 Security policy in the group policy objects h\u2026\nSystem/native: Microsoft-Windows-GroupPolicy 1502; Service Control Manager 7036; EventLog 6013\nVendor noise: SceCli 1704"
     },
     {
       "name": "file",
@@ -763,7 +571,10 @@
       "hostnames": [
         "file.acme.com"
       ],
-      "provenance": "knowledge"
+      "platform": null,
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Service Control Manager 7036; Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1502/1503; EventLog 6013; Microsoft-Windows-DistributedCOM 10016\nApplication: Microsoft-Windows-Security-SPP 900/902/903/1003/1014/1066/8198/8200/16384\nVendor noise: Windows Error Reporting 1001 [+2 more]"
     },
     {
       "name": "finance-1",
@@ -771,12 +582,12 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
           "ips": [
-            "172.16.220.150/24"
+            "172.16.220.72/24"
           ],
           "mac": null,
           "primary": true
@@ -784,17 +595,21 @@
       ],
       "services": [],
       "tags": [],
-      "notes": "",
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
       "hostnames": [
         "finance-1.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "henry",
         "full_name": "Henry Adams",
         "email": "henry.adams@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013; Display 4107; Service Control Manager 7009/7031/7045; Microsoft-Windows-DistributedCOM 10010\nVendor noise: Microsoft-Windows-Winlogon 7002",
+      "description": "Tomato: Allen Broodly Was Here | "
     },
     {
       "name": "finance-2",
@@ -802,7 +617,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -819,13 +634,16 @@
       "hostnames": [
         "finance-2.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "jane",
         "full_name": "Jane Carter",
         "email": "jane.carter@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived)\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; Microsoft-Windows-DNS-Client 8020; EventLog 6013"
     },
     {
       "name": "finance-3",
@@ -833,7 +651,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -850,13 +668,16 @@
       "hostnames": [
         "finance-3.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "robert",
         "full_name": "Robert Davis",
         "email": "robert.davis@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013"
     },
     {
       "name": "fw-corp",
@@ -897,6 +718,7 @@
       "hostnames": [
         "firewall-corp.acme.com"
       ],
+      "platform": "pfSense",
       "provenance": "knowledge"
     },
     {
@@ -938,6 +760,7 @@
       "hostnames": [
         "firewall-ot.acme.com"
       ],
+      "platform": "pfSense",
       "provenance": "knowledge"
     },
     {
@@ -971,6 +794,7 @@
       "hostnames": [
         "firewall-ids.acme.com"
       ],
+      "platform": "pfSense",
       "provenance": "knowledge"
     },
     {
@@ -984,16 +808,29 @@
         {
           "name": "eth0",
           "ips": [
-            "192.168.32.10/24"
+            "192.168.32.76/24"
           ],
           "mac": null,
           "primary": true
         }
       ],
-      "services": [],
+      "services": [
+        {
+          "name": "GE-SRTP",
+          "protocol": "tcp",
+          "ports": [
+            18245
+          ],
+          "source": "dataflow"
+        }
+      ],
       "tags": [],
-      "notes": "",
-      "provenance": "knowledge"
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
+      "provenance": "knowledge",
+      "platform": null,
+      "siem": "Malcolm",
+      "telemetry": "Observed: Winlogbeat + Native Logs | Ingestion: Malcolm\nSysmon: 1 Process Creation, 3 Network Connection, 4 Sysmon Service State Changed, 5 Process Terminated, 6 Driver Loaded, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 29 FileExecutableDetected, 255 Error\nSecurity auditing: 4608 Windows starting up (audit subsystem), 4624 An account was successfully logged on, 4647 User initiated logoff, 4648 Logon using explicit credentials, 4672 Special privileges assigned to new logon, 4688 A new process has been created, 4797 An attempt was made to query the existence of\u2026, 4798 A user's local group membership was enumerated, 4799 A security-enabled local group membership was\u2026, 4826 Boot Configuration Data loaded, 4902 Per-user audit policy table was created, 5024 IPsec Policy Agent service started, 5033 Windows Firewall Driver started, 5058 Key file operation, 5061 Cryptographic operation, 1100 The event logging service has shut down\nPowerShell: 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Display 4107; Service Control Manager 7001/7003/7009/7026/7031/7034/7040/7045; EventLog 6005/6006/6009/6013; User32 1073/1074; Microsoft-Windows-DistributedCOM 10001/10010; Application Popup 26; Microsoft-Windows-DHCPv6-Client 51046/51047; Microsoft-Windows-Dhcp-Client 50036/50037; Microsoft-Windows-Kernel-Power 109; Microsoft-Windows-Kernel-General 12/13/16; Microsoft-Windows-Kernel-Boot 18/20/25/27/32; vmci 3; Microsoft-Windows-FilterManager 6; Microsoft-Windows-Ntfs 98; Microsoft-Windows-Kernel-Processor-Power 55; Server 2511; FxControlRuntime 259; Microsoft-Windows-WAS 5186/5211; Trapi File Server 256\nApplication: Microsoft-Windows-Security-SPP 900/902/903/1003/1066/8198/16384\nVendor noise: Windows Error Reporting 1001 [+20 more]",
+      "description": "Tomato: Allen Broodly Was Here | "
     },
     {
       "name": "hmi-acs",
@@ -1006,7 +843,42 @@
         {
           "name": "eth0",
           "ips": [
-            "192.168.32.9/24"
+            "192.168.32.75/24"
+          ],
+          "mac": null,
+          "primary": true
+        }
+      ],
+      "services": [
+        {
+          "name": "COTP and S7comm",
+          "protocol": "tcp",
+          "ports": [
+            102
+          ],
+          "source": "dataflow"
+        }
+      ],
+      "tags": [],
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
+      "hostnames": [],
+      "platform": null,
+      "siem": "Malcolm",
+      "provenance": "knowledge",
+      "description": "Tomato: Allen Broodly Was Here | "
+    },
+    {
+      "name": "hmi-apl",
+      "role": "HMI",
+      "zone": "PCS-Field-APL",
+      "manufacturer": null,
+      "model": null,
+      "software": "InduSoft",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ips": [
+            "192.168.1.87/24"
           ],
           "mac": null,
           "primary": true
@@ -1014,9 +886,9 @@
       ],
       "services": [],
       "tags": [],
-      "notes": "",
-      "hostnames": [],
-      "provenance": "knowledge"
+      "notes": "AP&L HMI (day-1 inventory)",
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "hmi-asc",
@@ -1035,10 +907,20 @@
           "primary": true
         }
       ],
-      "services": [],
+      "services": [
+        {
+          "name": "CIP and EtherNet/IP (TCP)",
+          "protocol": "tcp",
+          "ports": [
+            44818
+          ],
+          "source": "dataflow"
+        }
+      ],
       "tags": [],
       "notes": "",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -1047,7 +929,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1064,13 +946,16 @@
       "hostnames": [
         "hr-1.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "olivia",
         "full_name": "Olivia Turner",
         "email": "olivia.turner@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; Microsoft-Windows-WPDClassInstaller 24576/24577/24579; Microsoft-Windows-DriverFrameworks-UserMode 10000/10002/10100; Microsoft-Windows-UserPnp 20001/20003; EventLog 6013"
     },
     {
       "name": "hr-2",
@@ -1078,7 +963,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1095,13 +980,16 @@
       "hostnames": [
         "hr-2.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "benjamin",
         "full_name": "Benjamin Parker",
         "email": "benjamin.parker@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; EventLog 6013"
     },
     {
       "name": "iccp-apl",
@@ -1122,17 +1010,18 @@
       ],
       "services": [
         {
-          "name": "DNP3",
+          "name": "Microsoft-DS (TCP)",
           "protocol": "tcp",
           "ports": [
-            20000
+            445
           ],
           "source": "dataflow"
         }
       ],
       "tags": [],
       "notes": "ICCP server",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "indusoft-overview",
@@ -1151,10 +1040,44 @@
           "primary": true
         }
       ],
-      "services": [],
+      "services": [
+        {
+          "name": "CIP and EtherNet/IP (TCP)",
+          "protocol": "tcp",
+          "ports": [
+            44818
+          ],
+          "source": "dataflow"
+        },
+        {
+          "name": "Modbus (TCP)",
+          "protocol": "tcp",
+          "ports": [
+            502
+          ],
+          "source": "dataflow"
+        },
+        {
+          "name": "COTP and S7comm",
+          "protocol": "tcp",
+          "ports": [
+            102
+          ],
+          "source": "dataflow"
+        },
+        {
+          "name": "GE-SRTP",
+          "protocol": "tcp",
+          "ports": [
+            18245
+          ],
+          "source": "dataflow"
+        }
+      ],
       "tags": [],
       "notes": "Process overview HMI (not in scans)",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "internal-dns",
@@ -1179,31 +1102,7 @@
       "hostnames": [
         "internal-dns.acme.com"
       ],
-      "provenance": "knowledge"
-    },
-    {
-      "name": "internal-ftp",
-      "role": "FTP-Server",
-      "zone": "Corporate",
-      "manufacturer": "VMware",
-      "model": null,
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "172.16.220.199/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [],
-      "tags": [],
-      "notes": "",
-      "hostnames": [
-        "internal-ftp.acme.com"
-      ],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -1223,19 +1122,11 @@
           "primary": true
         }
       ],
-      "services": [
-        {
-          "name": "DNP3",
-          "protocol": "tcp",
-          "ports": [
-            20000
-          ],
-          "source": "dataflow"
-        }
-      ],
+      "services": [],
       "tags": [],
       "notes": "AP&L IO server",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "mail",
@@ -1248,7 +1139,7 @@
         {
           "name": "eth0",
           "ips": [
-            "172.16.220.3/24"
+            "172.16.220.73/24"
           ],
           "mac": null,
           "primary": true
@@ -1256,11 +1147,13 @@
       ],
       "services": [],
       "tags": [],
-      "notes": "",
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
       "hostnames": [
         "mail.acme.com"
       ],
-      "provenance": "knowledge"
+      "platform": null,
+      "provenance": "knowledge",
+      "description": "Tomato: Allen Broodly Was Here | "
     },
     {
       "name": "malcolm",
@@ -1273,7 +1166,8 @@
       "services": [],
       "tags": [],
       "notes": "Malcolm (IP TBD)",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "mgmt-1",
@@ -1281,7 +1175,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1298,13 +1192,16 @@
       "hostnames": [
         "mgmt-1.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "michael",
         "full_name": "Michael Johnson",
         "email": "michael.johnson@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; EventLog 6013"
     },
     {
       "name": "mgmt-2",
@@ -1312,7 +1209,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1329,13 +1226,16 @@
       "hostnames": [
         "mgmt-2.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "sarah",
         "full_name": "Sarah Lewis",
         "email": "sarah.lewis@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4100 PowerShell engine/provider error, 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: EventLog 6005/6006/6008/6009/6011/6013; Microsoft-Windows-Kernel-Power 41/42/109; Microsoft-Windows-Kernel-General 1/12/13/15/16; Microsoft-Windows-Kernel-Boot 18/20/25/27/32; Microsoft-Windows-FilterManager 1/6; Microsoft-Windows-Ntfs 98; Microsoft-Windows-Kernel-Processor-Power 55; Microsoft-Windows-Dhcp-Client 50036/50037; Microsoft-Windows-DHCPv6-Client 51046/51047; Service Control Manager 7009/7022/7023/7024/7026/7030/7031/7040/7045; Microsoft-Windows-UserPnp 20001/20003; e1iexpress 32; Microsoft-Windows-TPM-WMI 1281/1282; Virtual Disk Service 3/4; Microsoft-Windows-UserModePowerService 12/22; Microsoft-Windows-Setup 2003/2004; User32 1074; Microsoft-Windows-DistributedCOM 10010/10016; Microsoft-Windows-Time-Service 35/37/50/129/134/138; Microsoft-Windows-GroupPolicy 1058/1129/1500/1501/1502/1503; vmci 3; Microsoft-Windows-Power-Troubleshooter 1; Display 4107; Microsoft-Windows-WPDClassInstaller 24576/24577/24579; Microsoft-Windows-DriverFrameworks-UserMode 10000/10001/10100/10114; Application Popup 26; Microsoft-Windows-Kernel-PnP 219; NetBT 4321; Server 2505; BROWSER 8033; Workstation 3260; NetJoin 4096/4097; Microsoft-Windows-DNS-Client 1014/8015/8017/8020/8038; NETLOGON 5719/5823; LSI_SAS 129; disk 153; Microsoft-Windows-WinRM 10148/10149/10154; Microsoft-Windows-TerminalServices-RemoteConnectionManager 1056/1067; Schannel 36874/36888; LsaSrv 6038\nVendor noise: Microsoft-Windows-Winlogon 7001"
     },
     {
       "name": "mgmt-3",
@@ -1343,7 +1243,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1360,13 +1260,16 @@
       "hostnames": [
         "mgmt-3.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "emily",
         "full_name": "Emily Clark",
         "email": "emily.clark@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; EventLog 6013"
     },
     {
       "name": "netbox",
@@ -1379,7 +1282,8 @@
       "services": [],
       "tags": [],
       "notes": "NetBox host (IP TBD)",
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "rssql-asc",
@@ -1398,13 +1302,25 @@
           "primary": true
         }
       ],
-      "services": [],
+      "services": [
+        {
+          "name": "CIP and EtherNet/IP (TCP)",
+          "protocol": "tcp",
+          "ports": [
+            44818
+          ],
+          "source": "dataflow"
+        }
+      ],
       "tags": [],
       "notes": "PCS historian / RSSQL",
       "hostnames": [
         "rssql.acme.com"
       ],
-      "provenance": "knowledge"
+      "platform": null,
+      "siem": "Malcolm",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Winlogbeat + Native Logs | Ingestion: Malcolm\nSysmon: 1 Process Creation, 2 File Creation Time Changed, 3 Network Connection, 5 Process Terminated, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 13 RegistryEvent (Value Set), 17 Pipe Created, 18 Pipe Connected, 26 File Delete Logged (no archive)\nPowerShell: 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-Kernel-General 1/16; Service Control Manager 7040; Microsoft-Windows-Time-Service 134; Microsoft-Windows-Power-Troubleshooter 1; Display 4107; BROWSER 8033; Microsoft-Windows-Kernel-Power 42; EventLog 6013\nVendor noise: Microsoft-Windows-Winlogon 7001"
     },
     {
       "name": "sales-1",
@@ -1412,7 +1328,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1429,13 +1345,16 @@
       "hostnames": [
         "sales-1.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "andrew",
         "full_name": "Andrew Harris",
         "email": "andrew.harris@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 29 FileExecutableDetected, 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; Service Control Manager 7009/7045; Display 4107; EventLog 6013"
     },
     {
       "name": "sales-2",
@@ -1443,7 +1362,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1460,13 +1379,16 @@
       "hostnames": [
         "sales-2.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "karen",
         "full_name": "Karen Taylor",
         "email": "karen.taylor@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013; Display 4107"
     },
     {
       "name": "sales-3",
@@ -1474,7 +1396,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1491,13 +1413,16 @@
       "hostnames": [
         "sales-3.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "james",
         "full_name": "James Anderson",
         "email": "james.anderson@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 29 FileExecutableDetected, 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-GroupPolicy 1500/1501/1502; Microsoft-Windows-DNS-Client 8020; LsaSrv 6038; EventLog 6013; Service Control Manager 7009/7045; Display 4107"
     },
     {
       "name": "sales-4",
@@ -1505,7 +1430,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1522,13 +1447,16 @@
       "hostnames": [
         "sales-4.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "susan",
         "full_name": "Susan Williams",
         "email": "susan.williams@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 8 CreateRemoteThread, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 29 FileExecutableDetected, 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013; Service Control Manager 7009/7045; Display 4107"
     },
     {
       "name": "security-onion",
@@ -1541,39 +1469,8 @@
       "services": [],
       "tags": [],
       "notes": "Security Onion manager (IP TBD)",
-      "provenance": "knowledge"
-    },
-    {
-      "name": "sign-asc",
-      "role": "Network-Display",
-      "zone": "PCS-Process",
-      "manufacturer": "Facts Engineering",
-      "model": "DirectLOGIC LED Sign",
-      "software": null,
-      "interfaces": [
-        {
-          "name": "eth0",
-          "ips": [
-            "192.168.0.155/24"
-          ],
-          "mac": null,
-          "primary": true
-        }
-      ],
-      "services": [
-        {
-          "name": "Modbus TCP",
-          "protocol": "tcp",
-          "ports": [
-            502
-          ],
-          "source": "dataflow"
-        }
-      ],
-      "tags": [],
-      "notes": "Delta LED display, Modbus TCP",
-      "hostnames": [],
-      "provenance": "knowledge"
+      "provenance": "knowledge",
+      "platform": null
     },
     {
       "name": "sign-mgmt",
@@ -1594,7 +1491,7 @@
       ],
       "services": [
         {
-          "name": "Modbus TCP",
+          "name": "Modbus (TCP)",
           "protocol": "tcp",
           "ports": [
             502
@@ -1605,6 +1502,7 @@
       "tags": [],
       "notes": "Omega LED display, Modbus TCP",
       "hostnames": [],
+      "platform": null,
       "provenance": "knowledge"
     },
     {
@@ -1613,12 +1511,12 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
           "ips": [
-            "172.16.220.181/24"
+            "172.16.220.71/24"
           ],
           "mac": null,
           "primary": true
@@ -1626,17 +1524,21 @@
       ],
       "services": [],
       "tags": [],
-      "notes": "",
+      "notes": "      \\ | /\n    '-.;;;.-'\n   -==;;;;;==-\n    .-';;;'-.\n   /  / | \\  \\\n  |           |\n  |  ( ) ( )  |\n  \\     _     /\n   '-._____.-'\nAllen Broodly Was Here",
       "hostnames": [
         "user-1.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "laura",
         "full_name": "Laura Martin",
         "email": "laura.martin@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-Eventlog 104; Microsoft-Windows-Time-Service 37; Microsoft-Windows-DNS-Client 8020; Service Control Manager 7040; Microsoft-Windows-GroupPolicy 1500/1501",
+      "description": "Tomato: Allen Broodly Was Here | "
     },
     {
       "name": "user-2",
@@ -1644,7 +1546,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1661,13 +1563,16 @@
       "hostnames": [
         "user-2.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "steven",
         "full_name": "Steven Thompson",
         "email": "steven.thompson@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Windows Logs only (Sysmon inactive) | Intended: Elastic Fleet\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 40961 PowerShell engine state \u2014 Available/Started, 40962 PowerShell engine state \u2014 Stopped, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013; Service Control Manager 7009/7045; Display 4107"
     },
     {
       "name": "user-3",
@@ -1675,7 +1580,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1692,13 +1597,16 @@
       "hostnames": [
         "user-3.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "megan",
         "full_name": "Megan Brown",
         "email": "megan.brown@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013"
     },
     {
       "name": "user-4",
@@ -1706,7 +1614,7 @@
       "zone": "Corporate",
       "manufacturer": "VMware",
       "model": null,
-      "software": "Windows 10 Professional",
+      "software": null,
       "interfaces": [
         {
           "name": "eth0",
@@ -1723,13 +1631,16 @@
       "hostnames": [
         "user-4.acme.com"
       ],
+      "platform": "Windows 10 Professional",
       "owner": {
         "user": "jessica",
         "full_name": "Jessica Moore",
         "email": "jessica.moore@acme.com",
         "os": "Windows 10 Professional"
       },
-      "provenance": "knowledge"
+      "siem": "Security Onion",
+      "provenance": "knowledge",
+      "telemetry": "Observed: Sysmon + Windows Logs | Intended: Elastic Fleet\nSysmon: 1 Process Creation, 3 Network Connection, 7 Image (DLL) Loaded, 10 ProcessAccess, 11 File Created, 12 RegistryEvent (Object create/delete), 13 RegistryEvent (Value Set), 17 Pipe Created, 22 DNS Query, 23 File Delete (Archived), 255 Error\nPowerShell: 4103 Module Logging, 4104 Script Block Logging, 53504 AppDomain/provider start (engine lifecycle)\nSystem/native: Microsoft-Windows-DNS-Client 8020; Microsoft-Windows-GroupPolicy 1500/1501/1502; LsaSrv 6038; EventLog 6013"
     },
     {
       "name": "www",
@@ -1754,129 +1665,325 @@
       "hostnames": [
         "www.acme.com"
       ],
+      "platform": null,
+      "siem": "Security Onion",
       "provenance": "knowledge"
+    }
+  ],
+  "contacts": [
+    {
+      "name": "Andrew Harris",
+      "email": "andrew.harris@acme.com",
+      "login": "andrew",
+      "devices": [
+        "sales-1"
+      ]
+    },
+    {
+      "name": "Benjamin Parker",
+      "email": "benjamin.parker@acme.com",
+      "login": "benjamin",
+      "devices": [
+        "hr-2"
+      ]
+    },
+    {
+      "name": "Emily Clark",
+      "email": "emily.clark@acme.com",
+      "login": "emily",
+      "devices": [
+        "mgmt-3"
+      ]
+    },
+    {
+      "name": "Henry Adams",
+      "email": "henry.adams@acme.com",
+      "login": "henry",
+      "devices": [
+        "finance-1"
+      ]
+    },
+    {
+      "name": "James Anderson",
+      "email": "james.anderson@acme.com",
+      "login": "james",
+      "devices": [
+        "sales-3"
+      ]
+    },
+    {
+      "name": "Jane Carter",
+      "email": "jane.carter@acme.com",
+      "login": "jane",
+      "devices": [
+        "finance-2"
+      ]
+    },
+    {
+      "name": "Jessica Moore",
+      "email": "jessica.moore@acme.com",
+      "login": "jessica",
+      "devices": [
+        "user-4",
+        "ews-4"
+      ]
+    },
+    {
+      "name": "Karen Taylor",
+      "email": "karen.taylor@acme.com",
+      "login": "karen",
+      "devices": [
+        "sales-2"
+      ]
+    },
+    {
+      "name": "Laura Martin",
+      "email": "laura.martin@acme.com",
+      "login": "laura",
+      "devices": [
+        "user-1",
+        "ews-1"
+      ]
+    },
+    {
+      "name": "Megan Brown",
+      "email": "megan.brown@acme.com",
+      "login": "megan",
+      "devices": [
+        "user-3",
+        "ews-3"
+      ]
+    },
+    {
+      "name": "Michael Johnson",
+      "email": "michael.johnson@acme.com",
+      "login": "michael",
+      "devices": [
+        "mgmt-1"
+      ]
+    },
+    {
+      "name": "Olivia Turner",
+      "email": "olivia.turner@acme.com",
+      "login": "olivia",
+      "devices": [
+        "hr-1"
+      ]
+    },
+    {
+      "name": "Robert Davis",
+      "email": "robert.davis@acme.com",
+      "login": "robert",
+      "devices": [
+        "finance-3"
+      ]
+    },
+    {
+      "name": "Sarah Lewis",
+      "email": "sarah.lewis@acme.com",
+      "login": "sarah",
+      "devices": [
+        "mgmt-2"
+      ]
+    },
+    {
+      "name": "Steven Thompson",
+      "email": "steven.thompson@acme.com",
+      "login": "steven",
+      "devices": [
+        "user-2",
+        "ews-2"
+      ]
+    },
+    {
+      "name": "Susan Williams",
+      "email": "susan.williams@acme.com",
+      "login": "susan",
+      "devices": [
+        "sales-4"
+      ]
     }
   ],
   "dataflows": [
     {
       "application": "ASC",
-      "name": "HMI to PLC (RSView32)",
-      "src": "hmi-asc",
-      "dst": "asc-l81-plc",
-      "protocol": "EtherNet/IP (CIP)",
-      "port": 44818
-    },
-    {
-      "application": "ASC",
-      "name": "PLC to remote I/O",
+      "name": "ASC L81 to Modbus sign #1 (ASC)",
       "src": "asc-l81-plc",
-      "dst": "asc-remote-io-eip",
-      "protocol": "EtherNet/IP I/O",
-      "port": 2222
-    },
-    {
-      "application": "ASC",
-      "name": "PLC to Modbus sign (ASC)",
-      "src": "asc-l55-plc",
       "dst": "sign-asc",
       "protocol": "Modbus TCP",
       "port": 502
     },
     {
       "application": "ASC",
-      "name": "PLC to Modbus sign (mgmt)",
-      "src": "asc-l55-plc",
+      "name": "ASC L81 to Modbus sign #2 (mgmt)",
+      "src": "asc-l81-plc",
       "dst": "sign-mgmt",
       "protocol": "Modbus TCP",
       "port": 502
     },
     {
       "application": "ASC",
-      "name": "Historian SQL (PCS to corp)",
-      "src": "rssql-asc",
-      "dst": "database-asc",
-      "protocol": "MS-SQL",
+      "name": "CORP database-asc to CORP DMZ DB",
+      "src": "database-asc",
+      "dst": "database",
+      "protocol": "MSSQL",
       "port": 1433
     },
     {
       "application": "ASC",
-      "name": "Corp DB replication",
-      "src": "database-asc",
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
       "dst": "database",
-      "protocol": "MS-SQL",
+      "protocol": "MSSQL",
       "port": 1433
     },
     {
       "application": "ACS",
-      "name": "HMI to S7-315",
-      "src": "hmi-acs",
-      "dst": "acs-s7-315-plc",
-      "protocol": "S7comm",
-      "port": 102
-    },
-    {
-      "application": "ACS",
-      "name": "HMI to S7-1500",
-      "src": "hmi-acs",
+      "name": "ACS S7-315 to S7-1515 (system control signals)",
+      "src": "acs-s7-315-plc",
       "dst": "acs-s7-1500-plc",
       "protocol": "S7comm",
       "port": 102
     },
     {
       "application": "ACS",
-      "name": "HMI to RTU (S7-1200)",
-      "src": "hmi-acs",
-      "dst": "apl-rtu-2",
+      "name": "AP&L RTU 2 to ACS S7-1515",
+      "src": "apl-rtu-2",
+      "dst": "acs-s7-1500-plc",
       "protocol": "S7comm",
       "port": 102
     },
     {
       "application": "ACS",
-      "name": "PROFINET remote I/O",
-      "src": "acs-s7-315-plc",
+      "name": "AP&L RTU 2 to syslog",
+      "src": "apl-rtu-2",
+      "dst": "syslog",
+      "protocol": "syslog",
+      "port": 514,
+      "transport": "udp"
+    },
+    {
+      "application": "ACS",
+      "name": "ioserver-apl to AP&L RTU 2 (DNP3)",
+      "src": "ioserver-apl",
+      "dst": "apl-rtu-2",
+      "protocol": "DNP3",
+      "port": 20000
+    },
+    {
+      "application": "ACS",
+      "name": "ioserver-apl to iccp-apl (SMB)",
+      "src": "ioserver-apl",
+      "dst": "iccp-apl",
+      "protocol": "SMB",
+      "port": 445
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-1515 to PROFINET Remote I/O",
+      "src": "acs-s7-1500-plc",
       "dst": "acs-remote-io-pn",
       "protocol": "PROFINET",
       "port": 34964
     },
     {
       "application": "ACS",
-      "name": "Historian SQL",
-      "src": "database-acs",
-      "dst": "database",
-      "protocol": "MS-SQL",
+      "name": "ACS S7-1515 to Indusoft HMI-ACS",
+      "src": "acs-s7-1500-plc",
+      "dst": "hmi-acs",
+      "protocol": "S7comm",
+      "port": 102
+    },
+    {
+      "application": "ACS",
+      "name": "HMI-ACS to PCS DMZ database-acs",
+      "src": "hmi-acs",
+      "dst": "database-acs",
+      "protocol": "MSSQL",
       "port": 1433
     },
     {
       "application": "ACS",
-      "name": "RTU to ICCP (DNP3)",
-      "src": "apl-rtu",
-      "dst": "iccp-apl",
-      "protocol": "DNP3",
-      "port": 20000
+      "name": "PCS DMZ database-acs to CORP DMZ DB",
+      "src": "database-acs",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
     },
     {
       "application": "ACS",
-      "name": "RTU to IO server (DNP3)",
-      "src": "apl-rtu",
-      "dst": "ioserver-apl",
-      "protocol": "DNP3",
-      "port": 20000
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
     },
     {
       "application": "ACD",
-      "name": "HMI to PLC (GE-SRTP)",
-      "src": "hmi-acd",
-      "dst": "acd-plc",
+      "name": "ACD PLC (CPE330) to Indusoft HMI-ACD",
+      "src": "acd-plc",
+      "dst": "hmi-acd",
       "protocol": "GE-SRTP",
       "port": 18245
     },
     {
       "application": "ACD",
-      "name": "Historian SQL",
+      "name": "HMI-ACD to PCS DMZ database-acd",
+      "src": "hmi-acd",
+      "dst": "database-acd",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ACD",
+      "name": "PCS DMZ database-acd to CORP DMZ DB",
       "src": "database-acd",
       "dst": "database",
-      "protocol": "MS-SQL",
+      "protocol": "MSSQL",
       "port": 1433
+    },
+    {
+      "application": "ACD",
+      "name": "WWW to CORP DMZ DB",
+      "src": "www",
+      "dst": "database",
+      "protocol": "MSSQL",
+      "port": 1433
+    },
+    {
+      "application": "ASC",
+      "name": "ASC L55 to Physical Skid (hard-wired I/O)",
+      "src": "asc-l55-plc",
+      "dst": "asc-physical-skid",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ASC",
+      "name": "ASC Remote I/O to ACS Remote I/O (hard-wired I/O)",
+      "src": "asc-remote-io-eip",
+      "dst": "acs-remote-io-pn",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACS",
+      "name": "ACS S7-315 to Physical Skid (hard-wired I/O)",
+      "src": "acs-s7-315-plc",
+      "dst": "acs-physical-skid",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACS",
+      "name": "ACS Remote I/O to ASC Remote I/O (hard-wired I/O)",
+      "src": "acs-remote-io-pn",
+      "dst": "asc-remote-io-eip",
+      "protocol": "Hard-wired I/O"
+    },
+    {
+      "application": "ACD",
+      "name": "ACD PLC to Physical Skid (hard-wired I/O)",
+      "src": "acd-plc",
+      "dst": "acd-physical-skid",
+      "protocol": "Hard-wired I/O"
     }
   ],
   "coverage_legend": {

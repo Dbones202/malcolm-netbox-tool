@@ -124,8 +124,8 @@ def discover_dataflows(conn: NetBoxConn) -> Dict[str, Any]:
     }
 
 
-def run_discovery(env_file: Optional[str] = None) -> Dict[str, Any]:
-    conn = get_connection(env_file=env_file)
+def run_discovery(env_file: Optional[str] = None, team: Optional[str] = None, localhost: bool = False) -> Dict[str, Any]:
+    conn = get_connection(env_file=env_file, team=team, localhost=localhost)
 
     # Auto-detect the working base URL if the configured one does not answer.
     code, _ = _safe_get_json(conn, "status/")

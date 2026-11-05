@@ -1,13 +1,12 @@
-"""CLI entry point for the NetBox v2 importer.
+"""CLI entry point for the NetBox v2 importer, scorer, and dashboard.
 
-Available now:
-  discover      Read-only API introspection -> saved report (needs a real .env token).
-
-Planned (built after discovery + day-1 materials are in hand):
-  build-master  Assemble/validate the master YAML (optionally from white-cell export).
-  seed          Full seed of the complete environment from the master.
-  seed-partial  Seed an incomplete 'starting' environment from the master.
-  score         Diff a live (blue-team) NetBox against the master -> gap/score report.
+Commands:
+  discover      Read-only API introspection -> saved report.
+  dump          Read-only export of existing NetBox objects -> instance_inventory.json.
+  seed          Seed NetBox from master or partial Day 1.
+  reset         Wipe NetBox objects (plan by default; --apply to delete).
+  score         Grade a live instance against the 75-point rubric.
+  dashboard     Run live split-screen classroom dashboard server for Delta & Omega.
 """
 from __future__ import annotations
 
@@ -16,15 +15,35 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Optional, Tuple
 
 from rich.console import Console
 
 from .version import __version__
 
 console = Console()
-PLANNED = {
-    "score": "Diff a live NetBox against the master -> gap/score report.",
-}
+PLANNED = {}
+
+
+def _resolve_team_and_localhost(args) -> Tuple[Optional[str], bool]:
+    """Helper to resolve team name and localhost flag from CLI arguments.
+    Supports:
+      --localhost delta   -> team='delta', localhost=True
+      --localhost omega   -> team='omega', localhost=True
+      --localhost         -> team=args.team or None, localhost=True
+      --team delta        -> team='delta', localhost=False
+    """
+    localhost_arg = getattr(args, "localhost", None)
+    team_arg = getattr(args, "team", None)
+
+    is_localhost = localhost_arg is not None
+    if localhost_arg in ("delta", "omega"):
+        team = localhost_arg
+    elif team_arg:
+        team = team_arg
+    else:
+        team = None
+    return team, is_localhost
 
 
 def _print_discovery_summary(rep: dict) -> None:
@@ -62,8 +81,9 @@ def _print_discovery_summary(rep: dict) -> None:
 
 def cmd_discover(args) -> int:
     from .discover import run_discovery
+    team, localhost = _resolve_team_and_localhost(args)
     try:
-        rep = run_discovery(env_file=args.env_file)
+        rep = run_discovery(env_file=args.env_file, team=team, localhost=localhost)
     except Exception as e:
         console.print(f"[bold red]Discovery failed:[/bold red] {e}")
         return 1
@@ -79,10 +99,73 @@ def cmd_discover(args) -> int:
     return 0
 
 
+def cmd_score(args) -> int:
+    from .scorer import NetBoxScorer
+    from rich.table import Table
+    from rich.panel import Panel
+
+    team, localhost = _resolve_team_and_localhost(args)
+    target_desc = f"Team {team.capitalize()}" if team else "Default"
+    if localhost:
+        target_desc += " (localhost)"
+
+    console.print(Panel.fit(f"[bold blue]KYE Day 1 NetBox Challenge Scorer[/bold blue] (Target: {target_desc})", border_style="cyan"))
+    scorer = NetBoxScorer(env_file=args.env_file, team=team, localhost=localhost)
+    try:
+        res = scorer.score()
+    except Exception as e:
+        console.print(f"[bold red]Scoring failed:[/bold red] {e}")
+        return 1
+
+    cats = res["categories"]
+    m1 = cats["corrected_data"]
+    m2 = cats["missing_entries"]
+    m3 = cats["missing_dataflow"]
+
+    table = Table(title="Score Breakdown", show_header=True, header_style="bold magenta")
+    table.add_column("Category", style="white", width=24)
+    table.add_column("Progress", style="cyan", width=18)
+    table.add_column("Points Earned", style="green", justify="right")
+    table.add_column("Max Possible", style="yellow", justify="right")
+
+    table.add_row("Corrected Data", f"{m1['count']} / {m1['total']} devices", f"{m1['points']} pts", f"{m1['max']} pts")
+    table.add_row("Missing Entries", f"{m2['count']} / {m2['total']} items", f"{m2['points']} pts", f"{m2['max']} pts")
+    table.add_row("Missing DataFlow", f"{m3['count']} / {m3['total']} flows", f"{m3['points']} pts", f"{m3['max']} pts")
+    table.add_section()
+    table.add_row("[bold]TOTAL SCORE[/bold]", f"[bold]{res['percentage']}% Complete[/bold]", f"[bold green]{res['total_score']} pts[/bold green]", f"[bold]{res['max_score']} pts[/bold]")
+
+    console.print(table)
+    return 0
+
+
+def cmd_dashboard(args) -> int:
+    from .dashboard_server import run_dashboard_server
+    run_dashboard_server(host=args.host, port=args.port)
+    return 0
+
+
+def _add_connection_args(parser: argparse.ArgumentParser) -> None:
+    """Adds common connection flags (--team and --localhost) across subcommands."""
+    parser.add_argument(
+        "--team",
+        choices=["delta", "omega"],
+        default=None,
+        help="Target remote team NetBox instance (delta or omega).",
+    )
+    parser.add_argument(
+        "--localhost",
+        nargs="?",
+        const="default",
+        choices=["delta", "omega", "default"],
+        default=None,
+        help="Target local loopback (127.0.0.1) on Malcolm VM. E.g. --localhost delta or --localhost omega.",
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="netbox-v2",
-        description="NetBox v2 importer — master-driven seeding and scoring.",
+        description="NetBox v2 importer — master-driven seeding, scoring, and live classroom dashboard.",
     )
     parser.add_argument("--version", action="version", version=f"netbox-importer-v2 {__version__}")
     sub = parser.add_subparsers(dest="command")
@@ -90,22 +173,31 @@ def main() -> None:
     d = sub.add_parser("discover", help="Read-only API introspection -> saved report.")
     d.add_argument("--env-file", default=None, help="Path to .env (default: auto-detect repo .env).")
     d.add_argument("--out", default="v2_reports", help="Directory for the JSON report (default: v2_reports/).")
+    _add_connection_args(d)
 
     du = sub.add_parser("dump", help="Read-only export of existing NetBox objects -> instance_inventory.json.")
     du.add_argument("--env-file", default=None)
     du.add_argument("--out", default="v2_reports/instance_inventory.json")
+    _add_connection_args(du)
 
     rs = sub.add_parser("reset", help="Wipe NetBox objects (plan by default; --apply to delete).")
     rs.add_argument("--env-file", default=None)
     rs.add_argument("--apply", action="store_true", help="Actually delete (otherwise dry-run plan).")
+    _add_connection_args(rs)
 
     se = sub.add_parser("seed", help="Seed NetBox from a master file (plan by default; --apply to write).")
     se.add_argument("--master", default="v2_reports/master.json", help="master.json or a partial_*.json")
     se.add_argument("--env-file", default=None)
     se.add_argument("--apply", action="store_true", help="Actually write (otherwise dry-run plan).")
+    _add_connection_args(se)
 
-    for name, desc in PLANNED.items():
-        sub.add_parser(name, help=f"(planned) {desc}")
+    sc = sub.add_parser("score", help="Score a live instance against the 75-pt KYE Day 1 rubric.")
+    sc.add_argument("--env-file", default=None)
+    _add_connection_args(sc)
+
+    dash = sub.add_parser("dashboard", help="Start the live split-screen classroom dashboard.")
+    dash.add_argument("--host", default="0.0.0.0", help="Binding host (default: 0.0.0.0)")
+    dash.add_argument("--port", type=int, default=8080, help="HTTP port (default: 8080)")
 
     args = parser.parse_args()
 
@@ -117,34 +209,37 @@ def main() -> None:
         sys.exit(cmd_discover(args))
     elif args.command == "dump":
         from .dump_instance import run_dump
-        import json as _json
-        try:
-            inv = run_dump(env_file=args.env_file)
-        except Exception as e:
-            console.print(f"[bold red]Dump failed:[/bold red] {e}"); sys.exit(1)
         import os as _os
+        team, localhost = _resolve_team_and_localhost(args)
+        try:
+            inv = run_dump(env_file=args.env_file, team=team, localhost=localhost)
+        except Exception as e:
+            console.print(f"[bold red]Dump failed:[/bold red] {e}")
+            sys.exit(1)
         _os.makedirs(_os.path.dirname(args.out) or ".", exist_ok=True)
-        _json.dump(inv, open(args.out, "w"), indent=2)
+        json.dump(inv, open(args.out, "w"), indent=2)
         console.print(f"[green]Wrote[/green] {args.out}  (sites={len(inv.get('sites',[]))}, devices={len(inv.get('devices',[]))}, dataflows={len(inv.get('df_dataflows',[]))})")
         sys.exit(0)
     elif args.command == "reset":
         from .seeder import run_reset
+        team, localhost = _resolve_team_and_localhost(args)
         if args.apply:
             console.print("[bold red]APPLY: deleting objects from NetBox...[/bold red]")
-        s = run_reset(apply=args.apply, env_file=args.env_file)
+        s = run_reset(apply=args.apply, env_file=args.env_file, team=team, localhost=localhost)
         sys.exit(0 if not s.errors else 1)
     elif args.command == "seed":
         from .seeder import run_seed
+        team, localhost = _resolve_team_and_localhost(args)
         console.print(f"[white]Seeding from[/white] [cyan]{args.master}[/cyan] "
                       + ("[bold red](APPLY)[/bold red]" if args.apply else "[yellow](plan / dry-run)[/yellow]"))
-        s = run_seed(args.master, apply=args.apply, env_file=args.env_file)
+        s = run_seed(args.master, apply=args.apply, env_file=args.env_file, team=team, localhost=localhost)
         if s.errors:
             console.print(f"[red]{len(s.errors)} errors[/red] - see v2_reports/seed_result.json")
         sys.exit(0 if not s.errors else 1)
-    elif args.command in PLANNED:
-        console.print(f"[yellow]'{args.command}' is planned but not built yet.[/yellow]")
-        console.print("It will be implemented after API discovery and review of the day-1 materials.")
-        sys.exit(2)
+    elif args.command == "score":
+        sys.exit(cmd_score(args))
+    elif args.command == "dashboard":
+        sys.exit(cmd_dashboard(args))
 
 
 if __name__ == "__main__":

@@ -1,126 +1,138 @@
-# NetBox Excel Device Importer
+# Malcolm NetBox Automation & Cyber Range Tooling
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
-![NetBox](https://img.shields.io/badge/NetBox-v4.x-blue.svg)
+![NetBox](https://img.shields.io/badge/NetBox-v4.2%2B%20%7C%20v4.6%2B-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 
-A packaged Python CLI tool and spreadsheet generator designed to import IPAM subnet prefixes, devices, attached network interfaces (`1000base-t`), and primary IPv4 addresses into a **NetBox** instance (including NetBox instances deployed within **Malcolm**).
-
----
-
-## Versioning & Architecture
-
-- **Current Version**: `1.3.0` (tracked in [VERSION](VERSION)).
-- **Changelog**: See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
+A complete Python automation suite for **NetBox** deployments running within **Malcolm** network traffic analysis environments and Cyber Range exercises (Defend the Arch / Know Your Environment / CTF).
 
 ---
 
-## Key Features
+## What's Included
 
-- **3-Sheet Excel Workflow**:
-  - **Sheet 1 (`Config`)**: Environment configuration (`CONFIG_VERSION`, `NETBOX_HOST`, `NETBOX_PATH`, `NETBOX_TOKEN`, `SITE_NAME`, `DEVICE_ROLE`, `MANUFACTURER`, `DEVICE_TYPE`, `INTERFACE_NAME`, `DEFAULT_SUBNET_MASK`, `VERIFY_SSL`). `NETBOX_HOST` defaults to `localhost` if left blank.
-  - **Sheet 2 (`Devices`)**: 3-column device inventory list: `Device Name`, `IP Address`, `Overwrite`.
-  - **Sheet 3 (`Prefixes`)**: 4-column IPAM subnet list: `Prefix`, `Description`, `Site`, `Status`.
-- **IPAM Subnet Prefixes (`Prefixes` Sheet)**:
-  - Automatically creates or verifies NetBox IPAM prefixes (e.g. `192.168.70.0/24`) and binds them to specified sites prior to device imports.
-- **Forced Overwrite Feature (`Overwrite = TRUE`)**:
-  - Ideal for live event days when student device names or IP assignments require forced correction.
-  - Automatically unbinds the IP from its former device, clears the former device's primary IPv4, and re-assigns the IP to the target device.
-- **Dynamic CIDR Mask Parsing**: Automatically appends the default subnet mask (e.g. `/24`) if omitted, or preserves custom specified masks (e.g. `192.168.1.5/16`).
-- **Pre-Flight Validation**: Validates the spreadsheet prior to any API connection or dry run, flagging missing names, missing IPs, duplicate names, duplicate IPs, and malformed IPv4/CIDR syntax using Python's `ipaddress` module.
-- **Idempotency**: Prevents creating duplicate devices, interfaces, IPAM prefixes, or IP addresses. Logs warnings if an IP is already bound to a different device (when `Overwrite` is `FALSE`).
-- **Malcolm Integration**: Supports Malcolm's reverse proxy path (`https://<host>/netbox/api/`) and SSL certificate warning suppression.
-- **Self-Healing Air-Gapped / Offline Deployment**:
-  - Pre-packages Linux binary wheels (`manylinux2014_x86_64`, `manylinux_2_17_x86_64`, `manylinux2014_aarch64`) and pure-Python universal wheels.
-  - Features a 3-tier self-healing installer (`install.sh`): standard `venv`, bundled standalone `virtualenv`, or direct local library fallback if the target OS lacks `python3-venv`.
+The repository provides two complementary toolsets:
+
+1. **`netbox-v2` (`src/netbox_importer_v2`)**: Modern master-driven seeding engine, automated 75-point challenge scorer, and live classroom split-screen scoreboard for cyber range exercises.
+2. **`netbox-excel-importer` (`src/netbox_importer`)**: 3-sheet Excel spreadsheet importer for bulk provisioning devices, IPAM prefixes, interfaces, and primary IPs.
 
 ---
 
-## Quick Start Guide
+## 🚀 NetBox v2 Toolset (`netbox-v2`)
 
-### 1. Installation
+Designed for NetBox v4.2+ and v4.6+ with first-class `dcim/mac-addresses` and the `netbox-data-flows` plugin.
 
-#### Standard Online Installation:
+### Key Capabilities
+
+- **Master-Driven Seeding (`seed`)**: Provisions sites, roles, IPAM prefixes, devices, interfaces, MAC addresses, primary IPs, services, telemetry/SIEM custom fields, and dataflows from a JSON master key.
+- **KYE Day 1 Challenge Engine**: Includes `partial_generator.py` to produce a student starting baseline with 9 redacted devices, 13 withheld dataflows, and 6 tampered devices featuring ASCII tomato comments signed *"Allen Broodly Was Here"*.
+- **Automated 75-Point Rubric Scorer (`score`)**: Instant audit and grading with fuzzy/normalized matching across:
+  - **Corrected Data**: 6 tampered devices × 3 pts = 18 pts
+  - **Missing Entries**: 9 redacted devices × 2 pts = 18 pts
+  - **Missing DataFlows**: 13 withheld flows × 3 pts = 39 pts
+- **Live Classroom Scoreboard (`dashboard`)**: Browser-based split-screen dashboard (`http://localhost:8080/`) displaying Team Delta (Neon Blue) vs Team Omega (Energetic Orange) with auto-updating progress bars and a hidden PIN-protected admin console (`Ctrl+Shift+A`).
+- **Unified Multi-Team Environment (`.env`)**: Manages both Delta and Omega instances from one `.env` file with support for `--localhost [delta|omega]` and `--team [delta|omega]`.
+- **Adaptive Rate Limiting & Terminal Progress Bar**: Paced requests (`NETBOX_PACE_MS`), 4-tier exponential backoff retries, and live `rich.progress` displays (`102/500 items`) to prevent Docker/Gunicorn worker exhaustion on Malcolm VMs.
+
+---
+
+### Command-Line Usage (`netbox-v2`)
+
 ```bash
-pip install -e .
+# 1. API Discovery & Plugin Introspection
+python -m src.netbox_importer_v2.cli discover
+
+# 2. Export Current Inventory to JSON
+python -m src.netbox_importer_v2.cli dump --out v2_reports/instance_inventory.json
+
+# 3. Seed NetBox (Dry-Run Plan vs Live Apply)
+python -m src.netbox_importer_v2.cli seed --master v2_reports/partial_day1.json         # dry-run
+python -m src.netbox_importer_v2.cli seed --master v2_reports/partial_day1.json --apply # live apply
+
+# 4. Score a Live Instance (75-pt Rubric)
+python -m src.netbox_importer_v2.cli score
+python -m src.netbox_importer_v2.cli score --team delta
+python -m src.netbox_importer_v2.cli score --localhost delta
+
+# 5. Selective Wipe / Reset (Cleans challenge objects; preserves vendor models)
+python -m src.netbox_importer_v2.cli reset --apply
+
+# 6. Start Classroom Live Scoreboard
+python -m src.netbox_importer_v2.cli dashboard --port 8080
 ```
 
-#### Air-Gapped Offline Installation (on Malcolm / Isolated Linux Host):
-Upload `netbox_importer_offline_bundle.tar.gz` to your target machine, extract, and run:
-```bash
-tar -xvf netbox_importer_offline_bundle.tar.gz
-cd netbox_importer_offline_bundle
-./install.sh
+---
+
+### Multi-Instance Environment Setup (`.env`)
+
+Copy [`.env.example`](.env.example) to `.env`:
+
+```env
+# Shared connection and rate-limiting options
+NETBOX_VERIFY_SSL=false
+NETBOX_PACE_MS=75
+NETBOX_TIMEOUT=45
+NETBOX_LOCAL_URL=https://127.0.0.1/netbox
+
+# Team Delta NetBox Instance
+DELTA_NETBOX_URL=https://192.168.1.50/netbox
+DELTA_NETBOX_TOKEN=your_delta_token_here
+
+# Team Omega NetBox Instance
+OMEGA_NETBOX_URL=https://192.168.1.60/netbox
+OMEGA_NETBOX_TOKEN=your_omega_token_here
+
+# Default / Fallback Instance
+NETBOX_URL=https://127.0.0.1/netbox
+NETBOX_TOKEN=your_token_here
 ```
-*The installer automatically configures the environment and generates direct `./netbox-excel-importer` and `./run.sh` executables.*
+
+- **Running locally on the Malcolm VM host:** Use `--localhost delta` or `--localhost omega` for local loopback (`127.0.0.1`).
+- **Running remotely from an instructor machine:** Use `--team delta` or `--team omega` to target VM IP addresses over the network.
+
+For full rubric specifications and breakdown, see [KYE_DAY1_CHALLENGE_AND_SCORING.md](KYE_DAY1_CHALLENGE_AND_SCORING.md).
 
 ---
 
-### 2. Generate Template Spreadsheet
+## 📊 Legacy Excel Device Importer (`netbox-excel-importer`)
 
-Generate a sample spreadsheet pre-populated with default config, 10 test devices, and IPAM subnet prefixes:
+For spreadsheet-based bulk provisioning of IPAM prefixes and devices.
 
+### 3-Sheet Excel Workflow
+1. **`Config`**: Environment settings (`NETBOX_HOST`, `NETBOX_PATH`, `NETBOX_TOKEN`, `SITE_NAME`, `DEFAULT_SUBNET_MASK`, `VERIFY_SSL`).
+2. **`Devices`**: Device inventory with `Device Name`, `IP Address`, and `Overwrite` (`TRUE`/`FALSE`).
+3. **`Prefixes`**: IPAM subnet definitions with `Prefix`, `Description`, `Site`, `Status`.
+
+### Excel CLI Commands
 ```bash
+# Generate template workbook
 ./netbox-excel-importer generate-template test_devices.xlsx
-```
 
----
-
-### 3. Spreadsheet Structure
-
-#### Sheet 1: `Config`
-| Setting Name | Default Value | Notes |
-| :--- | :--- | :--- |
-| `CONFIG_VERSION` | `1.2.0` | Template compatibility |
-| `NETBOX_HOST` | `192.168.1.172` | Host IP / domain (defaults to `localhost` if blank) |
-| `NETBOX_PATH` | `/netbox` | URL path prefix for Malcolm |
-| `NETBOX_TOKEN` | `<api_token>` | NetBox API Token |
-| `SITE_NAME` | `Malcolm Site` | NetBox Site |
-| `INTERFACE_NAME` | `eth0` | Default interface name |
-| `DEFAULT_SUBNET_MASK` | `/24` | Default CIDR suffix |
-| `VERIFY_SSL` | `False` | SSL certificate verification |
-
-#### Sheet 2: `Devices`
-
-| Device Name | IP Address | Overwrite | Notes |
-| :--- | :--- | :--- | :--- |
-| `srv-sensor-01` | `192.168.70.164` | `FALSE` | Standard creation/verification |
-| `hmi-term-01` | `192.168.70.189/16` | `FALSE` | Custom CIDR subnet mask preserved |
-| `srv-custom-01` | `192.168.70.27` | `TRUE` | **Forces unassignment from old device & re-assignment to this device** |
-
-#### Sheet 3: `Prefixes`
-
-| Prefix | Description | Site | Status |
-| :--- | :--- | :--- | :--- |
-| `192.168.70.0/24` | `Lab Test Devices Subnet` | `Malcolm Site` | `active` |
-| `192.168.1.0/16` | `Corporate Infrastructure Subnet` | `Malcolm Site` | `active` |
-
----
-
-### 4. Validate & Import
-
-#### Validate Spreadsheet Syntax:
-```bash
+# Validate workbook syntax
 ./netbox-excel-importer validate test_devices.xlsx
-```
 
-#### Dry-Run Mode (No changes written to NetBox):
-```bash
+# Dry-run preview
 ./netbox-excel-importer import test_devices.xlsx --dry-run
-```
 
-#### Live Import:
-```bash
+# Live import
 ./netbox-excel-importer import test_devices.xlsx
 ```
 
 ---
 
-## Building the Air-Gapped Deployment Bundle
+## 📦 Standalone Offline Deployment
 
-To build a standalone offline deployment package containing all Python wheel dependencies:
+To build an air-gapped deployment package containing all wheel dependencies for offline Malcolm / Linux nodes:
 
 ```bash
 python build_offline_bundle.py
 ```
-This generates `dist/netbox_importer_offline_bundle.tar.gz` and `dist/netbox_importer_offline_bundle.zip`.
+Outputs: `dist/netbox_importer_offline_bundle.tar.gz` and `dist/netbox_importer_offline_bundle.zip`.
+
+---
+
+## Documentation Links
+
+- [KYE Day 1 Challenge & Scoring Rubric](KYE_DAY1_CHALLENGE_AND_SCORING.md)
+- [Project Changelog](CHANGELOG.md)
+- [Version Tracker](VERSION)

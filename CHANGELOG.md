@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] - 2026-11-04
+
+### Added
+- **Master-Driven Seeding & Reset Engine (`netbox-v2`)**:
+  - Upgraded architecture for NetBox v4.2+ and v4.6+ with first-class `dcim/mac-addresses` and `netbox_data_flows` plugin integration (`applications`, `objectalias`, `dataflows`).
+  - Adaptive request execution engine with configurable write pacing delay (`NETBOX_PACE_MS`), timeout overrides (`NETBOX_TIMEOUT`), and 4-tier exponential backoff retries on HTTP 429/502/503/504 or connection drops.
+  - Selective reset engine (`reset --apply`) that deletes challenge inventory objects in paced batches of 30 without disrupting preloaded vendor models (`dcim/device-types/`).
+- **KYE Day 1 Challenge & 75-Point Rubric (`score`)**:
+  - **Part 1 (18 pts)**: 9 Redacted Devices (1 pt for IP entry, 1 pt for device binding).
+  - **Part 2 (39 pts)**: 13 Withheld DataFlows (1 pt for flow creation, 1 pt for source IP/alias, 1 pt for destination IP/alias).
+  - **Part 3 (18 pts)**: 6 Tampered Devices with wrong IPs and ASCII tomato comments signed *"Allen Broodly Was Here"* (3 pts for restoring correct IP).
+  - Normalized and adaptive device and alias name matching in `scorer.py`.
+- **Classroom Live Split-Screen Dashboard (`dashboard`)**:
+  - Dedicated zero-dependency HTTP scoreboard server running at `http://localhost:8080/`.
+  - Split-screen UI displaying Team Delta in neon blue and Team Omega in energetic orange.
+  - Auto-updates every 30 seconds with discrete progress bars (`x/18`, `x/18`, `x/39`).
+  - Discrete PIN-protected admin modal (`Ctrl+Shift+A` or hidden footer dot) with one-click "Reset to KYE Start" and "Complete CTF Inventory" controls.
+- **Unified Multi-Team Configuration & Localhost Support**:
+  - Consolidated `.env` architecture supporting shared rate-limiting options and independent instance URLs/tokens for Team Delta and Team Omega.
+  - Added `--localhost [delta|omega]` CLI flag for high-speed local loopback execution (`127.0.0.1`) directly on Malcolm VMs.
+  - Added `--team [delta|omega]` CLI flag for remote execution across VM IP addresses from instructor machines.
+- **Real-Time Terminal Progress Reporting**:
+  - Integrated `rich.progress` progress bars across `seed` and `reset` displaying item counters (e.g. `102/500 items`), percentage completion, elapsed/remaining time, and active object labels.
+
+---
+
 ## [1.3.0] - 2026-08-20
 
 ### Added

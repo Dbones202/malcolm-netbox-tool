@@ -1,112 +1,165 @@
 """Derive a reduced 'student' environment from the master by subtraction.
 
-Philosophy (per white cell): the master is the complete answer key; the student
-start-state is the master minus whatever they're meant to discover/build. It's
-always easier to remove than to add, so every student view is a profile of
-removals applied to one master. The output is itself master-shaped, so the same
-seeder pushes it and the same scorer grades against the full master.
-
-Profiles (knobs are all subtractive):
-  strip_mac             drop discovered MAC addresses from NICs (keep IPs)
-  drop_service_sources  drop services whose 'source' is in this list (nmap/dataflow)
-  drop_scan_only        drop devices whose provenance == 'scan-only' (students find them)
-  drop_dataflows        drop all dataflow objects
-  drop_coverage         drop 'seen-by:*' sensor-coverage tags
-  drop_owner            drop workstation owner/user info
-Pure standard library.
+Philosophy:
+  - Master is the complete 100% answer key.
+  - Day 1 is the KYE student starting state with:
+    1. 9 Redacted Devices removed (must be discovered).
+    2. 6 Prepopulated Devices tampered with wrong IPs & tomato ASCII note.
+    3. Exactly 24 Dataflows prepopulated (13 withheld to be discovered).
+    4. Stripped MAC addresses and raw nmap service clutter.
 """
 from __future__ import annotations
 
 import copy
 import json
 import os
+from typing import Tuple, Dict, Any
 
-PROFILES = {
-    "day1": {
-        "desc": "Day-1 student start: scaffold given, nmap-discovered layer removed.",
-        "strip_mac": True, "drop_service_sources": ["nmap"], "drop_scan_only": True,
-        "drop_dataflows": False, "drop_coverage": True, "drop_owner": False,
-    },
-    "skeleton": {
-        "desc": "Bare scaffold: devices + IPs + zones + roles only.",
-        "strip_mac": True, "drop_service_sources": ["nmap", "dataflow"], "drop_scan_only": True,
-        "drop_dataflows": True, "drop_coverage": True, "drop_owner": True,
-    },
-    "full": {
-        "desc": "No removals (identity transform; sanity check).",
-        "strip_mac": False, "drop_service_sources": [], "drop_scan_only": False,
-        "drop_dataflows": False, "drop_coverage": False, "drop_owner": False,
-    },
+# 9 Redacted Devices (removed from Day 1 student view)
+REDACTED_DEVICE_NAMES = {
+    "database",
+    "database-asc",
+    "database-acs",
+    "database-acd",
+    "internal-ftp",
+    "acd-plc",
+    "asc-l55-plc",
+    "apl-rtu-2",
+    "sign-asc",
+}
+
+# 6 Tampered Devices (wrong IPs + Allen Broodly tomato comment)
+TAMPERED_DEVICES = {
+    "user-1": {"wrong_ip": "172.16.220.71/24"},
+    "finance-1": {"wrong_ip": "172.16.220.72/24"},
+    "mail": {"wrong_ip": "172.16.220.73/24"},
+    "ews-1": {"wrong_ip": "192.168.0.74/24"},
+    "hmi-acs": {"wrong_ip": "192.168.32.75/24"},
+    "hmi-acd": {"wrong_ip": "192.168.32.76/24"},
+}
+
+TOMATO_ASCII = """      \\ | /
+    '-.;;;.-'
+   -==;;;;;==-
+    .-';;;'-.
+   /  / | \\  \\
+  |           |
+  |  ( ) ( )  |
+  \\     _     /
+   '-._____.-'
+Allen Broodly Was Here"""
+
+# 13 Missing Dataflows (withheld from Day 1 student view)
+WITHHELD_FLOW_KEYS = {
+    ("acd-plc", "indusoft-overview", 18245),
+    ("apl-rtu", "indusoft-overview", 502),
+    ("acs-s7-1500-plc", "indusoft-overview", 102),
+    ("acs-s7-1500-plc", "syslog", 514),
+    ("apl-rtu-2", "apl-breaker-panel", 20000),
+    ("hmi-acs", "asc-l81-plc", 2222),
+    ("asc-l81-plc", "syslog", 514),
+    ("asc-l81-plc", "asc-l55-plc", 44818),
+    ("asc-l55-plc", "indusoft-overview", 44818),
+    ("asc-l81-plc", "rssql-asc", 44818),
+    ("asc-l81-plc", "hmi-asc", 44818),
+    ("asc-remote-io-eip", "asc-l81-plc", 2222),
+    ("rssql-asc", "database-asc", 1433),
 }
 
 
-def reduce_master(master: dict, prof: dict) -> tuple[dict, dict]:
+def reduce_master_day1(master: dict) -> Tuple[dict, dict]:
     out = copy.deepcopy(master)
-    drop_src = set(prof.get("drop_service_sources", []))
-    stats = {"devices_dropped": 0, "macs_stripped": 0, "services_dropped": 0,
-             "owners_dropped": 0, "coverage_tags_dropped": 0, "dataflows_dropped": 0}
+    stats = {
+        "redacted_devices_dropped": 0,
+        "scan_only_dropped": 0,
+        "tampered_devices_modified": 0,
+        "macs_stripped": 0,
+        "services_dropped": 0,
+        "dataflows_withheld": 0,
+        "dataflows_kept": 0,
+    }
 
     kept_devices = []
     for d in out["devices"]:
-        if prof.get("drop_scan_only") and d.get("provenance") == "scan-only":
-            stats["devices_dropped"] += 1
+        name = d["name"]
+        
+        # 1. Drop scan-only rogue hosts
+        if d.get("provenance") == "scan-only":
+            stats["scan_only_dropped"] += 1
             continue
-        if prof.get("strip_mac"):
-            for nic in d["interfaces"]:
-                if nic.get("mac"):
-                    nic["mac"] = None
-                    stats["macs_stripped"] += 1
-        if drop_src:
-            before = len(d["services"])
-            d["services"] = [s for s in d["services"] if s.get("source") not in drop_src]
-            stats["services_dropped"] += before - len(d["services"])
-        if prof.get("drop_owner") and d.pop("owner", None) is not None:
-            stats["owners_dropped"] += 1
-        if prof.get("drop_coverage"):
-            before = len(d.get("tags", []))
-            d["tags"] = [t for t in d.get("tags", []) if not t.startswith("seen-by")]
-            stats["coverage_tags_dropped"] += before - len(d["tags"])
+
+        # 2. Redact the 9 target challenge devices
+        if name in REDACTED_DEVICE_NAMES:
+            stats["redacted_devices_dropped"] += 1
+            continue
+
+        # 3. Strip MAC addresses
+        for nic in d.get("interfaces", []):
+            if nic.get("mac"):
+                nic["mac"] = None
+                stats["macs_stripped"] += 1
+
+        # 4. Tamper the 6 targeted devices
+        if name in TAMPERED_DEVICES:
+            wrong_ip = TAMPERED_DEVICES[name]["wrong_ip"]
+            if d.get("interfaces"):
+                d["interfaces"][0]["ips"] = [wrong_ip]
+            d["notes"] = TOMATO_ASCII
+            d["description"] = f"Tomato: Allen Broodly Was Here | {d.get('description', '')}"[:200]
+            stats["tampered_devices_modified"] += 1
+
+        # 5. Drop nmap raw services (keep dataflow-inferred services)
+        before_svc = len(d.get("services", []))
+        d["services"] = [s for s in d.get("services", []) if s.get("source") != "nmap"]
+        stats["services_dropped"] += before_svc - len(d["services"])
+
         kept_devices.append(d)
+
     out["devices"] = kept_devices
 
-    kept_names = {d["name"] for d in kept_devices}
-    if prof.get("drop_dataflows"):
-        stats["dataflows_dropped"] = len(out.get("dataflows", []))
-        out["dataflows"] = []
-    else:
-        before = len(out.get("dataflows", []))
-        out["dataflows"] = [f for f in out["dataflows"] if f["src"] in kept_names and f["dst"] in kept_names]
-        stats["dataflows_dropped"] = before - len(out["dataflows"])
+    # Filter dataflows: withhold the 13 target flows
+    kept_flows = []
+    for f in out.get("dataflows", []):
+        key = (f.get("src"), f.get("dst"), f.get("port"))
+        if key in WITHHELD_FLOW_KEYS:
+            stats["dataflows_withheld"] += 1
+            continue
+        kept_flows.append(f)
 
-    out.setdefault("meta", {})["profile"] = {"name": prof.get("_name"), "desc": prof.get("desc")}
+    out["dataflows"] = kept_flows
+    stats["dataflows_kept"] = len(kept_flows)
+
+    out.setdefault("meta", {})["profile"] = {
+        "name": "day1_kye",
+        "desc": "KYE Day 1 Student Starting State: 9 Redacted, 6 Tampered, 24 Flows Prepopulated, 13 Withheld.",
+    }
     return out, stats
 
 
 def main():
     import argparse
-    ap = argparse.ArgumentParser(description="Reduce the master to a student start-state.")
-    ap.add_argument("--profile", default="day1", choices=list(PROFILES))
+    ap = argparse.ArgumentParser(description="Generate KYE Day 1 student state from master.")
     ap.add_argument("--master", default="v2_reports/master.json")
-    ap.add_argument("--out", default=None)
+    ap.add_argument("--out", default="v2_reports/partial_day1.json")
     args = ap.parse_args()
 
-    master = json.load(open(args.master))
-    prof = dict(PROFILES[args.profile]); prof["_name"] = args.profile
-    out, stats = reduce_master(master, prof)
+    master = json.load(open(args.master, encoding="utf-8"))
+    out, stats = reduce_master_day1(master)
 
-    out_path = args.out or f"v2_reports/partial_{args.profile}.json"
-    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
-    json.dump(out, open(out_path, "w"), indent=2)
+    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+    with open(args.out, "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=2)
 
-    svc_now = sum(len(d["services"]) for d in out["devices"])
-    print(f"Profile '{args.profile}': {prof['desc']}")
-    print(f"  master  : {len(master['devices'])} devices, "
-          f"{sum(len(d['services']) for d in master['devices'])} services, {len(master['dataflows'])} flows")
-    print(f"  student : {len(out['devices'])} devices, {svc_now} services, {len(out['dataflows'])} flows")
-    print(f"  removed : {stats['devices_dropped']} scan-only devices, {stats['macs_stripped']} MACs, "
-          f"{stats['services_dropped']} services, {stats['coverage_tags_dropped']} coverage tags, "
-          f"{stats['owners_dropped']} owners, {stats['dataflows_dropped']} flows")
-    print(f"  -> {out_path}  (this is what students must rebuild to reach 100%)")
+    print("=== KYE Day 1 State Generation Complete ===")
+    print(f"Master Devices       : {len(master['devices'])}")
+    print(f"Student Devices      : {len(out['devices'])}")
+    print(f"  Redacted Devices   : {stats['redacted_devices_dropped']} (Part 1 - 18 pts)")
+    print(f"  Tampered Devices   : {stats['tampered_devices_modified']} (Part 3 - 18 pts)")
+    print(f"  Scan-only Dropped  : {stats['scan_only_dropped']}")
+    print(f"Master Dataflows     : {len(master['dataflows'])}")
+    print(f"Student Dataflows    : {stats['dataflows_kept']} prepopulated")
+    print(f"  Withheld Dataflows : {stats['dataflows_withheld']} (Part 2 - 39 pts)")
+    print(f"Output File          : {args.out}")
 
 
 if __name__ == "__main__":
