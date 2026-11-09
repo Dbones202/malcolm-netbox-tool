@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.2] - 2026-11-09
+
+### Added
+- **Instructor Scored Points Audit Dashboard (`dashboard_server.py`)**:
+  - Built an interactive item-by-item Scored Points Audit table into the hidden admin modal (`Ctrl+Shift+A` or footer dot with PIN `instructor`).
+  - Itemized tracking across all 28 scorable items (75 total points):
+    - **Part 1 (9 Redacted Assets, 18 pts)**: Sub-point breakdown for IP in IPAM (+1 pt) and Device Binding (+1 pt).
+    - **Part 2 (13 Missing DataFlows, 39 pts)**: Sub-point breakdown for Flow Created (+1 pt), Source Alias (+1 pt), and Destination Alias (+1 pt).
+    - **Part 3 (6 Tampered Devices, 18 pts)**: Live verification of Expected IP vs Current IP and tamper note clearing (+3 pts).
+  - Multi-team selection tabs (**Team Delta** and **Team Omega**).
+  - Quick filter pills (**All (28)**, **Missing / Incomplete**, **Accounted For**) and real-time text search.
+  - New protected POST endpoint `/api/admin/audit` requiring admin PIN, keeping point secrets safe from student browser inspection.
+- **Terminal Itemized Scoring Audit (`cli.py`)**:
+  - Added `--details` / `--audit` flag to `netbox-v2 score`.
+  - Generates 3 formatted Rich tables displaying exact scorable point status, sub-points, and missing items directly in the CLI.
+
+---
+
 ## [2.0.1] - 2026-11-05
 
 ### Added

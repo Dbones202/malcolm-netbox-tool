@@ -179,10 +179,10 @@ http://localhost:8080
   * **Missing Entries:** (9 redacted assets × 2 pts = 18 pts max)
   * **Missing DataFlows:** (13 withheld flows × 3 pts = 39 pts max)
 
-### 4. Hidden Admin Console & Controls
-The scoreboard includes a built-in admin modal allowing instructors to remotely reset or re-seed either team's VM directly from the browser without opening a terminal.
+### 4. Hidden Admin Console & Scored Audit Dashboard
+The scoreboard includes a built-in admin modal allowing instructors to remotely reset or re-seed either team's VM directly from the browser without opening a terminal, as well as an interactive **Scored Points Audit** that inspects each of the 28 challenge points.
 
-* **Shortcut to Open:** Press **`Ctrl` + `Shift` + `A`** anywhere on the scoreboard page.
+* **Shortcut to Open:** Press **`Ctrl` + `Shift` + `A`** anywhere on the scoreboard page (or click the hidden dot `•` in the footer).
 * **Admin PIN:**
   ```text
   instructor
@@ -191,5 +191,30 @@ The scoreboard includes a built-in admin modal allowing instructors to remotely 
   * **Reset to Day 1:** Selectively wipes challenge objects and re-seeds the initial student starting baseline (`partial_day1.json`).
   * **Seed Complete CTF Inventory:** Populates the full 70-device ground truth / answer key (`master.json`).
   * **Force Refresh:** Bypasses the 30-second polling timer and immediately queries both student instances.
+* **Item-by-Item Scored Audit Dashboard:**
+  * Displays a full breakdown of all **28 scorable items** (75 total points) for either team (**Team Delta** or **Team Omega**).
+  * **Filter Pills:** Filter by **All (28)**, **Missing / Incomplete**, or **Accounted For**.
+  * **Real-Time Search:** Search by device name, IP address, flow name, or description.
+  * **Summary KPI Cards:** Instantly view Total Score, Redacted Assets (Part 1), Missing DataFlows (Part 2), and Tampered Devices (Part 3).
+  * **Granular Status Badges:**
+    * **Part 1 (Redacted Assets, 9 items):** Shows separate indicators for *IP in IPAM* (+1 pt) and *Device Bound* (+1 pt).
+    * **Part 2 (Missing DataFlows, 13 items):** Shows separate indicators for *Flow Created* (+1 pt), *Source Alias* (+1 pt), and *Dest Alias* (+1 pt).
+    * **Part 3 (Tampered Devices, 6 items):** Shows *Status* (`Corrected` / `Tampered`), expected IP vs. current IP, and tamper comment detection.
+
+### 5. Command-Line Scoring with Granular Audit
+Instructors can also run an itemized scoring audit directly in the terminal using the `--details` (or `--audit`) flag:
+
+```bash
+# Audit Team Delta's scoring breakdown in terminal
+./netbox-v2.sh score --team delta --details
+
+# Audit Team Omega with full item-by-item tables
+./netbox-v2.sh score --team omega --details
+
+# Audit local VM loopback
+./netbox-v2.sh score --localhost delta --details
+```
+This prints 3 detailed Rich tables showing the exact status and sub-point allocation for every single scorable asset, flow, and device.
+
 
 

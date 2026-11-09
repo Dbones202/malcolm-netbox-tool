@@ -2,7 +2,8 @@
 
 Serves auto-updating split-screen dashboard for Team Delta (Blue) and Team Omega (Orange).
 Polls NetBox APIs every 30 seconds or on demand.
-Includes discrete, non-obvious Admin controls to Reset to Day 1 or Complete CTF Inventory.
+Includes discrete, non-obvious Admin controls with an interactive item-by-item
+Scored Audit Dashboard showing every scorable point (missing vs. accounted for).
 """
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ import time
 from pathlib import Path
 from typing import Dict, Any
 
-from .scorer import NetBoxScorer
+from .scorer import NetBoxScorer, REDACTED_DEVICES, TARGET_FLOWS, TAMPERED_DEVICES
 from .seeder import run_reset, run_seed
 
 HERE = Path(__file__).parent.resolve()
@@ -27,13 +28,64 @@ OMEGA_ENV = str(HERE / "omega_env.txt")
 PARTIAL_DAY1 = str(ROOT_REPO / "v2_reports" / "partial_day1.json")
 MASTER_JSON = str(ROOT_REPO / "v2_reports" / "master.json")
 
-ADMIN_PIN = "instructor"
+ADMIN_PIN = (os.environ.get("ADMIN_PIN") or "instructor").strip()
+
+
+def _empty_score_result(err: str = "") -> dict:
+    p1 = [
+        {
+            "canonical": k,
+            "ip": v["ip"],
+            "ip_found": False,
+            "device_bound": False,
+            "found_dev_name": None,
+            "points": 0,
+        }
+        for k, v in REDACTED_DEVICES.items()
+    ]
+    p2 = [
+        {
+            "name": tf["name"],
+            "app": tf["app"],
+            "port": tf["port"],
+            "src_ip": tf["src_ip"],
+            "dst_ip": tf["dst_ip"],
+            "flow_found": False,
+            "src_ok": False,
+            "dst_ok": False,
+            "points": 0,
+        }
+        for tf in TARGET_FLOWS
+    ]
+    p3 = [
+        {
+            "device": k,
+            "real_ip": v["real_ip"],
+            "wrong_ip": v["wrong_ip"],
+            "current_ip": None,
+            "is_corrected": False,
+            "points": 0,
+        }
+        for k, v in TAMPERED_DEVICES.items()
+    ]
+    return {
+        "error": err,
+        "total_score": 0,
+        "max_score": 75,
+        "percentage": 0.0,
+        "categories": {
+            "corrected_data": {"points": 0, "max": 18, "count": 0, "total": 6, "details": p3},
+            "missing_entries": {"points": 0, "max": 18, "count": 0, "total": 9, "details": p1},
+            "missing_dataflow": {"points": 0, "max": 39, "count": 0, "total": 13, "details": p2},
+        },
+    }
+
 
 # In-memory score cache
 CACHE_LOCK = threading.Lock()
 LATEST_DATA: Dict[str, Any] = {
-    "delta": {"total_score": 0, "max_score": 75, "categories": {"corrected_data": {"points": 0, "max": 18}, "missing_entries": {"points": 0, "max": 18}, "missing_dataflow": {"points": 0, "max": 39}}},
-    "omega": {"total_score": 0, "max_score": 75, "categories": {"corrected_data": {"points": 0, "max": 18}, "missing_entries": {"points": 0, "max": 18}, "missing_dataflow": {"points": 0, "max": 39}}},
+    "delta": _empty_score_result("Connecting to Team Delta..."),
+    "omega": _empty_score_result("Connecting to Team Omega..."),
     "last_updated": None,
     "delta_online": False,
     "omega_online": False,
@@ -60,9 +112,7 @@ def refresh_scores() -> None:
             except Exception as e2:
                 e = e2
         if not delta_ok:
-            delta_res = {"error": str(e), "total_score": 0, "max_score": 75, "categories": {
-                "corrected_data": {"points": 0, "max": 18}, "missing_entries": {"points": 0, "max": 18}, "missing_dataflow": {"points": 0, "max": 39}
-            }}
+            delta_res = _empty_score_result(str(e))
 
     # Omega
     omega_res, omega_ok = None, False
@@ -79,9 +129,7 @@ def refresh_scores() -> None:
             except Exception as e2:
                 e = e2
         if not omega_ok:
-            omega_res = {"error": str(e), "total_score": 0, "max_score": 75, "categories": {
-                "corrected_data": {"points": 0, "max": 18}, "missing_entries": {"points": 0, "max": 18}, "missing_dataflow": {"points": 0, "max": 39}
-            }}
+            omega_res = _empty_score_result(str(e))
 
     with CACHE_LOCK:
         if delta_res:
@@ -283,40 +331,319 @@ HTML_PAGE = """<!DOCTYPE html>
   }
   .secret-dot:hover { background: rgba(255, 255, 255, 0.1); }
 
-  /* Hidden Modal */
+  /* Hidden Admin Modal & Scored Audit Dashboard */
   .modal-backdrop {
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(12px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    padding: 20px;
   }
   .modal-box {
-    background: #141b24;
-    border: 1px solid #2a3b4c;
-    border-radius: 12px;
-    padding: 32px;
+    background: #0d121a;
+    border: 1px solid #1f2f40;
+    border-radius: 14px;
+    padding: 24px;
     width: 480px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    max-width: 95vw;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease, height 0.3s ease;
   }
-  .modal-box h3 { margin-bottom: 16px; font-size: 18px; color: #fff; }
-  .modal-row { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-  .modal-row label { font-size: 13px; color: #90a4ae; }
+  .modal-box.expanded {
+    width: 1140px;
+    max-width: 96vw;
+    height: 90vh;
+    max-height: 90vh;
+  }
+
+  /* Auth Screen */
+  .auth-view h3 { margin-bottom: 12px; font-size: 18px; color: #fff; }
+  .auth-view p { font-size: 13px; color: #78909c; margin-bottom: 20px; line-height: 1.4; }
+  .modal-row { margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .modal-row label { font-size: 13px; color: #90a4ae; font-weight: 600; }
   .modal-box input, .modal-box select {
-    background: #0d1219; border: 1px solid #37474f; border-radius: 6px; padding: 10px 14px; color: #fff; font-size: 14px; outline: none;
+    background: #070a0f; border: 1px solid #2a3b4c; border-radius: 6px; padding: 10px 14px; color: #fff; font-size: 14px; outline: none;
   }
-  .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+  .modal-box input:focus { border-color: #00c3ff; }
+  .modal-actions { display: flex; gap: 12px; margin-top: 16px; }
   .btn {
-    flex: 1; padding: 12px; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: opacity 0.2s;
+    padding: 10px 18px; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer; border: none; transition: opacity 0.2s, background 0.2s;
   }
-  .btn-reset { background: #d32f2f; color: #fff; }
+  .btn-primary { background: #0091ea; color: #fff; }
+  .btn-reset { background: #c62828; color: #fff; }
   .btn-complete { background: #2e7d32; color: #fff; }
-  .btn-close { background: #37474f; color: #fff; }
-  .btn:hover { opacity: 0.85; }
-  .status-msg { margin-top: 14px; font-size: 13px; text-align: center; }
+  .btn-close { background: #263238; color: #cfd8dc; }
+  .btn:hover { opacity: 0.88; }
+  .status-msg { margin-top: 12px; font-size: 13px; text-align: center; font-weight: 600; }
+
+  /* Audit Dashboard UI */
+  .audit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .audit-header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .badge-instructor {
+    background: #283593;
+    color: #8c9eff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(140, 158, 255, 0.3);
+  }
+  .audit-header-btns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-sm {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .btn-icon-close {
+    background: transparent;
+    color: #90a4ae;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .btn-icon-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+  /* Team Selector & Filter Bar */
+  .audit-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 14px 0 12px 0;
+  }
+  .team-toggle-group {
+    display: flex;
+    background: #06090e;
+    border: 1px solid #1c2b3a;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 4px;
+  }
+  .team-tab-btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #78909c;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .team-tab-btn.active.delta {
+    background: #0088cc;
+    color: #fff;
+    box-shadow: 0 0 12px var(--delta-glow);
+  }
+  .team-tab-btn.active.omega {
+    background: #d35400;
+    color: #fff;
+    box-shadow: 0 0 12px var(--omega-glow);
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #263238;
+    background: #10161f;
+    color: #90a4ae;
+    transition: all 0.2s;
+  }
+  .filter-pill.active {
+    background: #263238;
+    color: #eceff1;
+    border-color: #546e7a;
+  }
+  .search-input {
+    background: #070a0f;
+    border: 1px solid #263238;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: #fff;
+    font-size: 12px;
+    width: 200px;
+    outline: none;
+  }
+  .search-input:focus { border-color: #00c3ff; }
+
+  /* Summary Stat Cards */
+  .audit-summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .summary-stat-card {
+    background: #070b10;
+    border: 1px solid #1c2b3a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .summary-stat-label { font-size: 11px; font-weight: 700; color: #78909c; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-stat-val { font-size: 18px; font-weight: 800; font-family: monospace; color: #fff; }
+
+  /* Audit List Container */
+  .audit-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .audit-scroll-area::-webkit-scrollbar { width: 6px; }
+  .audit-scroll-area::-webkit-scrollbar-thumb { background: #263238; border-radius: 3px; }
+
+  .audit-category-block {
+    background: #080c12;
+    border: 1px solid #1a2634;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .audit-category-header {
+    background: rgba(255,255,255,0.02);
+    padding: 10px 16px;
+    border-bottom: 1px solid #1a2634;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .audit-category-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #cfd8dc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .audit-category-score { font-size: 13px; font-weight: 700; color: #00e676; font-family: monospace; }
+
+  /* Items Table */
+  .audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .audit-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.3);
+    color: #607d8b;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  .audit-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: middle;
+    color: #eceff1;
+  }
+  .audit-table tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* Status Pills */
+  .pill-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .pill-earned { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
+  .pill-missing { background: rgba(244, 67, 54, 0.15); color: #f44336; border: 1px solid rgba(244, 67, 54, 0.3); }
+
+  .points-badge {
+    font-weight: 800;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-align: right;
+    display: inline-block;
+  }
+  .points-full { color: #00e676; background: rgba(0, 230, 118, 0.1); }
+  .points-part { color: #ffb300; background: rgba(255, 179, 0, 0.1); }
+  .points-zero { color: #f44336; background: rgba(244, 67, 54, 0.1); }
+
+  /* Footer Controls Bar */
+  .audit-footer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .remote-control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .select-target {
+    background: #070a0f;
+    border: 1px solid #37474f;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    font-size: 12px;
+    outline: none;
+  }
 </style>
 </head>
 <body>
@@ -413,38 +740,176 @@ HTML_PAGE = """<!DOCTYPE html>
 
 <footer>
   <span>KYE Industrial Range Exercise</span>
-  <div class="secret-dot" id="adminTrigger" title=""></div>
+  <div class="secret-dot" id="adminTrigger" title="Instructor Console"></div>
 </footer>
 
 <!-- Discrete Admin Modal -->
 <div class="modal-backdrop" id="adminModal">
-  <div class="modal-box">
-    <h3>Instructor Control Console</h3>
-    <div class="modal-row">
-      <label>Passcode</label>
-      <input type="password" id="adminPin" placeholder="Instructor PIN">
+  <div class="modal-box" id="adminBox">
+    
+    <!-- 1. Passcode Screen (Shown if locked) -->
+    <div id="adminAuthView" class="auth-view">
+      <h3>Instructor Control & Scored Points Audit</h3>
+      <p>Enter the Instructor PIN to access the item-by-item scoring audit and remote NetBox controls.</p>
+      <div class="modal-row">
+        <label>Instructor Passcode</label>
+        <input type="password" id="adminPinInput" placeholder="Enter PIN" onkeydown="if(event.key==='Enter')submitPin()">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="submitPin()">Unlock Console</button>
+        <button class="btn btn-close" onclick="closeAdmin()">Cancel</button>
+      </div>
+      <div class="status-msg" id="authStatus"></div>
     </div>
-    <div class="modal-row">
-      <label>Target Environment</label>
-      <select id="adminTarget">
-        <option value="both">Both Teams (Delta & Omega)</option>
-        <option value="delta">Team Delta Only</option>
-        <option value="omega">Team Omega Only</option>
-      </select>
+
+    <!-- 2. Interactive Scored Audit Dashboard (Shown once unlocked) -->
+    <div id="adminAuditView" style="display:none; flex: 1; flex-direction: column; overflow: hidden;">
+      <div class="audit-header">
+        <div class="audit-header-title">
+          <span>Instructor Scored Points Audit</span>
+          <span class="badge-instructor">Instructor Mode</span>
+        </div>
+        <div class="audit-header-btns">
+          <button class="btn-sm btn-primary" onclick="refreshAudit(true)">⟳ Refresh Scores</button>
+          <button class="btn-icon-close" onclick="closeAdmin()">&times;</button>
+        </div>
+      </div>
+
+      <!-- Navigation & Filters -->
+      <div class="audit-nav-bar">
+        <div class="team-toggle-group">
+          <button class="team-tab-btn delta active" id="tabDeltaBtn" onclick="selectTeam('delta')">
+            <span>Team Delta</span>
+            <span id="tabDeltaScore">0/75</span>
+          </button>
+          <button class="team-tab-btn omega" id="tabOmegaBtn" onclick="selectTeam('omega')">
+            <span>Team Omega</span>
+            <span id="tabOmegaScore">0/75</span>
+          </button>
+        </div>
+
+        <div class="filter-group">
+          <button class="filter-pill active" id="filterAll" onclick="setFilter('all')">All (28)</button>
+          <button class="filter-pill" id="filterMissing" onclick="setFilter('missing')">✗ Missing / Incomplete</button>
+          <button class="filter-pill" id="filterAccounted" onclick="setFilter('accounted')">✓ Accounted For</button>
+          <input type="text" class="search-input" id="auditSearchInput" placeholder="🔍 Filter items..." oninput="filterItems()">
+        </div>
+      </div>
+
+      <!-- Summary Stat Cards -->
+      <div class="audit-summary-row">
+        <div class="summary-stat-card">
+          <span class="summary-stat-label">Total Score</span>
+          <span class="summary-stat-val" id="statTotalScore">0 / 75 pts (0%)</span>
+        </div>
+        <div class="summary-stat-card">
+          <span class="summary-stat-label">Part 1: Redacted Assets</span>
+          <span class="summary-stat-val" id="statPart1">0 / 9 (0 / 18 pts)</span>
+        </div>
+        <div class="summary-stat-card">
+          <span class="summary-stat-label">Part 2: Missing DataFlows</span>
+          <span class="summary-stat-val" id="statPart2">0 / 13 (0 / 39 pts)</span>
+        </div>
+        <div class="summary-stat-card">
+          <span class="summary-stat-label">Part 3: Tampered Devices</span>
+          <span class="summary-stat-val" id="statPart3">0 / 6 (0 / 18 pts)</span>
+        </div>
+      </div>
+
+      <!-- Scrollable Tables -->
+      <div class="audit-scroll-area" id="auditScrollArea">
+        
+        <!-- Category 1: Part 3 Tampered Devices -->
+        <div class="audit-category-block" id="blockPart3">
+          <div class="audit-category-header">
+            <span class="audit-category-title">🍅 Part 3: Tampered Devices (6 Items &times; 3 pts = 18 pts max)</span>
+            <span class="audit-category-score" id="hdrPart3Score">0 / 18 pts</span>
+          </div>
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Device</th>
+                <th>Real Expected IPv4</th>
+                <th>Seeded Bogus IP</th>
+                <th>Current NetBox IP</th>
+                <th>Status</th>
+                <th style="text-align:right;">Points</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPart3"></tbody>
+          </table>
+        </div>
+
+        <!-- Category 2: Part 1 Redacted Assets -->
+        <div class="audit-category-block" id="blockPart1">
+          <div class="audit-category-header">
+            <span class="audit-category-title">🔍 Part 1: Redacted Devices &amp; IPs (9 Items &times; 2 pts = 18 pts max)</span>
+            <span class="audit-category-score" id="hdrPart1Score">0 / 18 pts</span>
+          </div>
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Asset / Canonical</th>
+                <th>Expected IPv4</th>
+                <th>IP in IPAM (+1 pt)</th>
+                <th>Device Bound (+1 pt)</th>
+                <th>Matched In NetBox</th>
+                <th style="text-align:right;">Points</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPart1"></tbody>
+          </table>
+        </div>
+
+        <!-- Category 3: Part 2 Missing Industrial Dataflows -->
+        <div class="audit-category-block" id="blockPart2">
+          <div class="audit-category-header">
+            <span class="audit-category-title">⚡ Part 2: Missing Industrial DataFlows (13 Items &times; 3 pts = 39 pts max)</span>
+            <span class="audit-category-score" id="hdrPart2Score">0 / 39 pts</span>
+          </div>
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>App</th>
+                <th>Flow Name</th>
+                <th>Endpoints &amp; Port</th>
+                <th>Flow Record (+1 pt)</th>
+                <th>Src Resolved (+1 pt)</th>
+                <th>Dst Resolved (+1 pt)</th>
+                <th style="text-align:right;">Points</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPart2"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Remote Control Bar -->
+      <div class="audit-footer-controls">
+        <div class="remote-control-group">
+          <span style="font-size:12px; font-weight:600; color:#90a4ae;">Remote Action Target:</span>
+          <select id="adminTarget" class="select-target">
+            <option value="both">Both Teams (Delta &amp; Omega)</option>
+            <option value="delta">Team Delta Only</option>
+            <option value="omega">Team Omega Only</option>
+          </select>
+          <button class="btn btn-reset" onclick="triggerAction('reset')">Reset to KYE Start</button>
+          <button class="btn btn-complete" onclick="triggerAction('complete')">Complete CTF Inventory</button>
+        </div>
+        <div class="status-msg" id="adminStatus" style="margin:0;"></div>
+      </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-reset" onclick="triggerAction('reset')">Reset to KYE Start</button>
-      <button class="btn btn-complete" onclick="triggerAction('complete')">Complete CTF Inventory</button>
-    </div>
-    <div style="margin-top: 12px; text-align: right;">
-      <button class="btn btn-close" onclick="closeAdmin()">Close</button>
-    </div>
-    <div class="status-msg" id="adminStatus"></div>
+
   </div>
 </div>
 
 <script>
   let timer = 30;
+  let adminPin = sessionStorage.getItem('kye_admin_pin') || '';
+  let auditData = null;
+  let activeTeam = 'delta';
+  let activeFilter = 'all';
 
   async function updateScores() {
     try {
@@ -484,6 +949,12 @@ HTML_PAGE = """<!DOCTYPE html>
       document.getElementById('omega-m3').innerText = om3 + ' / 39';
       document.getElementById('omega-b3').style.width = ((om3 / 39) * 100) + '%';
       document.getElementById('omega-offline').style.display = data.omega_online ? 'none' : 'block';
+
+      // If audit dashboard is open, update its numbers too
+      if (document.getElementById('adminAuditView').style.display === 'flex') {
+        auditData = data;
+        renderAudit();
+      }
     } catch(e) {
       console.error('Score sync error:', e);
     }
@@ -503,7 +974,8 @@ HTML_PAGE = """<!DOCTYPE html>
   // Admin Hotkey (Ctrl + Shift + A) or secret-dot click
   document.getElementById('adminTrigger').addEventListener('click', openAdmin);
   window.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
+    if (e.ctrlKey && e.shiftKey && (e.code === 'KeyA' || e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
       openAdmin();
     }
   });
@@ -511,13 +983,252 @@ HTML_PAGE = """<!DOCTYPE html>
   function openAdmin() {
     document.getElementById('adminModal').style.display = 'flex';
     document.getElementById('adminStatus').innerText = '';
+    if (adminPin) {
+      showAuditDashboard();
+    } else {
+      showAuthScreen();
+    }
   }
+
   function closeAdmin() {
     document.getElementById('adminModal').style.display = 'none';
   }
 
+  function showAuthScreen() {
+    const box = document.getElementById('adminBox');
+    box.classList.remove('expanded');
+    document.getElementById('adminAuthView').style.display = 'block';
+    document.getElementById('adminAuditView').style.display = 'none';
+    document.getElementById('authStatus').innerText = '';
+    setTimeout(() => document.getElementById('adminPinInput').focus(), 100);
+  }
+
+  function showAuditDashboard() {
+    const box = document.getElementById('adminBox');
+    box.classList.add('expanded');
+    document.getElementById('adminAuthView').style.display = 'none';
+    document.getElementById('adminAuditView').style.display = 'flex';
+    refreshAudit(false);
+  }
+
+  async function submitPin() {
+    const pin = document.getElementById('adminPinInput').value.trim();
+    const statusEl = document.getElementById('authStatus');
+    statusEl.style.color = '#ffb300';
+    statusEl.innerText = 'Verifying passcode...';
+
+    try {
+      const res = await fetch('/api/admin/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: pin })
+      });
+      if (res.ok) {
+        adminPin = pin;
+        sessionStorage.setItem('kye_admin_pin', pin);
+        statusEl.innerText = '';
+        auditData = await res.json();
+        showAuditDashboard();
+      } else {
+        statusEl.style.color = '#f44336';
+        statusEl.innerText = 'Incorrect passcode. Access denied.';
+      }
+    } catch(e) {
+      statusEl.style.color = '#f44336';
+      statusEl.innerText = 'Error connecting to server.';
+    }
+  }
+
+  async function refreshAudit(force = false) {
+    const statusEl = document.getElementById('adminStatus');
+    if (force) {
+      statusEl.style.color = '#ffb300';
+      statusEl.innerText = 'Querying live NetBox instances...';
+    }
+    try {
+      const res = await fetch('/api/admin/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: adminPin, refresh: force })
+      });
+      if (res.ok) {
+        auditData = await res.json();
+        renderAudit();
+        if (force) {
+          statusEl.style.color = '#00e676';
+          statusEl.innerText = 'Scores refreshed at ' + (auditData.last_updated || new Date().toLocaleTimeString());
+          setTimeout(() => { statusEl.innerText = ''; }, 3000);
+        }
+      } else if (res.status === 403) {
+        sessionStorage.removeItem('kye_admin_pin');
+        adminPin = '';
+        showAuthScreen();
+      }
+    } catch(e) {
+      statusEl.style.color = '#f44336';
+      statusEl.innerText = 'Error loading audit data.';
+    }
+  }
+
+  function selectTeam(team) {
+    activeTeam = team;
+    document.getElementById('tabDeltaBtn').className = 'team-tab-btn delta' + (team === 'delta' ? ' active' : '');
+    document.getElementById('tabOmegaBtn').className = 'team-tab-btn omega' + (team === 'omega' ? ' active' : '');
+    renderAudit();
+  }
+
+  function setFilter(filt) {
+    activeFilter = filt;
+    ['filterAll', 'filterMissing', 'filterAccounted'].forEach(id => {
+      document.getElementById(id).classList.remove('active');
+    });
+    if (filt === 'all') document.getElementById('filterAll').classList.add('active');
+    if (filt === 'missing') document.getElementById('filterMissing').classList.add('active');
+    if (filt === 'accounted') document.getElementById('filterAccounted').classList.add('active');
+    renderAudit();
+  }
+
+  function filterItems() {
+    renderAudit();
+  }
+
+  function renderAudit() {
+    if (!auditData) return;
+
+    const deltaScore = (auditData.delta && auditData.delta.total_score) || 0;
+    const omegaScore = (auditData.omega && auditData.omega.total_score) || 0;
+    document.getElementById('tabDeltaScore').innerText = deltaScore + '/75';
+    document.getElementById('tabOmegaScore').innerText = omegaScore + '/75';
+
+    const currentTeam = auditData[activeTeam] || {};
+    const cats = currentTeam.categories || {};
+    const p3 = cats.corrected_data || { points: 0, max: 18, count: 0, total: 6, details: [] };
+    const p1 = cats.missing_entries || { points: 0, max: 18, count: 0, total: 9, details: [] };
+    const p2 = cats.missing_dataflow || { points: 0, max: 39, count: 0, total: 13, details: [] };
+
+    // Update Stat Cards
+    const totalPts = currentTeam.total_score || 0;
+    const pct = currentTeam.percentage || 0;
+    document.getElementById('statTotalScore').innerText = totalPts + ' / 75 pts (' + pct + '%)';
+    document.getElementById('statPart1').innerText = p1.count + ' / ' + p1.total + ' (' + p1.points + ' / 18 pts)';
+    document.getElementById('statPart2').innerText = p2.count + ' / ' + p2.total + ' (' + p2.points + ' / 39 pts)';
+    document.getElementById('statPart3').innerText = p3.count + ' / ' + p3.total + ' (' + p3.points + ' / 18 pts)';
+
+    document.getElementById('hdrPart1Score').innerText = p1.points + ' / 18 pts';
+    document.getElementById('hdrPart2Score').innerText = p2.points + ' / 39 pts';
+    document.getElementById('hdrPart3Score').innerText = p3.points + ' / 18 pts';
+
+    const q = (document.getElementById('auditSearchInput').value || '').toLowerCase().trim();
+
+    // 1. Render Part 3: Tampered Devices (6 Items)
+    const tbodyP3 = document.getElementById('tbodyPart3');
+    tbodyP3.innerHTML = '';
+    (p3.details || []).forEach(item => {
+      const isComplete = item.is_corrected;
+      if (activeFilter === 'missing' && isComplete) return;
+      if (activeFilter === 'accounted' && !isComplete) return;
+
+      const txtMatch = (item.device + ' ' + item.real_ip + ' ' + item.wrong_ip + ' ' + (item.current_ip || '')).toLowerCase();
+      if (q && !txtMatch.includes(q)) return;
+
+      const tr = document.createElement('tr');
+      const stPill = isComplete 
+        ? '<span class="pill-status pill-earned">✓ Restored to ' + item.real_ip + '</span>'
+        : '<span class="pill-status pill-missing">✗ Tampered (current: ' + (item.current_ip || 'None') + ')</span>';
+
+      const ptBadge = isComplete
+        ? '<span class="points-badge points-full">3 / 3</span>'
+        : '<span class="points-badge points-zero">0 / 3</span>';
+
+      tr.innerHTML = `
+        <td style="font-weight:700;">${item.device}</td>
+        <td><code>${item.real_ip}</code></td>
+        <td style="color:#78909c;"><code>${item.wrong_ip}</code></td>
+        <td><code>${item.current_ip || '<span style="color:#607d8b;">None</span>'}</code></td>
+        <td>${stPill}</td>
+        <td style="text-align:right;">${ptBadge}</td>
+      `;
+      tbodyP3.appendChild(tr);
+    });
+
+    // 2. Render Part 1: Redacted Assets (9 Items)
+    const tbodyP1 = document.getElementById('tbodyPart1');
+    tbodyP1.innerHTML = '';
+    (p1.details || []).forEach(item => {
+      const isComplete = item.points === 2;
+      if (activeFilter === 'missing' && isComplete) return;
+      if (activeFilter === 'accounted' && !isComplete) return;
+
+      const txtMatch = (item.canonical + ' ' + item.ip + ' ' + (item.found_dev_name || '')).toLowerCase();
+      if (q && !txtMatch.includes(q)) return;
+
+      const tr = document.createElement('tr');
+      const ipPill = item.ip_found
+        ? '<span class="pill-status pill-earned">✓ Found in IPAM</span>'
+        : '<span class="pill-status pill-missing">✗ Missing IP</span>';
+
+      const devPill = item.device_bound
+        ? '<span class="pill-status pill-earned">✓ Bound to Device</span>'
+        : '<span class="pill-status pill-missing">✗ Unbound</span>';
+
+      let ptBadge = '<span class="points-badge points-zero">0 / 2</span>';
+      if (item.points === 2) ptBadge = '<span class="points-badge points-full">2 / 2</span>';
+      else if (item.points === 1) ptBadge = '<span class="points-badge points-part">1 / 2</span>';
+
+      tr.innerHTML = `
+        <td style="font-weight:700;">${item.canonical}</td>
+        <td><code>${item.ip}</code></td>
+        <td>${ipPill}</td>
+        <td>${devPill}</td>
+        <td style="color:#cfd8dc;">${item.found_dev_name || '<span style="color:#546e7a;">—</span>'}</td>
+        <td style="text-align:right;">${ptBadge}</td>
+      `;
+      tbodyP1.appendChild(tr);
+    });
+
+    // 3. Render Part 2: Missing DataFlows (13 Items)
+    const tbodyP2 = document.getElementById('tbodyPart2');
+    tbodyP2.innerHTML = '';
+    (p2.details || []).forEach(item => {
+      const isComplete = item.points === 3;
+      if (activeFilter === 'missing' && isComplete) return;
+      if (activeFilter === 'accounted' && !isComplete) return;
+
+      const txtMatch = (item.app + ' ' + item.name + ' ' + item.src_ip + ' ' + item.dst_ip + ' ' + item.port).toLowerCase();
+      if (q && !txtMatch.includes(q)) return;
+
+      const tr = document.createElement('tr');
+      const flowPill = item.flow_found
+        ? '<span class="pill-status pill-earned">✓ Created</span>'
+        : '<span class="pill-status pill-missing">✗ Missing</span>';
+
+      const srcPill = item.src_ok
+        ? '<span class="pill-status pill-earned">✓ Resolved</span>'
+        : '<span class="pill-status pill-missing">✗ Missing</span>';
+
+      const dstPill = item.dst_ok
+        ? '<span class="pill-status pill-earned">✓ Resolved</span>'
+        : '<span class="pill-status pill-missing">✗ Missing</span>';
+
+      let ptBadge = '<span class="points-badge points-zero">0 / 3</span>';
+      if (item.points === 3) ptBadge = '<span class="points-badge points-full">3 / 3</span>';
+      else if (item.points === 2) ptBadge = '<span class="points-badge points-part">2 / 3</span>';
+      else if (item.points === 1) ptBadge = '<span class="points-badge points-part">1 / 3</span>';
+
+      tr.innerHTML = `
+        <td><span style="font-weight:800; color:#ffb300;">${item.app}</span></td>
+        <td style="font-weight:600;">${item.name}</td>
+        <td style="color:#90a4ae;"><code>${item.src_ip} &rarr; ${item.dst_ip}:${item.port}</code></td>
+        <td>${flowPill}</td>
+        <td>${srcPill}</td>
+        <td>${dstPill}</td>
+        <td style="text-align:right;">${ptBadge}</td>
+      `;
+      tbodyP2.appendChild(tr);
+    });
+  }
+
   async function triggerAction(action) {
-    const pin = document.getElementById('adminPin').value;
     const target = document.getElementById('adminTarget').value;
     const statusEl = document.getElementById('adminStatus');
 
@@ -528,13 +1239,13 @@ HTML_PAGE = """<!DOCTYPE html>
       const res = await fetch('/api/admin/' + action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pin: pin, target: target })
+        body: JSON.stringify({ pin: adminPin, target: target })
       });
       const data = await res.json();
       if (res.ok) {
         statusEl.style.color = '#00e676';
         statusEl.innerText = 'Success: ' + (data.message || 'Operation complete.');
-        setTimeout(updateScores, 1500);
+        setTimeout(() => refreshAudit(true), 1500);
       } else {
         statusEl.style.color = '#f44336';
         statusEl.innerText = 'Failed: ' + (data.error || 'Unauthorized / Error');
@@ -581,6 +1292,27 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"error": "Invalid PIN"}).encode("utf-8"))
+            return
+
+        # Audit breakdown query
+        if self.path == "/api/admin/audit":
+            if payload.get("refresh"):
+                try:
+                    refresh_scores()
+                except Exception as e:
+                    print(f"Error during refresh: {e}")
+            with CACHE_LOCK:
+                resp = json.dumps({
+                    "delta": LATEST_DATA["delta"],
+                    "omega": LATEST_DATA["omega"],
+                    "delta_online": LATEST_DATA["delta_online"],
+                    "omega_online": LATEST_DATA["omega_online"],
+                    "last_updated": LATEST_DATA["last_updated"],
+                })
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(resp.encode("utf-8"))
             return
 
         target = payload.get("target", "both")
@@ -634,7 +1366,7 @@ def run_dashboard_server(host: str = "0.0.0.0", port: int = 8080):
     print(f"\n[+] KYE Split-Screen Classroom Dashboard running at:")
     print(f"    👉 http://localhost:{port}/")
     print(f"    (Delta: Blue fonts | Omega: Orange fonts)")
-    print(f"    (Admin console hidden in bottom-right corner or press Ctrl+Shift+A)\n")
+    print(f"    (Instructor audit dashboard & controls: press Ctrl+Shift+A)\n")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
@@ -646,4 +1378,3 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1].isdigit():
         p = int(sys.argv[1])
     run_dashboard_server(port=p)
-

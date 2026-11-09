@@ -135,6 +135,55 @@ def cmd_score(args) -> int:
     table.add_row("[bold]TOTAL SCORE[/bold]", f"[bold]{res['percentage']}% Complete[/bold]", f"[bold green]{res['total_score']} pts[/bold green]", f"[bold]{res['max_score']} pts[/bold]")
 
     console.print(table)
+
+    if getattr(args, "details", False):
+        # 1. Part 1: Redacted Assets
+        t1 = Table(title="\nPart 1: Redacted Assets & IPs (9 Items - 18 pts max)", show_header=True, header_style="bold blue")
+        t1.add_column("Canonical Name", style="white")
+        t1.add_column("Expected IPv4", style="cyan")
+        t1.add_column("IP in IPAM", style="magenta")
+        t1.add_column("Device Bound", style="magenta")
+        t1.add_column("Matched Name", style="white")
+        t1.add_column("Points", style="green", justify="right")
+        for item in m2.get("details", []):
+            ip_st = "[green]✓ Found[/green]" if item.get("ip_found") else "[red]✗ Missing[/red]"
+            dev_st = "[green]✓ Bound[/green]" if item.get("device_bound") else "[red]✗ Unbound[/red]"
+            pts = f"{item.get('points', 0)} / 2"
+            t1.add_row(item.get("canonical", ""), item.get("ip", ""), ip_st, dev_st, item.get("found_dev_name") or "-", pts)
+        console.print(t1)
+
+        # 2. Part 2: Missing DataFlows
+        t2 = Table(title="\nPart 2: Missing Industrial DataFlows (13 Items - 39 pts max)", show_header=True, header_style="bold cyan")
+        t2.add_column("App", style="yellow", width=6)
+        t2.add_column("Flow Name", style="white")
+        t2.add_column("Endpoints & Port", style="dim")
+        t2.add_column("Flow Record", style="magenta")
+        t2.add_column("Src Resolved", style="magenta")
+        t2.add_column("Dst Resolved", style="magenta")
+        t2.add_column("Points", style="green", justify="right")
+        for item in m3.get("details", []):
+            f_st = "[green]✓ Created[/green]" if item.get("flow_found") else "[red]✗ Missing[/red]"
+            s_st = "[green]✓ OK[/green]" if item.get("src_ok") else "[red]✗ Missing[/red]"
+            d_st = "[green]✓ OK[/green]" if item.get("dst_ok") else "[red]✗ Missing[/red]"
+            ep = f"{item.get('src_ip')} → {item.get('dst_ip')} ({item.get('port')})"
+            pts = f"{item.get('points', 0)} / 3"
+            t2.add_row(item.get("app", ""), item.get("name", ""), ep, f_st, s_st, d_st, pts)
+        console.print(t2)
+
+        # 3. Part 3: Tampered Devices
+        t3 = Table(title="\nPart 3: Tampered Devices (6 Items - 18 pts max)", show_header=True, header_style="bold yellow")
+        t3.add_column("Device", style="white")
+        t3.add_column("Real Expected IPv4", style="green")
+        t3.add_column("Bogus Starting IP", style="dim")
+        t3.add_column("Current NetBox IP", style="cyan")
+        t3.add_column("Status", style="magenta")
+        t3.add_column("Points", style="green", justify="right")
+        for item in m1.get("details", []):
+            st = "[green]✓ Corrected[/green]" if item.get("is_corrected") else "[red]✗ Tampered[/red]"
+            pts = f"{item.get('points', 0)} / 3"
+            t3.add_row(item.get("device", ""), item.get("real_ip", ""), item.get("wrong_ip", ""), item.get("current_ip") or "[dim]None[/dim]", st, pts)
+        console.print(t3)
+
     return 0
 
 
@@ -193,6 +242,7 @@ def main() -> None:
 
     sc = sub.add_parser("score", help="Score a live instance against the 75-pt KYE Day 1 rubric.")
     sc.add_argument("--env-file", default=None)
+    sc.add_argument("--details", "--audit", action="store_true", help="Print item-by-item breakdown of all 28 scorable points.")
     _add_connection_args(sc)
 
     dash = sub.add_parser("dashboard", help="Start the live split-screen classroom dashboard.")
