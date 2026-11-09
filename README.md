@@ -1,6 +1,6 @@
 # Malcolm NetBox Automation & Cyber Range Tooling
 
-![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.2-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
 ![NetBox](https://img.shields.io/badge/NetBox-v4.2%2B%20%7C%20v4.6%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
@@ -52,6 +52,7 @@ python -m src.netbox_importer_v2.cli seed --master v2_reports/partial_day1.json 
 # 4. Score a Live Instance (75-pt Rubric)
 python -m src.netbox_importer_v2.cli score
 python -m src.netbox_importer_v2.cli score --team delta
+python -m src.netbox_importer_v2.cli score --team delta --details       # Itemized audit breakdown
 python -m src.netbox_importer_v2.cli score --localhost delta
 
 # 5. Selective Wipe / Reset (Cleans challenge objects; preserves vendor models)
