@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Provisions `Student-Own-Changelog` object permissions on `core.objectchange` using dynamic `$user` constraints (`{"user": "$user"}`), ensuring students can only view their own audit logs while keeping all admin/API seeding and scoring actions strictly invisible.
   - Full CLI integration supporting dry-run inspection by default (`--apply` to execute), custom `--group`, custom `--users`, and multi-instance targeting via `--team [delta|omega]` and `--localhost [delta|omega]`.
   - Comprehensive unit test suite in `tests/test_permissions.py`.
+- **Instructor Secret Menu Permission Verification & Lockdown (`dashboard_server.py`)**:
+  - Integrated one-click **"🔍 Verify Perms"** and **"🔒 Lockdown Perms"** controls into the hidden instructor modal (`Ctrl+Shift+A` or footer dot).
+  - Added backend endpoints `/api/admin/verify-perms` (dry-run audit reporting student superuser/staff status, group memberships, and changelog restrictions) and `/api/admin/fix-perms` (live lockdown execution across Delta, Omega, or both).
+  - Added unit test suite in `tests/test_dashboard.py`.
 
 ---
 

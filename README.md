@@ -30,7 +30,7 @@ Designed for NetBox v4.2+ and v4.6+ with first-class `dcim/mac-addresses` and th
   - **Corrected Data**: 6 tampered devices × 3 pts = 18 pts
   - **Missing Entries**: 9 redacted devices × 2 pts = 18 pts
   - **Missing DataFlows**: 13 withheld flows × 3 pts = 39 pts
-- **Live Classroom Scoreboard (`dashboard`)**: Browser-based split-screen dashboard (`http://localhost:8080/`) displaying Team Delta (Neon Blue) vs Team Omega (Energetic Orange) with auto-updating progress bars and a hidden PIN-protected admin console (`Ctrl+Shift+A`).
+- **Live Classroom Scoreboard (`dashboard`)**: Browser-based split-screen dashboard (`http://localhost:8080/`) displaying Team Delta (Neon Blue) vs Team Omega (Energetic Orange) with auto-updating progress bars and a hidden PIN-protected admin console (`Ctrl+Shift+A` or footer dot) featuring one-click student permissions verification/lockdown, environment resets, and complete CTF master push.
 - **Student Permissions & Group Isolation (`perms`)**: Automatically manages user groups (creating and isolating users into `student` while stripping `admin`), revokes superuser/staff overrides, and enforces least-privilege NetBox object permissions with dynamic `$user` changelog constraints so students cannot see admin/API modifications.
 - **Unified Multi-Team Environment (`.env`)**: Manages both Delta and Omega instances from one `.env` file with support for `--localhost [delta|omega]` and `--team [delta|omega]`.
 - **Adaptive Rate Limiting & Terminal Progress Bar**: Paced requests (`NETBOX_PACE_MS`), 4-tier exponential backoff retries, and live `rich.progress` displays (`102/500 items`) to prevent Docker/Gunicorn worker exhaustion on Malcolm VMs.
