@@ -210,6 +210,24 @@ HTML_PAGE = """<!DOCTYPE html>
     padding: 40px;
     position: relative;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #2a3b4c #0a0c10;
+  }
+  .team-panel::-webkit-scrollbar {
+    width: 8px;
+  }
+  .team-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .team-panel::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+  .team-delta::-webkit-scrollbar-thumb:hover {
+    background: var(--delta-blue);
+  }
+  .team-omega::-webkit-scrollbar-thumb:hover {
+    background: var(--omega-orange);
   }
   .team-delta {
     background: radial-gradient(circle at 10% 20%, var(--delta-dark) 0%, var(--bg-dark) 70%);
@@ -335,13 +353,14 @@ HTML_PAGE = """<!DOCTYPE html>
   .modal-backdrop {
     display: none;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; left: 0; width: 100vw; height: 100vh;
     background: rgba(0, 0, 0, 0.88);
     backdrop-filter: blur(12px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
   }
   .modal-box {
     background: #0d121a;
@@ -353,13 +372,15 @@ HTML_PAGE = """<!DOCTYPE html>
     box-shadow: 0 25px 60px rgba(0,0,0,0.95);
     display: flex;
     flex-direction: column;
+    min-height: 0;
     transition: width 0.3s ease, height 0.3s ease;
   }
   .modal-box.expanded {
-    width: 1140px;
+    width: 1200px;
     max-width: 96vw;
-    height: 90vh;
-    max-height: 90vh;
+    height: 92vh;
+    max-height: 92vh;
+    overflow: hidden;
   }
 
   /* Auth Screen */
@@ -534,15 +555,33 @@ HTML_PAGE = """<!DOCTYPE html>
 
   /* Audit List Container */
   .audit-scroll-area {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 6px;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: scroll;
+    overflow-x: auto;
+    padding-right: 10px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #00c3ff #101620;
   }
-  .audit-scroll-area::-webkit-scrollbar { width: 6px; }
-  .audit-scroll-area::-webkit-scrollbar-thumb { background: #263238; border-radius: 3px; }
+  .audit-scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .audit-scroll-area::-webkit-scrollbar-track {
+    background: #090e15;
+    border-radius: 5px;
+  }
+  .audit-scroll-area::-webkit-scrollbar-thumb {
+    background: #1e3a5f;
+    border-radius: 5px;
+    border: 2px solid #090e15;
+  }
+  .audit-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: #00c3ff;
+  }
 
   .audit-category-block {
     background: #080c12;
