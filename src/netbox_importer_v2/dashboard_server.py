@@ -359,7 +359,7 @@ HTML_PAGE = """<!DOCTYPE html>
     z-index: 1000;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
     box-sizing: border-box;
   }
   .modal-box {
@@ -373,14 +373,22 @@ HTML_PAGE = """<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     min-height: 0;
-    transition: width 0.3s ease, height 0.3s ease;
+    transition: width 0.25s ease, height 0.25s ease;
   }
   .modal-box.expanded {
-    width: 1200px;
+    width: 1280px;
     max-width: 96vw;
-    height: 92vh;
-    max-height: 92vh;
+    height: 94vh;
+    max-height: 94vh;
     overflow: hidden;
+  }
+  .modal-box.fullscreen {
+    width: 99vw !important;
+    max-width: 99vw !important;
+    height: 98vh !important;
+    max-height: 98vh !important;
+    border-radius: 8px !important;
+    padding: 16px 20px !important;
   }
 
   /* Auth Screen */
@@ -557,9 +565,9 @@ HTML_PAGE = """<!DOCTYPE html>
   .audit-scroll-area {
     flex: 1 1 0;
     min-height: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: auto;
-    padding-right: 10px;
+    padding-right: 6px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -567,17 +575,16 @@ HTML_PAGE = """<!DOCTYPE html>
     scrollbar-color: #00c3ff #101620;
   }
   .audit-scroll-area::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   .audit-scroll-area::-webkit-scrollbar-track {
     background: #090e15;
-    border-radius: 5px;
+    border-radius: 4px;
   }
   .audit-scroll-area::-webkit-scrollbar-thumb {
     background: #1e3a5f;
-    border-radius: 5px;
-    border: 2px solid #090e15;
+    border-radius: 4px;
   }
   .audit-scroll-area::-webkit-scrollbar-thumb:hover {
     background: #00c3ff;
@@ -588,14 +595,17 @@ HTML_PAGE = """<!DOCTYPE html>
     border: 1px solid #1a2634;
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   .audit-category-header {
-    background: rgba(255,255,255,0.02);
+    background: rgba(255,255,255,0.03);
     padding: 10px 16px;
     border-bottom: 1px solid #1a2634;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    user-select: none;
   }
   .audit-category-title {
     font-size: 13px;
@@ -607,6 +617,30 @@ HTML_PAGE = """<!DOCTYPE html>
   }
   .audit-category-score { font-size: 13px; font-weight: 700; color: #00e676; font-family: monospace; }
 
+  /* Dedicated Scrollable Table Wrapper for each Part */
+  .audit-table-wrapper {
+    max-height: 250px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #00c3ff #080c12;
+  }
+  .audit-table-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .audit-table-wrapper::-webkit-scrollbar-track {
+    background: #05080c;
+  }
+  .audit-table-wrapper::-webkit-scrollbar-thumb {
+    background: #25446b;
+    border-radius: 5px;
+    border: 2px solid #05080c;
+  }
+  .audit-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #00c3ff;
+  }
+
   /* Items Table */
   .audit-table {
     width: 100%;
@@ -616,21 +650,24 @@ HTML_PAGE = """<!DOCTYPE html>
   .audit-table th {
     text-align: left;
     padding: 8px 12px;
-    background: rgba(0,0,0,0.3);
-    color: #607d8b;
-    font-weight: 600;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: #0a0f16;
+    color: #8da2b5;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     text-transform: uppercase;
     font-size: 10px;
     letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
   .audit-table td {
-    padding: 10px 12px;
+    padding: 9px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.03);
     vertical-align: middle;
     color: #eceff1;
   }
-  .audit-table tr:hover { background: rgba(255,255,255,0.02); }
+  .audit-table tr:hover { background: rgba(255,255,255,0.03); }
 
   /* Status Pills */
   .pill-status {
@@ -810,6 +847,7 @@ HTML_PAGE = """<!DOCTYPE html>
         </div>
         <div class="audit-header-btns">
           <button class="btn-sm btn-primary" onclick="refreshAudit(true)">⟳ Refresh Scores</button>
+          <button class="btn-sm btn-close" id="btnToggleFullscreen" onclick="toggleFullscreen()" title="Toggle full-width expanded view">⛶ Expand Window</button>
           <button class="btn-icon-close" onclick="closeAdmin()">&times;</button>
         </div>
       </div>
@@ -858,68 +896,83 @@ HTML_PAGE = """<!DOCTYPE html>
       <!-- Scrollable Tables -->
       <div class="audit-scroll-area" id="auditScrollArea">
         
-        <!-- Category 1: Part 3 Tampered Devices -->
-        <div class="audit-category-block" id="blockPart3">
-          <div class="audit-category-header">
-            <span class="audit-category-title">🍅 Part 3: Tampered Devices (6 Items &times; 3 pts = 18 pts max)</span>
-            <span class="audit-category-score" id="hdrPart3Score">0 / 18 pts</span>
-          </div>
-          <table class="audit-table">
-            <thead>
-              <tr>
-                <th>Device</th>
-                <th>Real Expected IPv4</th>
-                <th>Seeded Bogus IP</th>
-                <th>Current NetBox IP</th>
-                <th>Status</th>
-                <th style="text-align:right;">Points</th>
-              </tr>
-            </thead>
-            <tbody id="tbodyPart3"></tbody>
-          </table>
-        </div>
-
-        <!-- Category 2: Part 1 Redacted Assets -->
+        <!-- Category 1: Part 1 Redacted Assets -->
         <div class="audit-category-block" id="blockPart1">
           <div class="audit-category-header">
             <span class="audit-category-title">🔍 Part 1: Redacted Devices &amp; IPs (9 Items &times; 2 pts = 18 pts max)</span>
-            <span class="audit-category-score" id="hdrPart1Score">0 / 18 pts</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="audit-category-score" id="hdrPart1Score">0 / 18 pts</span>
+              <button class="btn-sm btn-close" onclick="toggleBlockExpand('wrapPart1', this)" style="padding:2px 8px; font-size:11px;">Expand</button>
+            </div>
           </div>
-          <table class="audit-table">
-            <thead>
-              <tr>
-                <th>Asset / Canonical</th>
-                <th>Expected IPv4</th>
-                <th>IP in IPAM (+1 pt)</th>
-                <th>Device Bound (+1 pt)</th>
-                <th>Matched In NetBox</th>
-                <th style="text-align:right;">Points</th>
-              </tr>
-            </thead>
-            <tbody id="tbodyPart1"></tbody>
-          </table>
+          <div class="audit-table-wrapper" id="wrapPart1">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Asset / Canonical</th>
+                  <th>Expected IPv4</th>
+                  <th>IP in IPAM (+1 pt)</th>
+                  <th>Device Bound (+1 pt)</th>
+                  <th>Matched In NetBox</th>
+                  <th style="text-align:right;">Points</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyPart1"></tbody>
+            </table>
+          </div>
         </div>
 
-        <!-- Category 3: Part 2 Missing Industrial Dataflows -->
+        <!-- Category 2: Part 2 Missing Industrial Dataflows -->
         <div class="audit-category-block" id="blockPart2">
           <div class="audit-category-header">
             <span class="audit-category-title">⚡ Part 2: Missing Industrial DataFlows (13 Items &times; 3 pts = 39 pts max)</span>
-            <span class="audit-category-score" id="hdrPart2Score">0 / 39 pts</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="audit-category-score" id="hdrPart2Score">0 / 39 pts</span>
+              <button class="btn-sm btn-close" onclick="toggleBlockExpand('wrapPart2', this)" style="padding:2px 8px; font-size:11px;">Expand</button>
+            </div>
           </div>
-          <table class="audit-table">
-            <thead>
-              <tr>
-                <th>App</th>
-                <th>Flow Name</th>
-                <th>Endpoints &amp; Port</th>
-                <th>Flow Record (+1 pt)</th>
-                <th>Src Resolved (+1 pt)</th>
-                <th>Dst Resolved (+1 pt)</th>
-                <th style="text-align:right;">Points</th>
-              </tr>
-            </thead>
-            <tbody id="tbodyPart2"></tbody>
-          </table>
+          <div class="audit-table-wrapper" id="wrapPart2">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>App</th>
+                  <th>Flow Name</th>
+                  <th>Endpoints &amp; Port</th>
+                  <th>Flow Record (+1 pt)</th>
+                  <th>Src Resolved (+1 pt)</th>
+                  <th>Dst Resolved (+1 pt)</th>
+                  <th style="text-align:right;">Points</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyPart2"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Category 3: Part 3 Tampered Devices -->
+        <div class="audit-category-block" id="blockPart3">
+          <div class="audit-category-header">
+            <span class="audit-category-title">🍅 Part 3: Tampered Devices (6 Items &times; 3 pts = 18 pts max)</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="audit-category-score" id="hdrPart3Score">0 / 18 pts</span>
+              <button class="btn-sm btn-close" onclick="toggleBlockExpand('wrapPart3', this)" style="padding:2px 8px; font-size:11px;">Expand</button>
+            </div>
+          </div>
+          <div class="audit-table-wrapper" id="wrapPart3">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Device</th>
+                  <th>Real Expected IPv4</th>
+                  <th>Seeded Bogus IP</th>
+                  <th>Current NetBox IP</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Points</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyPart3"></tbody>
+            </table>
+          </div>
         </div>
 
       </div>
@@ -1031,6 +1084,30 @@ HTML_PAGE = """<!DOCTYPE html>
 
   function closeAdmin() {
     document.getElementById('adminModal').style.display = 'none';
+  }
+
+  function toggleFullscreen() {
+    const box = document.getElementById('adminBox');
+    const btn = document.getElementById('btnToggleFullscreen');
+    if (box.classList.contains('fullscreen')) {
+      box.classList.remove('fullscreen');
+      btn.innerText = '⛶ Expand Window';
+    } else {
+      box.classList.add('fullscreen');
+      btn.innerText = '🗗 Restore Window';
+    }
+  }
+
+  function toggleBlockExpand(wrapId, btn) {
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    if (wrap.style.maxHeight === 'none') {
+      wrap.style.maxHeight = '250px';
+      btn.innerText = 'Expand';
+    } else {
+      wrap.style.maxHeight = 'none';
+      btn.innerText = 'Collapse';
+    }
   }
 
   function showAuthScreen() {
