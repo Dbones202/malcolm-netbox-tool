@@ -1,6 +1,6 @@
 # Malcolm NetBox Automation & Cyber Range Tooling
 
-![Version](https://img.shields.io/badge/version-2.0.2-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
 ![NetBox](https://img.shields.io/badge/NetBox-v4.2%2B%20%7C%20v4.6%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
@@ -31,6 +31,7 @@ Designed for NetBox v4.2+ and v4.6+ with first-class `dcim/mac-addresses` and th
   - **Missing Entries**: 9 redacted devices × 2 pts = 18 pts
   - **Missing DataFlows**: 13 withheld flows × 3 pts = 39 pts
 - **Live Classroom Scoreboard (`dashboard`)**: Browser-based split-screen dashboard (`http://localhost:8080/`) displaying Team Delta (Neon Blue) vs Team Omega (Energetic Orange) with auto-updating progress bars and a hidden PIN-protected admin console (`Ctrl+Shift+A`).
+- **Student Permissions & Group Isolation (`perms`)**: Automatically manages user groups (creating and isolating users into `student` while stripping `admin`), revokes superuser/staff overrides, and enforces least-privilege NetBox object permissions with dynamic `$user` changelog constraints so students cannot see admin/API modifications.
 - **Unified Multi-Team Environment (`.env`)**: Manages both Delta and Omega instances from one `.env` file with support for `--localhost [delta|omega]` and `--team [delta|omega]`.
 - **Adaptive Rate Limiting & Terminal Progress Bar**: Paced requests (`NETBOX_PACE_MS`), 4-tier exponential backoff retries, and live `rich.progress` displays (`102/500 items`) to prevent Docker/Gunicorn worker exhaustion on Malcolm VMs.
 
@@ -60,6 +61,11 @@ python -m src.netbox_importer_v2.cli reset --apply
 
 # 6. Start Classroom Live Scoreboard
 python -m src.netbox_importer_v2.cli dashboard --port 8080
+
+# 7. Restrict Student Permissions & Isolate Groups (student group, hide admin changelog)
+python -m src.netbox_importer_v2.cli perms                                 # dry-run plan
+python -m src.netbox_importer_v2.cli perms --team delta --apply            # apply to Delta instance
+python -m src.netbox_importer_v2.cli perms --team omega --apply            # apply to Omega instance
 ```
 
 ---

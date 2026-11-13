@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-11-13
+
+### Added
+- **Student Permissions & Group Isolation Engine (`perms`)**:
+  - Automatically manages user groups: creates the `student` group if missing and removes students from any other assigned groups (such as `admin` or Malcolm defaults).
+  - Automatically strips `is_superuser` and `is_staff` privileges from student accounts (`delta-user`, `omega-user`, or custom user lists) to prevent administrative bypass of NetBox permission policies.
+  - Dynamically introspects all NetBox object types and provisions `Student-General-Access` object permissions granting full CRUD across DCIM, IPAM, and plugins while excluding user management (`users.*`, `auth.*`, `account.*`).
+  - Provisions `Student-Own-Changelog` object permissions on `core.objectchange` using dynamic `$user` constraints (`{"user": "$user"}`), ensuring students can only view their own audit logs while keeping all admin/API seeding and scoring actions strictly invisible.
+  - Full CLI integration supporting dry-run inspection by default (`--apply` to execute), custom `--group`, custom `--users`, and multi-instance targeting via `--team [delta|omega]` and `--localhost [delta|omega]`.
+  - Comprehensive unit test suite in `tests/test_permissions.py`.
+
+---
+
 ## [2.0.2] - 2026-11-09
 
 ### Added
