@@ -182,17 +182,19 @@ http://localhost:8080
 ### 4. Hidden Admin Console & Scored Audit Dashboard
 The scoreboard includes a built-in admin modal allowing instructors to remotely reset or re-seed either team's VM directly from the browser without opening a terminal, as well as an interactive **Scored Points Audit** that inspects each of the 28 challenge points.
 
-* **Shortcut to Open:** Press **`Ctrl` + `Shift` + `A`** anywhere on the scoreboard page (or click the hidden dot `•` in the footer).
+* **Shortcut to Open:** Press **`Ctrl` + `Shift` + `A`** (or **`Alt` + `Shift` + `A`** in Firefox) anywhere on the scoreboard page, or click the hidden dot `•` in the footer.
 * **Admin PIN:**
   ```text
   instructor
   ```
 * **Available Remote Controls:**
-  * **Reset to Day 1:** Selectively wipes challenge objects and re-seeds the initial student starting baseline (`partial_day1.json`).
-  * **Seed Complete CTF Inventory:** Populates the full 70-device ground truth / answer key (`master.json`).
+  * **Fill KYE Day 1:** Builds/updates only the Day 1 student baseline items (`partial_day1.json`) without deleting existing NetBox data.
+  * **Complete CTF Inventory:** Wipes all existing challenge objects and rebuilds the full 70-device ground truth / answer key (`master.json`).
+  * **Clean Slate:** Deletes all NetBox challenge objects (devices, IPs, interfaces, prefixes, dataflows) without re-seeding.
   * **Force Refresh:** Bypasses the 30-second polling timer and immediately queries both student instances.
 * **Item-by-Item Scored Audit Dashboard:**
-  * Displays a full breakdown of all **28 scorable items** (75 total points) for either team (**Team Delta** or **Team Omega**).
+  * Displays a full breakdown of all **28 scorable items** (75 total points) for either team (**Team Delta** or **Team Omega**) in Part 1, 2, 3 order.
+  * Each section displays **8+ rows** with independent scrollbars, sticky column headers, and per-section **Expand / Collapse** buttons (plus a full-screen **Expand Window** toggle).
   * **Filter Pills:** Filter by **All (28)**, **Missing / Incomplete**, or **Accounted For**.
   * **Real-Time Search:** Search by device name, IP address, flow name, or description.
   * **Summary KPI Cards:** Instantly view Total Score, Redacted Assets (Part 1), Missing DataFlows (Part 2), and Tampered Devices (Part 3).

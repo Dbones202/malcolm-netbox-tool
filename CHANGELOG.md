@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.1] - 2026-11-16
+
+### Added
+- **Dashboard `Clean Slate` Action (`/api/admin/clean-slate`)**:
+  - Added a dedicated `Clean Slate` button in the instructor console to wipe all NetBox challenge objects (devices, IPs, interfaces, prefixes, dataflows) without re-seeding.
+- **Firefox Hotkey Fallback (`Alt + Shift + A`)**:
+  - Added `Alt + Shift + A` alongside `Ctrl + Shift + A` and the footer dot trigger so Firefox users can open the instructor console without colliding with Firefox's Add-ons Manager shortcut.
+
+### Changed
+- **Instructor Dashboard Action Semantics**:
+  - **`Fill KYE Day 1`** (`/api/admin/reset`): Now strictly builds/updates only the Day 1 baseline items (`partial_day1.json`) without deleting existing NetBox data.
+  - **`Complete CTF Inventory`** (`/api/admin/complete`): Now wipes all existing challenge objects (`run_reset`) and rebuilds the complete 100% CTF master inventory (`master.json`).
+- **Audit Table Sizing & Full-Page Scrolling**:
+  - Added `flex-shrink: 0` to `.audit-category-block` so all three parts scroll smoothly across the entire audit modal without squishing.
+  - Increased each part's `.audit-table-wrapper` `max-height` to `380px` (showing 8+ rows per section) with sticky headers, plus per-section `Expand`/`Collapse` and `Expand Window` fullscreen controls.
+
+### Fixed
+- **Dashboard JS Syntax Error**: Escaped `\n` sequences in the `HTML_PAGE` Python triple-quoted string so browser `<script>` parsing succeeds cleanly in Firefox and Chromium.
+
+### Removed
+- Removed student permission verification/lockdown buttons (`Verify Perms`, `Lockdown Perms`) and `/api/admin/verify-perms`, `/api/admin/fix-perms` endpoints from `dashboard_server.py`.
+
+---
+
 ## [2.1.0] - 2026-11-13
 
 ### Added
