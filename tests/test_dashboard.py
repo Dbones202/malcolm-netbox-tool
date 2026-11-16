@@ -80,6 +80,38 @@ class TestDashboardAdminEndpoints(unittest.TestCase):
         res = json.loads(handler.wfile.getvalue().decode("utf-8"))
         self.assertIn("Clean Slate", res.get("message", ""))
 
+    @patch("src.netbox_importer_v2.dashboard_server._save_overrides")
+    def test_override_applies_and_removes_credit(self, mock_save):
+        from src.netbox_importer_v2.dashboard_server import OVERRIDES, BASE_DATA, LATEST_DATA, _empty_score_result
+
+        BASE_DATA["delta"] = _empty_score_result()
+        LATEST_DATA["delta"] = _empty_score_result()
+        for part in ("part1", "part2", "part3"):
+            OVERRIDES["delta"][part].clear()
+
+        # Apply override to 1 Part 1 item (+2 pts)
+        h1 = self._create_mock_handler(
+            "/api/admin/override",
+            {"pin": ADMIN_PIN, "team": "delta", "part": "part1", "item_key": "database", "override": True},
+        )
+        h1.do_POST()
+        h1.send_response.assert_called_with(200)
+        res1 = json.loads(h1.wfile.getvalue().decode("utf-8"))
+        self.assertEqual(res1["delta"]["total_score"], 2)
+        self.assertEqual(res1["delta"]["categories"]["missing_entries"]["points"], 2)
+        self.assertEqual(res1["delta"]["categories"]["missing_entries"]["count"], 1)
+
+        # Remove override -> back to 0 pts
+        h2 = self._create_mock_handler(
+            "/api/admin/override",
+            {"pin": ADMIN_PIN, "team": "delta", "part": "part1", "item_key": "database", "override": False},
+        )
+        h2.do_POST()
+        h2.send_response.assert_called_with(200)
+        res2 = json.loads(h2.wfile.getvalue().decode("utf-8"))
+        self.assertEqual(res2["delta"]["total_score"], 0)
+        self.assertEqual(res2["delta"]["categories"]["missing_entries"]["count"], 0)
+
     def test_perms_endpoints_removed(self):
         for ep in ("/api/admin/verify-perms", "/api/admin/fix-perms"):
             handler = self._create_mock_handler(ep, {"pin": ADMIN_PIN, "target": "delta"})

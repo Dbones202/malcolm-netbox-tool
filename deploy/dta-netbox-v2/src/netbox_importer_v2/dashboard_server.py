@@ -7,6 +7,7 @@ Scored Audit Dashboard showing every scorable point (missing vs. accounted for).
 """
 from __future__ import annotations
 
+import copy
 import http.server
 import json
 import os
@@ -27,6 +28,7 @@ DELTA_ENV = str(HERE / "delta_env.txt")
 OMEGA_ENV = str(HERE / "omega_env.txt")
 PARTIAL_DAY1 = str(ROOT_REPO / "v2_reports" / "partial_day1.json")
 MASTER_JSON = str(ROOT_REPO / "v2_reports" / "master.json")
+OVERRIDES_FILE = str(ROOT_REPO / "v2_reports" / "score_overrides.json")
 
 ADMIN_PIN = (os.environ.get("ADMIN_PIN") or "instructor").strip()
 
@@ -81,8 +83,12 @@ def _empty_score_result(err: str = "") -> dict:
     }
 
 
-# In-memory score cache
+# In-memory score cache and instructor overrides
 CACHE_LOCK = threading.Lock()
+BASE_DATA: Dict[str, Any] = {
+    "delta": _empty_score_result("Connecting to Team Delta..."),
+    "omega": _empty_score_result("Connecting to Team Omega..."),
+}
 LATEST_DATA: Dict[str, Any] = {
     "delta": _empty_score_result("Connecting to Team Delta..."),
     "omega": _empty_score_result("Connecting to Team Omega..."),
@@ -91,6 +97,103 @@ LATEST_DATA: Dict[str, Any] = {
     "omega_online": False,
     "events": [],
 }
+
+
+def _load_overrides() -> Dict[str, Dict[str, set]]:
+    data: Dict[str, Dict[str, set]] = {
+        "delta": {"part1": set(), "part2": set(), "part3": set()},
+        "omega": {"part1": set(), "part2": set(), "part3": set()},
+    }
+    try:
+        if os.path.exists(OVERRIDES_FILE):
+            with open(OVERRIDES_FILE, "r", encoding="utf-8") as f:
+                raw = json.load(f)
+            for tm in ("delta", "omega"):
+                if isinstance(raw.get(tm), dict):
+                    for part in ("part1", "part2", "part3"):
+                        if isinstance(raw[tm].get(part), list):
+                            data[tm][part] = set(raw[tm][part])
+    except Exception:
+        pass
+    return data
+
+
+def _save_overrides() -> None:
+    try:
+        os.makedirs(os.path.dirname(OVERRIDES_FILE), exist_ok=True)
+        serializable = {
+            tm: {part: sorted(OVERRIDES[tm][part]) for part in ("part1", "part2", "part3")}
+            for tm in ("delta", "omega")
+        }
+        with open(OVERRIDES_FILE, "w", encoding="utf-8") as f:
+            json.dump(serializable, f, indent=2)
+    except Exception:
+        pass
+
+
+OVERRIDES: Dict[str, Dict[str, set]] = _load_overrides()
+
+
+def _apply_overrides(team: str, base_res: Dict[str, Any]) -> Dict[str, Any]:
+    """Return a copy of base_res with instructor overrides applied."""
+    res = copy.deepcopy(base_res)
+    ov = OVERRIDES.get(team, {"part1": set(), "part2": set(), "part3": set()})
+    cats = res.get("categories", {})
+
+    # Part 1: missing_entries (2 pts per item, key = canonical)
+    p1 = cats.get("missing_entries", {})
+    p1_details = p1.get("details", [])
+    for item in p1_details:
+        if item.get("canonical") in ov.get("part1", set()):
+            item["overridden"] = True
+            item["ip_found"] = True
+            item["device_bound"] = True
+            item["points"] = 2
+        else:
+            item["overridden"] = False
+    if p1_details:
+        p1["points"] = sum(int(d.get("points", 0)) for d in p1_details)
+        p1["count"] = sum(1 for d in p1_details if d.get("points", 0) == 2)
+
+    # Part 2: missing_dataflow (3 pts per item, key = name)
+    p2 = cats.get("missing_dataflow", {})
+    p2_details = p2.get("details", [])
+    for item in p2_details:
+        if item.get("name") in ov.get("part2", set()):
+            item["overridden"] = True
+            item["flow_found"] = True
+            item["src_ok"] = True
+            item["dst_ok"] = True
+            item["points"] = 3
+        else:
+            item["overridden"] = False
+    if p2_details:
+        p2["points"] = sum(int(d.get("points", 0)) for d in p2_details)
+        p2["count"] = sum(1 for d in p2_details if d.get("points", 0) == 3)
+
+    # Part 3: corrected_data (3 pts per item, key = device)
+    p3 = cats.get("corrected_data", {})
+    p3_details = p3.get("details", [])
+    for item in p3_details:
+        if item.get("device") in ov.get("part3", set()):
+            item["overridden"] = True
+            item["is_corrected"] = True
+            item["points"] = 3
+        else:
+            item["overridden"] = False
+    if p3_details:
+        p3["points"] = sum(int(d.get("points", 0)) for d in p3_details)
+        p3["count"] = sum(1 for d in p3_details if d.get("is_corrected"))
+
+    total_score = (
+        int(p1.get("points", 0))
+        + int(p2.get("points", 0))
+        + int(p3.get("points", 0))
+    )
+    max_score = int(res.get("max_score", 75) or 75)
+    res["total_score"] = total_score
+    res["percentage"] = round((total_score / max_score) * 100, 1) if max_score else 0.0
+    return res
 
 
 def refresh_scores() -> None:
@@ -133,10 +236,12 @@ def refresh_scores() -> None:
 
     with CACHE_LOCK:
         if delta_res:
-            LATEST_DATA["delta"] = delta_res
+            BASE_DATA["delta"] = delta_res
+            LATEST_DATA["delta"] = _apply_overrides("delta", delta_res)
         LATEST_DATA["delta_online"] = delta_ok
         if omega_res:
-            LATEST_DATA["omega"] = omega_res
+            BASE_DATA["omega"] = omega_res
+            LATEST_DATA["omega"] = _apply_overrides("omega", omega_res)
         LATEST_DATA["omega_online"] = omega_ok
         LATEST_DATA["last_updated"] = time.strftime("%H:%M:%S")
 
@@ -683,6 +788,25 @@ HTML_PAGE = """<!DOCTYPE html>
   }
   .pill-earned { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
   .pill-missing { background: rgba(244, 67, 54, 0.15); color: #f44336; border: 1px solid rgba(244, 67, 54, 0.3); }
+  .pill-override {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    background: rgba(156, 39, 176, 0.25);
+    color: #e1bee7;
+    border: 1px solid rgba(206, 147, 216, 0.45);
+  }
+  .override-chk {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #ab47bc;
+    vertical-align: middle;
+  }
 
   .points-badge {
     font-weight: 800;
@@ -912,6 +1036,7 @@ HTML_PAGE = """<!DOCTYPE html>
             <table class="audit-table">
               <thead>
                 <tr>
+                  <th style="width:68px; text-align:center;" title="Force score system to accept as correct">Override</th>
                   <th>Asset / Canonical</th>
                   <th>Expected IPv4</th>
                   <th>IP in IPAM (+1 pt)</th>
@@ -938,6 +1063,7 @@ HTML_PAGE = """<!DOCTYPE html>
             <table class="audit-table">
               <thead>
                 <tr>
+                  <th style="width:68px; text-align:center;" title="Force score system to accept as correct">Override</th>
                   <th>App</th>
                   <th>Flow Name</th>
                   <th>Endpoints &amp; Port</th>
@@ -965,6 +1091,7 @@ HTML_PAGE = """<!DOCTYPE html>
             <table class="audit-table">
               <thead>
                 <tr>
+                  <th style="width:68px; text-align:center;" title="Force score system to accept as correct">Override</th>
                   <th>Device</th>
                   <th>Real Expected IPv4</th>
                   <th>Seeded Bogus IP</th>
@@ -1241,6 +1368,20 @@ HTML_PAGE = """<!DOCTYPE html>
 
     const q = (document.getElementById('auditSearchInput').value || '').toLowerCase().trim();
 
+    const makeOverrideCell = (part, key, isComplete, isOverridden) => {
+      if (!isComplete || isOverridden) {
+        return `<td style="text-align:center;"><input type="checkbox" class="override-chk" ${isOverridden ? 'checked' : ''} title="Force score system to accept as correct"></td>`;
+      }
+      return '<td style="text-align:center; color:#455a64;">—</td>';
+    };
+
+    const bindOverride = (tr, part, key) => {
+      const chk = tr.querySelector('.override-chk');
+      if (chk) {
+        chk.addEventListener('change', () => toggleOverride(part, key, chk.checked));
+      }
+    };
+
     // 1. Render Part 3: Tampered Devices (6 Items)
     const tbodyP3 = document.getElementById('tbodyPart3');
     tbodyP3.innerHTML = '';
@@ -1253,8 +1394,9 @@ HTML_PAGE = """<!DOCTYPE html>
       if (q && !txtMatch.includes(q)) return;
 
       const tr = document.createElement('tr');
+      const ovBadge = item.overridden ? '<span class="pill-override">OVERRIDE</span>' : '';
       const stPill = isComplete 
-        ? '<span class="pill-status pill-earned">✓ Restored to ' + item.real_ip + '</span>'
+        ? '<span class="pill-status pill-earned">✓ Restored to ' + item.real_ip + '</span>' + ovBadge
         : '<span class="pill-status pill-missing">✗ Tampered (current: ' + (item.current_ip || 'None') + ')</span>';
 
       const ptBadge = isComplete
@@ -1262,6 +1404,7 @@ HTML_PAGE = """<!DOCTYPE html>
         : '<span class="points-badge points-zero">0 / 3</span>';
 
       tr.innerHTML = `
+        ${makeOverrideCell('part3', item.device, isComplete, item.overridden)}
         <td style="font-weight:700;">${item.device}</td>
         <td><code>${item.real_ip}</code></td>
         <td style="color:#78909c;"><code>${item.wrong_ip}</code></td>
@@ -1269,6 +1412,7 @@ HTML_PAGE = """<!DOCTYPE html>
         <td>${stPill}</td>
         <td style="text-align:right;">${ptBadge}</td>
       `;
+      bindOverride(tr, 'part3', item.device);
       tbodyP3.appendChild(tr);
     });
 
@@ -1284,6 +1428,7 @@ HTML_PAGE = """<!DOCTYPE html>
       if (q && !txtMatch.includes(q)) return;
 
       const tr = document.createElement('tr');
+      const ovBadge = item.overridden ? '<span class="pill-override">OVERRIDE</span>' : '';
       const ipPill = item.ip_found
         ? '<span class="pill-status pill-earned">✓ Found in IPAM</span>'
         : '<span class="pill-status pill-missing">✗ Missing IP</span>';
@@ -1297,13 +1442,15 @@ HTML_PAGE = """<!DOCTYPE html>
       else if (item.points === 1) ptBadge = '<span class="points-badge points-part">1 / 2</span>';
 
       tr.innerHTML = `
-        <td style="font-weight:700;">${item.canonical}</td>
+        ${makeOverrideCell('part1', item.canonical, isComplete, item.overridden)}
+        <td style="font-weight:700;">${item.canonical}${ovBadge}</td>
         <td><code>${item.ip}</code></td>
         <td>${ipPill}</td>
         <td>${devPill}</td>
         <td style="color:#cfd8dc;">${item.found_dev_name || '<span style="color:#546e7a;">—</span>'}</td>
         <td style="text-align:right;">${ptBadge}</td>
       `;
+      bindOverride(tr, 'part1', item.canonical);
       tbodyP1.appendChild(tr);
     });
 
@@ -1319,6 +1466,7 @@ HTML_PAGE = """<!DOCTYPE html>
       if (q && !txtMatch.includes(q)) return;
 
       const tr = document.createElement('tr');
+      const ovBadge = item.overridden ? '<span class="pill-override">OVERRIDE</span>' : '';
       const flowPill = item.flow_found
         ? '<span class="pill-status pill-earned">✓ Created</span>'
         : '<span class="pill-status pill-missing">✗ Missing</span>';
@@ -1337,16 +1485,48 @@ HTML_PAGE = """<!DOCTYPE html>
       else if (item.points === 1) ptBadge = '<span class="points-badge points-part">1 / 3</span>';
 
       tr.innerHTML = `
+        ${makeOverrideCell('part2', item.name, isComplete, item.overridden)}
         <td><span style="font-weight:800; color:#ffb300;">${item.app}</span></td>
-        <td style="font-weight:600;">${item.name}</td>
+        <td style="font-weight:600;">${item.name}${ovBadge}</td>
         <td style="color:#90a4ae;"><code>${item.src_ip} &rarr; ${item.dst_ip}:${item.port}</code></td>
         <td>${flowPill}</td>
         <td>${srcPill}</td>
         <td>${dstPill}</td>
         <td style="text-align:right;">${ptBadge}</td>
       `;
+      bindOverride(tr, 'part2', item.name);
       tbodyP2.appendChild(tr);
     });
+  }
+
+  async function toggleOverride(part, itemKey, overrideState) {
+    const statusEl = document.getElementById('adminStatus');
+    try {
+      const res = await fetch('/api/admin/override', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pin: adminPin,
+          team: activeTeam,
+          part: part,
+          item_key: itemKey,
+          override: overrideState
+        })
+      });
+      if (res.ok) {
+        auditData = await res.json();
+        renderAudit();
+        updateScores();
+        statusEl.style.color = '#ab47bc';
+        statusEl.innerText = (overrideState ? 'Override applied' : 'Override removed') + ' for ' + itemKey + ' (' + activeTeam.toUpperCase() + ').';
+      } else {
+        statusEl.style.color = '#f44336';
+        statusEl.innerText = 'Failed to update override.';
+      }
+    } catch(e) {
+      statusEl.style.color = '#f44336';
+      statusEl.innerText = 'Network error updating override.';
+    }
   }
 
   async function triggerAction(action) {
@@ -1491,11 +1671,46 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
                     run_reset(apply=True, team=tm, show_progress=False)
                 except Exception as e:
                     print(f"Error cleaning slate for {tm}: {e}")
+                with CACHE_LOCK:
+                    for part in ("part1", "part2", "part3"):
+                        OVERRIDES[tm][part].clear()
+            _save_overrides()
             threading.Thread(target=refresh_scores, daemon=True).start()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"message": f"Deleted all NetBox data (Clean Slate) for {target}."}).encode("utf-8"))
+
+        elif self.path == "/api/admin/override":
+            tm = payload.get("team", "delta")
+            part = payload.get("part", "")
+            item_key = payload.get("item_key", "")
+            override_state = bool(payload.get("override", True))
+            if tm not in ("delta", "omega") or part not in ("part1", "part2", "part3") or not item_key:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "Invalid override parameters"}).encode("utf-8"))
+                return
+
+            with CACHE_LOCK:
+                if override_state:
+                    OVERRIDES[tm][part].add(item_key)
+                else:
+                    OVERRIDES[tm][part].discard(item_key)
+                _save_overrides()
+                LATEST_DATA[tm] = _apply_overrides(tm, BASE_DATA[tm])
+                resp = json.dumps({
+                    "delta": LATEST_DATA["delta"],
+                    "omega": LATEST_DATA["omega"],
+                    "delta_online": LATEST_DATA["delta_online"],
+                    "omega_online": LATEST_DATA["omega_online"],
+                    "last_updated": LATEST_DATA["last_updated"],
+                })
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(resp.encode("utf-8"))
         else:
             self.send_response(404)
             self.end_headers()
