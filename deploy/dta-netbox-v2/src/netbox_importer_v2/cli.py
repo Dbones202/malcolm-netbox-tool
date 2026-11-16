@@ -193,6 +193,21 @@ def cmd_dashboard(args) -> int:
     return 0
 
 
+def cmd_perms(args) -> int:
+    from .connection import get_connection
+    from .permissions import fix_student_permissions
+
+    team, localhost = _resolve_team_and_localhost(args)
+    conn = get_connection(env_file=args.env_file, team=team, localhost=localhost)
+    summary = fix_student_permissions(
+        conn=conn,
+        usernames=args.users,
+        group_name=args.group,
+        apply=args.apply,
+    )
+    return 0 if not summary.get("errors") else 1
+
+
 def _add_connection_args(parser: argparse.ArgumentParser) -> None:
     """Adds common connection flags (--team and --localhost) across subcommands."""
     parser.add_argument(
@@ -249,6 +264,13 @@ def main() -> None:
     dash.add_argument("--host", default="0.0.0.0", help="Binding host (default: 0.0.0.0)")
     dash.add_argument("--port", type=int, default=8080, help="HTTP port (default: 8080)")
 
+    p = sub.add_parser("perms", help="Re-assign and define student permissions (revoke superuser, restrict changelog).")
+    p.add_argument("--env-file", default=None)
+    p.add_argument("--apply", action="store_true", help="Actually apply permission changes (otherwise dry-run plan).")
+    p.add_argument("--users", nargs="+", default=None, help="Usernames to fix (default: delta-user omega-user).")
+    p.add_argument("--group", default="student", help="Target student group name (default: student).")
+    _add_connection_args(p)
+
     args = parser.parse_args()
 
     if not args.command:
@@ -290,6 +312,8 @@ def main() -> None:
         sys.exit(cmd_score(args))
     elif args.command == "dashboard":
         sys.exit(cmd_dashboard(args))
+    elif args.command == "perms":
+        sys.exit(cmd_perms(args))
 
 
 if __name__ == "__main__":

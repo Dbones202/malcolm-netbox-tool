@@ -19,6 +19,8 @@ from typing import Dict, Any
 
 from .scorer import NetBoxScorer, REDACTED_DEVICES, TARGET_FLOWS, TAMPERED_DEVICES
 from .seeder import run_reset, run_seed
+from .connection import get_connection
+from .permissions import fix_student_permissions
 
 HERE = Path(__file__).parent.resolve()
 ROOT_REPO = HERE.parent.parent
@@ -29,6 +31,13 @@ PARTIAL_DAY1 = str(ROOT_REPO / "v2_reports" / "partial_day1.json")
 MASTER_JSON = str(ROOT_REPO / "v2_reports" / "master.json")
 
 ADMIN_PIN = (os.environ.get("ADMIN_PIN") or "instructor").strip()
+
+
+def _get_team_conn(team: str):
+    """Resolve NetBox connection for team with fallback env files."""
+    env_candidate = DELTA_ENV if team == "delta" else OMEGA_ENV
+    env_file = env_candidate if os.path.exists(env_candidate) else None
+    return get_connection(team=team, env_file=env_file)
 
 
 def _empty_score_result(err: str = "") -> dict:
@@ -407,6 +416,8 @@ HTML_PAGE = """<!DOCTYPE html>
   .btn-primary { background: #0091ea; color: #fff; }
   .btn-reset { background: #c62828; color: #fff; }
   .btn-complete { background: #2e7d32; color: #fff; }
+  .btn-verify { background: #00838f; color: #fff; }
+  .btn-perms { background: #6a1b9a; color: #fff; }
   .btn-close { background: #263238; color: #cfd8dc; }
   .btn:hover { opacity: 0.88; }
   .status-msg { margin-top: 12px; font-size: 13px; text-align: center; font-weight: 600; }
@@ -710,6 +721,7 @@ HTML_PAGE = """<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
   .select-target {
     background: #070a0f;
@@ -986,10 +998,12 @@ HTML_PAGE = """<!DOCTYPE html>
             <option value="delta">Team Delta Only</option>
             <option value="omega">Team Omega Only</option>
           </select>
+          <button class="btn btn-verify" onclick="triggerAction('verify-perms')" title="Audit whether students are demoted, isolated in 'student', and changelog restricted">🔍 Verify Perms</button>
+          <button class="btn btn-perms" onclick="triggerAction('fix-perms')" title="Demote superusers, isolate in 'student' group, and restrict changelog">🔒 Lockdown Perms</button>
           <button class="btn btn-reset" onclick="triggerAction('reset')">Reset to KYE Start</button>
           <button class="btn btn-complete" onclick="triggerAction('complete')">Complete CTF Inventory</button>
         </div>
-        <div class="status-msg" id="adminStatus" style="margin:0;"></div>
+        <div class="status-msg" id="adminStatus" style="width:100%; text-align:left; padding:6px 0 0 0; margin:0; font-size:12px;"></div>
       </div>
     </div>
 
@@ -1348,8 +1362,19 @@ HTML_PAGE = """<!DOCTYPE html>
     const target = document.getElementById('adminTarget').value;
     const statusEl = document.getElementById('adminStatus');
 
+    if (action === 'reset') {
+      if (!confirm('⚠️ Reset ' + target + ' to Day 1 starting state? Challenge progress will be wiped!')) return;
+    } else if (action === 'complete') {
+      if (!confirm('⚠️ Push 100% CTF Master to ' + target + '?')) return;
+    } else if (action === 'fix-perms') {
+      if (!confirm('🔒 Apply Student Permissions Lockdown to ' + target + '?\n\nThis will:\n• Strip superuser and staff flags\n• Isolate users into the "student" group\n• Remove them from "admin"\n• Restrict changelog visibility so instructor changes are hidden.')) return;
+    }
+
     statusEl.style.color = '#ffb300';
-    statusEl.innerText = 'Executing ' + action + ' on ' + target + '...';
+    const actionLabel = action === 'verify-perms' ? 'Auditing permissions' :
+                        action === 'fix-perms' ? 'Applying permission lockdown' :
+                        'Executing ' + action;
+    statusEl.innerText = actionLabel + ' on ' + target + '...';
 
     try {
       const res = await fetch('/api/admin/' + action, {
@@ -1359,9 +1384,11 @@ HTML_PAGE = """<!DOCTYPE html>
       });
       const data = await res.json();
       if (res.ok) {
-        statusEl.style.color = '#00e676';
-        statusEl.innerText = 'Success: ' + (data.message || 'Operation complete.');
-        setTimeout(() => refreshAudit(true), 1500);
+        statusEl.style.color = data.has_issues ? '#ffb300' : '#00e676';
+        statusEl.innerText = (data.message || 'Operation complete.');
+        if (action === 'reset' || action === 'complete') {
+          setTimeout(() => refreshAudit(true), 1500);
+        }
       } else {
         statusEl.style.color = '#f44336';
         statusEl.innerText = 'Failed: ' + (data.error || 'Unauthorized / Error');
@@ -1464,6 +1491,81 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"message": f"Completed 100% CTF inventory for {target}."}).encode("utf-8"))
+
+        elif self.path == "/api/admin/verify-perms":
+            # Verify student permissions and group isolation (dry-run audit)
+            results = []
+            has_issues = False
+            for tm in teams:
+                try:
+                    conn = _get_team_conn(tm)
+                    summary = fix_student_permissions(conn=conn, usernames=None, group_name="student", apply=False)
+                    tm_issues = []
+                    users_found = summary.get("users_found", [])
+                    if not users_found:
+                        tm_issues.append("no student users found")
+                    for u in users_found:
+                        uname = u.get("username", "user")
+                        u_issues = []
+                        if u.get("is_superuser"):
+                            u_issues.append("superuser active")
+                        if u.get("is_staff"):
+                            u_issues.append("staff active")
+                        curr_groups = u.get("groups", [])
+                        if curr_groups != ["student"]:
+                            u_issues.append(f"groups: {curr_groups or '(none)'}")
+                        if u_issues:
+                            tm_issues.append(f"{uname} ({', '.join(u_issues)})")
+
+                    if summary.get("group_created"):
+                        tm_issues.append("'student' group missing")
+
+                    if tm_issues:
+                        has_issues = True
+                        results.append(f"{tm.upper()}: ⚠️ {'; '.join(tm_issues)}")
+                    else:
+                        names = ", ".join(u.get("username") for u in users_found)
+                        results.append(f"{tm.upper()}: ✅ Protected ({names} in 'student', no superuser, changelog restricted)")
+                except Exception as e:
+                    has_issues = True
+                    results.append(f"{tm.upper()}: ❌ Connection error ({e})")
+
+            msg = " | ".join(results)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "message": msg,
+                "has_issues": has_issues,
+            }).encode("utf-8"))
+
+        elif self.path == "/api/admin/fix-perms":
+            # Apply student permissions & group lockdown
+            results = []
+            has_errors = False
+            for tm in teams:
+                try:
+                    conn = _get_team_conn(tm)
+                    summary = fix_student_permissions(conn=conn, usernames=None, group_name="student", apply=True)
+                    if summary.get("errors"):
+                        has_errors = True
+                        results.append(f"{tm.upper()}: ⚠️ Errors ({'; '.join(summary['errors'])})")
+                    else:
+                        updated = summary.get("users_updated", [])
+                        up_str = f"{len(updated)} user(s) updated" if updated else "users already locked down"
+                        results.append(f"{tm.upper()}: ✅ Lockdown complete ({up_str})")
+                except Exception as e:
+                    has_errors = True
+                    results.append(f"{tm.upper()}: ❌ Connection error ({e})")
+
+            msg = " | ".join(results)
+            self.send_response(200 if not has_errors else 500)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "message": msg,
+                "error": msg if has_errors else None,
+            }).encode("utf-8"))
         else:
             self.send_response(404)
             self.end_headers()
