@@ -1077,10 +1077,11 @@ HTML_PAGE = """<!DOCTYPE html>
 
   updateScores();
 
-  // Admin Hotkey (Ctrl + Shift + A) or secret-dot click
+  // Admin Hotkey (Ctrl + Shift + A, or Alt + Shift + A for Firefox) or secret-dot click
   document.getElementById('adminTrigger').addEventListener('click', openAdmin);
   window.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && (e.code === 'KeyA' || e.key === 'A' || e.key === 'a')) {
+    const isKeyA = (e.code === 'KeyA' || e.key === 'A' || e.key === 'a');
+    if ((e.ctrlKey && e.shiftKey && isKeyA) || (e.altKey && e.shiftKey && isKeyA)) {
       e.preventDefault();
       openAdmin();
     }
@@ -1367,7 +1368,7 @@ HTML_PAGE = """<!DOCTYPE html>
     } else if (action === 'complete') {
       if (!confirm('⚠️ Push 100% CTF Master to ' + target + '?')) return;
     } else if (action === 'fix-perms') {
-      if (!confirm('🔒 Apply Student Permissions Lockdown to ' + target + '?\n\nThis will:\n• Strip superuser and staff flags\n• Isolate users into the "student" group\n• Remove them from "admin"\n• Restrict changelog visibility so instructor changes are hidden.')) return;
+      if (!confirm('🔒 Apply Student Permissions Lockdown to ' + target + '?\\n\\nThis will:\\n• Strip superuser and staff flags\\n• Isolate users into the "student" group\\n• Remove them from "admin"\\n• Restrict changelog visibility so instructor changes are hidden.')) return;
     }
 
     statusEl.style.color = '#ffb300';
