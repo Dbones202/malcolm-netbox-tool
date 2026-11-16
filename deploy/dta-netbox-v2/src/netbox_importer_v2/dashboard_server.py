@@ -19,8 +19,6 @@ from typing import Dict, Any
 
 from .scorer import NetBoxScorer, REDACTED_DEVICES, TARGET_FLOWS, TAMPERED_DEVICES
 from .seeder import run_reset, run_seed
-from .connection import get_connection
-from .permissions import fix_student_permissions
 
 HERE = Path(__file__).parent.resolve()
 ROOT_REPO = HERE.parent.parent
@@ -31,13 +29,6 @@ PARTIAL_DAY1 = str(ROOT_REPO / "v2_reports" / "partial_day1.json")
 MASTER_JSON = str(ROOT_REPO / "v2_reports" / "master.json")
 
 ADMIN_PIN = (os.environ.get("ADMIN_PIN") or "instructor").strip()
-
-
-def _get_team_conn(team: str):
-    """Resolve NetBox connection for team with fallback env files."""
-    env_candidate = DELTA_ENV if team == "delta" else OMEGA_ENV
-    env_file = env_candidate if os.path.exists(env_candidate) else None
-    return get_connection(team=team, env_file=env_file)
 
 
 def _empty_score_result(err: str = "") -> dict:
@@ -416,8 +407,6 @@ HTML_PAGE = """<!DOCTYPE html>
   .btn-primary { background: #0091ea; color: #fff; }
   .btn-reset { background: #c62828; color: #fff; }
   .btn-complete { background: #2e7d32; color: #fff; }
-  .btn-verify { background: #00838f; color: #fff; }
-  .btn-perms { background: #6a1b9a; color: #fff; }
   .btn-close { background: #263238; color: #cfd8dc; }
   .btn:hover { opacity: 0.88; }
   .status-msg { margin-top: 12px; font-size: 13px; text-align: center; font-weight: 600; }
@@ -576,32 +565,34 @@ HTML_PAGE = """<!DOCTYPE html>
   .audit-scroll-area {
     flex: 1 1 0;
     min-height: 0;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: auto;
-    padding-right: 6px;
+    padding-right: 8px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
     scrollbar-width: thin;
     scrollbar-color: #00c3ff #101620;
   }
   .audit-scroll-area::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
   .audit-scroll-area::-webkit-scrollbar-track {
     background: #090e15;
-    border-radius: 4px;
+    border-radius: 5px;
   }
   .audit-scroll-area::-webkit-scrollbar-thumb {
     background: #1e3a5f;
-    border-radius: 4px;
+    border-radius: 5px;
+    border: 2px solid #090e15;
   }
   .audit-scroll-area::-webkit-scrollbar-thumb:hover {
     background: #00c3ff;
   }
 
   .audit-category-block {
+    flex-shrink: 0;
     background: #080c12;
     border: 1px solid #1a2634;
     border-radius: 10px;
@@ -628,9 +619,9 @@ HTML_PAGE = """<!DOCTYPE html>
   }
   .audit-category-score { font-size: 13px; font-weight: 700; color: #00e676; font-family: monospace; }
 
-  /* Dedicated Scrollable Table Wrapper for each Part */
+  /* Dedicated Scrollable Table Wrapper for each Part (shows >= 8 rows) */
   .audit-table-wrapper {
-    max-height: 250px;
+    max-height: 380px;
     overflow-y: scroll;
     overflow-x: auto;
     scrollbar-width: thin;
@@ -998,10 +989,8 @@ HTML_PAGE = """<!DOCTYPE html>
             <option value="delta">Team Delta Only</option>
             <option value="omega">Team Omega Only</option>
           </select>
-          <button class="btn btn-verify" onclick="triggerAction('verify-perms')" title="Audit whether students are demoted, isolated in 'student', and changelog restricted">🔍 Verify Perms</button>
-          <button class="btn btn-perms" onclick="triggerAction('fix-perms')" title="Demote superusers, isolate in 'student' group, and restrict changelog">🔒 Lockdown Perms</button>
-          <button class="btn btn-reset" onclick="triggerAction('reset')">Reset to KYE Start</button>
-          <button class="btn btn-complete" onclick="triggerAction('complete')">Complete CTF Inventory</button>
+          <button class="btn btn-primary" onclick="triggerAction('reset')" title="Build only KYE Day 1 items without deleting existing data">Fill KYE Day 1</button>
+          <button class="btn btn-complete" onclick="triggerAction('complete')" title="Delete all challenge objects and rebuild 100% CTF inventory">Complete CTF Inventory</button>
         </div>
         <div class="status-msg" id="adminStatus" style="width:100%; text-align:left; padding:6px 0 0 0; margin:0; font-size:12px;"></div>
       </div>
@@ -1117,7 +1106,7 @@ HTML_PAGE = """<!DOCTYPE html>
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
     if (wrap.style.maxHeight === 'none') {
-      wrap.style.maxHeight = '250px';
+      wrap.style.maxHeight = '380px';
       btn.innerText = 'Expand';
     } else {
       wrap.style.maxHeight = 'none';
@@ -1364,16 +1353,14 @@ HTML_PAGE = """<!DOCTYPE html>
     const statusEl = document.getElementById('adminStatus');
 
     if (action === 'reset') {
-      if (!confirm('⚠️ Reset ' + target + ' to Day 1 starting state? Challenge progress will be wiped!')) return;
+      if (!confirm('Fill KYE Day 1 items on ' + target + '? (Builds only Day 1 items without deleting existing data.)')) return;
     } else if (action === 'complete') {
-      if (!confirm('⚠️ Push 100% CTF Master to ' + target + '?')) return;
-    } else if (action === 'fix-perms') {
-      if (!confirm('🔒 Apply Student Permissions Lockdown to ' + target + '?\\n\\nThis will:\\n• Strip superuser and staff flags\\n• Isolate users into the "student" group\\n• Remove them from "admin"\\n• Restrict changelog visibility so instructor changes are hidden.')) return;
+      if (!confirm('⚠️ Delete everything and rebuild 100% CTF Master on ' + target + '? All existing challenge objects will be wiped and rebuilt!')) return;
     }
 
     statusEl.style.color = '#ffb300';
-    const actionLabel = action === 'verify-perms' ? 'Auditing permissions' :
-                        action === 'fix-perms' ? 'Applying permission lockdown' :
+    const actionLabel = action === 'reset' ? 'Building KYE Day 1' :
+                        action === 'complete' ? 'Wiping & rebuilding 100% CTF' :
                         'Executing ' + action;
     statusEl.innerText = actionLabel + ' on ' + target + '...';
 
@@ -1467,106 +1454,31 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
             teams.append("omega")
 
         if self.path == "/api/admin/reset":
-            # Reset to KYE start: wipe dta-v2, then seed partial_day1.json
+            # Fill KYE Day 1: seed partial_day1.json without deleting existing objects
+            for tm in teams:
+                try:
+                    run_seed(PARTIAL_DAY1, apply=True, team=tm, show_progress=False)
+                except Exception as e:
+                    print(f"Error building KYE Day 1 for {tm}: {e}")
+            threading.Thread(target=refresh_scores, daemon=True).start()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"message": f"Built KYE Day 1 inventory for {target} (no items deleted)."}).encode("utf-8"))
+
+        elif self.path == "/api/admin/complete":
+            # Delete everything and rebuild 100% CTF Master completely
             for tm in teams:
                 try:
                     run_reset(apply=True, team=tm, show_progress=False)
-                    run_seed(PARTIAL_DAY1, apply=True, team=tm, show_progress=False)
-                except Exception as e:
-                    print(f"Error resetting {tm}: {e}")
-            threading.Thread(target=refresh_scores, daemon=True).start()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({"message": f"Reset {target} to KYE Day 1 state."}).encode("utf-8"))
-
-        elif self.path == "/api/admin/complete":
-            # Push 100% CTF Master
-            for tm in teams:
-                try:
                     run_seed(MASTER_JSON, apply=True, team=tm, show_progress=False)
                 except Exception as e:
-                    print(f"Error completing {tm}: {e}")
+                    print(f"Error rebuilding complete inventory for {tm}: {e}")
             threading.Thread(target=refresh_scores, daemon=True).start()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"message": f"Completed 100% CTF inventory for {target}."}).encode("utf-8"))
-
-        elif self.path == "/api/admin/verify-perms":
-            # Verify student permissions and group isolation (dry-run audit)
-            results = []
-            has_issues = False
-            for tm in teams:
-                try:
-                    conn = _get_team_conn(tm)
-                    summary = fix_student_permissions(conn=conn, usernames=None, group_name="student", apply=False)
-                    tm_issues = []
-                    users_found = summary.get("users_found", [])
-                    if not users_found:
-                        tm_issues.append("no student users found")
-                    for u in users_found:
-                        uname = u.get("username", "user")
-                        u_issues = []
-                        if u.get("is_superuser"):
-                            u_issues.append("superuser active")
-                        if u.get("is_staff"):
-                            u_issues.append("staff active")
-                        curr_groups = u.get("groups", [])
-                        if curr_groups != ["student"]:
-                            u_issues.append(f"groups: {curr_groups or '(none)'}")
-                        if u_issues:
-                            tm_issues.append(f"{uname} ({', '.join(u_issues)})")
-
-                    if summary.get("group_created"):
-                        tm_issues.append("'student' group missing")
-
-                    if tm_issues:
-                        has_issues = True
-                        results.append(f"{tm.upper()}: ⚠️ {'; '.join(tm_issues)}")
-                    else:
-                        names = ", ".join(u.get("username") for u in users_found)
-                        results.append(f"{tm.upper()}: ✅ Protected ({names} in 'student', no superuser, changelog restricted)")
-                except Exception as e:
-                    has_issues = True
-                    results.append(f"{tm.upper()}: ❌ Connection error ({e})")
-
-            msg = " | ".join(results)
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({
-                "message": msg,
-                "has_issues": has_issues,
-            }).encode("utf-8"))
-
-        elif self.path == "/api/admin/fix-perms":
-            # Apply student permissions & group lockdown
-            results = []
-            has_errors = False
-            for tm in teams:
-                try:
-                    conn = _get_team_conn(tm)
-                    summary = fix_student_permissions(conn=conn, usernames=None, group_name="student", apply=True)
-                    if summary.get("errors"):
-                        has_errors = True
-                        results.append(f"{tm.upper()}: ⚠️ Errors ({'; '.join(summary['errors'])})")
-                    else:
-                        updated = summary.get("users_updated", [])
-                        up_str = f"{len(updated)} user(s) updated" if updated else "users already locked down"
-                        results.append(f"{tm.upper()}: ✅ Lockdown complete ({up_str})")
-                except Exception as e:
-                    has_errors = True
-                    results.append(f"{tm.upper()}: ❌ Connection error ({e})")
-
-            msg = " | ".join(results)
-            self.send_response(200 if not has_errors else 500)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({
-                "message": msg,
-                "error": msg if has_errors else None,
-            }).encode("utf-8"))
+            self.wfile.write(json.dumps({"message": f"Wiped and rebuilt 100% CTF inventory for {target}."}).encode("utf-8"))
         else:
             self.send_response(404)
             self.end_headers()

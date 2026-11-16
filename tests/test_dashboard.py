@@ -2,9 +2,14 @@
 import io
 import json
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, call
 
-from src.netbox_importer_v2.dashboard_server import DashboardHandler, ADMIN_PIN
+from src.netbox_importer_v2.dashboard_server import (
+    DashboardHandler,
+    ADMIN_PIN,
+    PARTIAL_DAY1,
+    MASTER_JSON,
+)
 
 
 class TestDashboardAdminEndpoints(unittest.TestCase):
@@ -21,76 +26,52 @@ class TestDashboardAdminEndpoints(unittest.TestCase):
         return handler
 
     def test_admin_pin_rejected(self):
-        handler = self._create_mock_handler("/api/admin/verify-perms", {"pin": "wrong_pin"})
+        handler = self._create_mock_handler("/api/admin/reset", {"pin": "wrong_pin"})
         handler.do_POST()
         handler.send_response.assert_called_with(403)
         res = json.loads(handler.wfile.getvalue().decode("utf-8"))
         self.assertIn("Invalid PIN", res.get("error", ""))
 
-    @patch("src.netbox_importer_v2.dashboard_server._get_team_conn")
-    @patch("src.netbox_importer_v2.dashboard_server.fix_student_permissions")
-    def test_admin_verify_perms_detects_issues(self, mock_fix, mock_conn):
-        mock_fix.return_value = {
-            "apply": False,
-            "group_created": False,
-            "users_found": [
-                {"id": 10, "username": "delta-user", "is_superuser": True, "is_staff": False, "groups": ["admin"]},
+    @patch("src.netbox_importer_v2.dashboard_server.refresh_scores")
+    @patch("src.netbox_importer_v2.dashboard_server.run_seed")
+    @patch("src.netbox_importer_v2.dashboard_server.run_reset")
+    def test_fill_kye_day1_does_not_delete(self, mock_reset, mock_seed, mock_refresh):
+        handler = self._create_mock_handler("/api/admin/reset", {"pin": ADMIN_PIN, "target": "delta"})
+        handler.do_POST()
+        handler.send_response.assert_called_with(200)
+
+        mock_reset.assert_not_called()
+        mock_seed.assert_called_once_with(PARTIAL_DAY1, apply=True, team="delta", show_progress=False)
+        res = json.loads(handler.wfile.getvalue().decode("utf-8"))
+        self.assertIn("no items deleted", res.get("message", ""))
+
+    @patch("src.netbox_importer_v2.dashboard_server.refresh_scores")
+    @patch("src.netbox_importer_v2.dashboard_server.run_seed")
+    @patch("src.netbox_importer_v2.dashboard_server.run_reset")
+    def test_complete_inventory_deletes_and_rebuilds(self, mock_reset, mock_seed, mock_refresh):
+        manager = MagicMock()
+        manager.attach_mock(mock_reset, "run_reset")
+        manager.attach_mock(mock_seed, "run_seed")
+
+        handler = self._create_mock_handler("/api/admin/complete", {"pin": ADMIN_PIN, "target": "omega"})
+        handler.do_POST()
+        handler.send_response.assert_called_with(200)
+
+        self.assertEqual(
+            manager.mock_calls,
+            [
+                call.run_reset(apply=True, team="omega", show_progress=False),
+                call.run_seed(MASTER_JSON, apply=True, team="omega", show_progress=False),
             ],
-            "errors": [],
-        }
-
-        handler = self._create_mock_handler("/api/admin/verify-perms", {"pin": ADMIN_PIN, "target": "delta"})
-        handler.do_POST()
-        handler.send_response.assert_called_with(200)
-
+        )
         res = json.loads(handler.wfile.getvalue().decode("utf-8"))
-        self.assertTrue(res.get("has_issues"))
-        self.assertIn("DELTA", res.get("message", ""))
-        self.assertIn("superuser active", res.get("message", ""))
-        self.assertIn("groups: ['admin']", res.get("message", ""))
-        mock_fix.assert_called_once_with(conn=mock_conn.return_value, usernames=None, group_name="student", apply=False)
+        self.assertIn("Wiped and rebuilt", res.get("message", ""))
 
-    @patch("src.netbox_importer_v2.dashboard_server._get_team_conn")
-    @patch("src.netbox_importer_v2.dashboard_server.fix_student_permissions")
-    def test_admin_verify_perms_protected_state(self, mock_fix, mock_conn):
-        mock_fix.return_value = {
-            "apply": False,
-            "group_created": False,
-            "users_found": [
-                {"id": 10, "username": "delta-user", "is_superuser": False, "is_staff": False, "groups": ["student"]},
-            ],
-            "errors": [],
-        }
-
-        handler = self._create_mock_handler("/api/admin/verify-perms", {"pin": ADMIN_PIN, "target": "delta"})
-        handler.do_POST()
-        handler.send_response.assert_called_with(200)
-
-        res = json.loads(handler.wfile.getvalue().decode("utf-8"))
-        self.assertFalse(res.get("has_issues"))
-        self.assertIn("Protected", res.get("message", ""))
-
-    @patch("src.netbox_importer_v2.dashboard_server._get_team_conn")
-    @patch("src.netbox_importer_v2.dashboard_server.fix_student_permissions")
-    def test_admin_fix_perms_applies(self, mock_fix, mock_conn):
-        mock_fix.return_value = {
-            "apply": True,
-            "group_id": 5,
-            "group_created": False,
-            "users_found": [{"id": 10, "username": "delta-user"}],
-            "users_updated": ["delta-user"],
-            "permissions_created": [],
-            "permissions_updated": ["Student-General-Access", "Student-Own-Changelog"],
-            "errors": [],
-        }
-
-        handler = self._create_mock_handler("/api/admin/fix-perms", {"pin": ADMIN_PIN, "target": "delta"})
-        handler.do_POST()
-        handler.send_response.assert_called_with(200)
-
-        res = json.loads(handler.wfile.getvalue().decode("utf-8"))
-        self.assertIn("Lockdown complete", res.get("message", ""))
-        mock_fix.assert_called_once_with(conn=mock_conn.return_value, usernames=None, group_name="student", apply=True)
+    def test_perms_endpoints_removed(self):
+        for ep in ("/api/admin/verify-perms", "/api/admin/fix-perms"):
+            handler = self._create_mock_handler(ep, {"pin": ADMIN_PIN, "target": "delta"})
+            handler.do_POST()
+            handler.send_response.assert_called_with(404)
 
 
 if __name__ == "__main__":
