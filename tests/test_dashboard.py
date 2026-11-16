@@ -67,6 +67,19 @@ class TestDashboardAdminEndpoints(unittest.TestCase):
         res = json.loads(handler.wfile.getvalue().decode("utf-8"))
         self.assertIn("Wiped and rebuilt", res.get("message", ""))
 
+    @patch("src.netbox_importer_v2.dashboard_server.refresh_scores")
+    @patch("src.netbox_importer_v2.dashboard_server.run_seed")
+    @patch("src.netbox_importer_v2.dashboard_server.run_reset")
+    def test_clean_slate_deletes_without_seeding(self, mock_reset, mock_seed, mock_refresh):
+        handler = self._create_mock_handler("/api/admin/clean-slate", {"pin": ADMIN_PIN, "target": "delta"})
+        handler.do_POST()
+        handler.send_response.assert_called_with(200)
+
+        mock_reset.assert_called_once_with(apply=True, team="delta", show_progress=False)
+        mock_seed.assert_not_called()
+        res = json.loads(handler.wfile.getvalue().decode("utf-8"))
+        self.assertIn("Clean Slate", res.get("message", ""))
+
     def test_perms_endpoints_removed(self):
         for ep in ("/api/admin/verify-perms", "/api/admin/fix-perms"):
             handler = self._create_mock_handler(ep, {"pin": ADMIN_PIN, "target": "delta"})
