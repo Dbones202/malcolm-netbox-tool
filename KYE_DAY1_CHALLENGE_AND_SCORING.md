@@ -196,6 +196,7 @@ The scoreboard includes a built-in admin modal allowing instructors to remotely 
   * Displays a full breakdown of all **28 scorable items** (75 total points) for either team (**Team Delta** or **Team Omega**) in Part 1, 2, 3 order.
   * Each section displays **8+ rows** with independent scrollbars, sticky column headers, and per-section **Expand / Collapse** buttons (plus a full-screen **Expand Window** toggle).
   * **Filter Pills:** Filter by **All (28)**, **Missing / Incomplete**, or **Accounted For**.
+  * **Instructor Score Overrides:** Check the **Override** box next to any missing/incomplete item to force the scoring system to credit it as complete (useful when a student enters a valid answer that doesn't match the exact expected string). Overridden items are tagged `OVERRIDE`, persist across background polls in `v2_reports/score_overrides.json`, and can be unchecked anytime.
   * **Real-Time Search:** Search by device name, IP address, flow name, or description.
   * **Summary KPI Cards:** Instantly view Total Score, Redacted Assets (Part 1), Missing DataFlows (Part 2), and Tampered Devices (Part 3).
   * **Granular Status Badges:**

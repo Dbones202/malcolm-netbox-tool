@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.2] - 2026-11-16
+
+### Added
+- **Instructor Score Override Checkboxes (`dashboard_server.py`)**:
+  - Added an **Override** checkbox column to Part 1, Part 2, and Part 3 audit tables so instructors can manually credit any missing or partial item directly from the dashboard (including in the `Missing / Incomplete` filter view).
+  - Added backend endpoint `/api/admin/override` with persistent storage in `v2_reports/score_overrides.json`, automatically re-applied across 30-second background polls and cleared on `Clean Slate`.
+  - Overridden items display an `OVERRIDE` badge and immediately update both the audit modal and the public split-screen scoreboard.
+  - Added unit test `test_override_applies_and_removes_credit` in `tests/test_dashboard.py`.
+
+---
+
 ## [2.1.1] - 2026-11-16
 
 ### Added
