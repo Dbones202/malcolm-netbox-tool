@@ -2,7 +2,7 @@
 import io
 import json
 import unittest
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
 from src.netbox_importer_v2.dashboard_server import (
     DashboardHandler,
@@ -46,26 +46,27 @@ class TestDashboardAdminEndpoints(unittest.TestCase):
         self.assertIn("no items deleted", res.get("message", ""))
 
     @patch("src.netbox_importer_v2.dashboard_server.refresh_scores")
-    @patch("src.netbox_importer_v2.dashboard_server.run_seed")
+    @patch("src.netbox_importer_v2.dashboard_server.run_reconcile")
     @patch("src.netbox_importer_v2.dashboard_server.run_reset")
-    def test_complete_inventory_deletes_and_rebuilds(self, mock_reset, mock_seed, mock_refresh):
-        manager = MagicMock()
-        manager.attach_mock(mock_reset, "run_reset")
-        manager.attach_mock(mock_seed, "run_seed")
-
+    def test_complete_inventory_reconciles_without_reset(self, mock_reset, mock_reconcile, mock_refresh):
+        mock_reconcile.return_value = {"status": "applied", "operations": 3, "directory": "/reports/test"}
         handler = self._create_mock_handler("/api/admin/complete", {"pin": ADMIN_PIN, "target": "omega"})
         handler.do_POST()
         handler.send_response.assert_called_with(200)
-
-        self.assertEqual(
-            manager.mock_calls,
-            [
-                call.run_reset(apply=True, team="omega", show_progress=False),
-                call.run_seed(MASTER_JSON, apply=True, team="omega", show_progress=False),
-            ],
-        )
+        mock_reset.assert_not_called()
+        mock_reconcile.assert_called_once_with(MASTER_JSON, apply=True, team="omega", show_progress=False)
         res = json.loads(handler.wfile.getvalue().decode("utf-8"))
-        self.assertIn("Wiped and rebuilt", res.get("message", ""))
+        self.assertIn("preserved", res["message"])
+
+    @patch("src.netbox_importer_v2.dashboard_server.run_reconcile")
+    @patch("src.netbox_importer_v2.dashboard_server.run_reset")
+    def test_complete_inventory_reports_failure(self, mock_reset, mock_reconcile):
+        mock_reconcile.side_effect = RuntimeError("snapshot unavailable")
+        handler = self._create_mock_handler("/api/admin/complete", {"pin": ADMIN_PIN, "target": "delta"})
+        handler.do_POST()
+        handler.send_response.assert_called_with(500)
+        mock_reset.assert_not_called()
+        self.assertIn("snapshot unavailable", handler.wfile.getvalue().decode())
 
     @patch("src.netbox_importer_v2.dashboard_server.refresh_scores")
     @patch("src.netbox_importer_v2.dashboard_server.run_seed")

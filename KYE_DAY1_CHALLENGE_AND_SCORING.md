@@ -189,7 +189,7 @@ The scoreboard includes a built-in admin modal allowing instructors to remotely 
   ```
 * **Available Remote Controls:**
   * **Fill KYE Day 1:** Builds/updates only the Day 1 student baseline items (`partial_day1.json`) without deleting existing NetBox data.
-  * **Complete CTF Inventory:** Wipes all existing challenge objects and rebuilds the full 70-device ground truth / answer key (`master.json`).
+  * **Complete Day 4 Inventory:** Reconciles the full answer key (`master.json`) in place, removes known exercise markings, and preserves student additions. Saves snapshots and contribution reports; see [Day 4 reconciliation](DAY4_RECONCILIATION.md).
   * **Clean Slate:** Deletes all NetBox challenge objects (devices, IPs, interfaces, prefixes, dataflows) without re-seeding.
   * **Force Refresh:** Bypasses the 30-second polling timer and immediately queries both student instances.
 * **Item-by-Item Scored Audit Dashboard:**

@@ -30,6 +30,16 @@ To seed the complete 70-device environment:
 
     ./netbox-v2.sh seed --master v2_reports/master.json --apply
 
+For Day 4 upgrades of student inventories, use reconciliation instead of seeding:
+
+    ./netbox-v2.sh reconcile --team delta
+    ./netbox-v2.sh reconcile --team delta --apply
+
+This preserves student additions and removes known exercise markings. Capture an
+actual Day 1 baseline with `snapshot` before students begin, then pass it with
+`reconcile --baseline`. See `DAY4_RECONCILIATION.md` for saved-plan review,
+contribution reports, merge rules and recovery.
+
 ## 5. Other Operations
     # Snapshot existing NetBox instance:
     ./netbox-v2.sh dump

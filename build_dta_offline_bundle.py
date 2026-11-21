@@ -20,8 +20,9 @@ def package_dta_bundle():
     print(f"[*] Creating ZIP archive: {ZIP_OUT}...")
     with zipfile.ZipFile(ZIP_OUT, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(DEPLOY_DIR):
+            dirs[:] = [d for d in dirs if d != "__pycache__"]
             for file in sorted(files):
-                if file == ".DS_Store":
+                if file == ".DS_Store" or file.endswith((".pyc", ".pyo")):
                     continue
                 fp = Path(root) / file
                 rel = fp.relative_to(DEPLOY_DIR)
@@ -36,6 +37,8 @@ def package_dta_bundle():
     # 2. Build .tar.gz archive
     print(f"[*] Creating TAR.GZ archive: {TAR_OUT}...")
     def tar_filter(tarinfo):
+        if "__pycache__" in Path(tarinfo.name).parts or tarinfo.name.endswith((".pyc", ".pyo", ".DS_Store")):
+            return None
         if tarinfo.name.endswith(".sh"):
             tarinfo.mode = 0o755
         return tarinfo
