@@ -50,6 +50,10 @@ python -m src.netbox_importer_v2.cli dump --out v2_reports/instance_inventory.js
 python -m src.netbox_importer_v2.cli seed --master v2_reports/partial_day1.json         # dry-run
 python -m src.netbox_importer_v2.cli seed --master v2_reports/partial_day1.json --apply # live apply
 
+# Day 4 completion (plan first; preserve student additions)
+python -m src.netbox_importer_v2.cli reconcile --team delta
+python -m src.netbox_importer_v2.cli reconcile --team delta --apply
+
 # 4. Score a Live Instance (75-pt Rubric)
 python -m src.netbox_importer_v2.cli score
 python -m src.netbox_importer_v2.cli score --team delta
@@ -143,3 +147,10 @@ Outputs: `dist/netbox_importer_offline_bundle.tar.gz` and `dist/netbox_importer_
 - [KYE Day 1 Challenge & Scoring Rubric](KYE_DAY1_CHALLENGE_AND_SCORING.md)
 - [Project Changelog](CHANGELOG.md)
 - [Version Tracker](VERSION)
+
+## Day 4 completion and student contributions
+
+Use `reconcile` to complete the answer key in place, preserve student additions,
+and remove known Allen Broodly exercise markings. Capture a Day 1 baseline with
+`snapshot` to compare student contributions. See [Day 4 reconciliation](DAY4_RECONCILIATION.md)
+for the classroom procedure, field policies, saved-plan review and recovery.

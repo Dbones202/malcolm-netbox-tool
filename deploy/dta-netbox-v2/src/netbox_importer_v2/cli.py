@@ -4,6 +4,8 @@ Commands:
   discover      Read-only API introspection -> saved report.
   dump          Read-only export of existing NetBox objects -> instance_inventory.json.
   seed          Seed NetBox from master or partial Day 1.
+  snapshot      Capture complete raw inventory for a Day 1 baseline.
+  reconcile     Complete Day 4 inventory while preserving student additions.
   reset         Wipe NetBox objects (plan by default; --apply to delete).
   score         Grade a live instance against the 75-point rubric.
   dashboard     Run live split-screen classroom dashboard server for Delta & Omega.
@@ -255,6 +257,20 @@ def main() -> None:
     se.add_argument("--apply", action="store_true", help="Actually write (otherwise dry-run plan).")
     _add_connection_args(se)
 
+    snap = sub.add_parser("snapshot", help="Capture complete raw inventory (GET/OPTIONS only).")
+    snap.add_argument("--env-file", default=None)
+    snap.add_argument("--out", required=True, help="New snapshot file; existing files are never overwritten.")
+    _add_connection_args(snap)
+
+    rec = sub.add_parser("reconcile", help="Complete Day 4 inventory; plan by default, preserve student data.")
+    rec.add_argument("--master", default="v2_reports/master.json")
+    rec.add_argument("--env-file", default=None)
+    rec.add_argument("--apply", action="store_true")
+    rec.add_argument("--plan", default=None, help="Previously reviewed plan.json; validated against target and master.")
+    rec.add_argument("--baseline", default=None, help="Actual Day 1 snapshot for contribution comparison.")
+    rec.add_argument("--out-dir", default="v2_reports/day4")
+    _add_connection_args(rec)
+
     sc = sub.add_parser("score", help="Score a live instance against the 75-pt KYE Day 1 rubric.")
     sc.add_argument("--env-file", default=None)
     sc.add_argument("--details", "--audit", action="store_true", help="Print item-by-item breakdown of all 28 scorable points.")
@@ -279,6 +295,29 @@ def main() -> None:
 
     if args.command == "discover":
         sys.exit(cmd_discover(args))
+    elif args.command == "snapshot":
+        from .connection import get_connection
+        from .inventory_snapshot import capture_snapshot, write_private_json
+        team, localhost = _resolve_team_and_localhost(args)
+        try:
+            conn = get_connection(env_file=args.env_file, team=team, localhost=localhost)
+            snapshot = capture_snapshot(conn, target=team)
+            write_private_json(args.out, snapshot)
+            console.print(f"Snapshot saved: {args.out}")
+        except Exception as error:
+            console.print(f"Snapshot failed: {error}")
+            sys.exit(1)
+    elif args.command == "reconcile":
+        from .reconcile_apply import run_reconcile
+        team, localhost = _resolve_team_and_localhost(args)
+        try:
+            result = run_reconcile(args.master, apply=args.apply, env_file=args.env_file,
+                                   team=team, localhost=localhost, baseline_path=args.baseline, out_dir=args.out_dir, plan_path=args.plan)
+            console.print(json.dumps(result, indent=2))
+            sys.exit(0 if result["status"] in ("planned", "applied") else 1)
+        except Exception as error:
+            console.print(f"Day 4 reconciliation failed: {error}")
+            sys.exit(1)
     elif args.command == "dump":
         from .dump_instance import run_dump
         import os as _os

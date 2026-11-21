@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- Day 4 `reconcile` command with live read-only planning, optional exact saved-plan apply, complete private snapshots, operation journals, baseline contribution reports, and post-apply verification.
+- Raw `snapshot` command for actual Day 1 baselines, including student notes, config text, tags, custom fields and relationships.
+- Regression and full-inventory integration tests covering Day 1 to Day 4 completion, preservation, matching, failures, concurrent changes and repeat-run idempotence.
+
+### Changed
+- The dashboard completion action now reconciles in place instead of wiping and rebuilding. It preserves student additions and reports failures accurately.
+- Day 4 selectively removes known Allen Broodly/Broodley signatures and tomato art while preserving surrounding student comments/configuration and appending missing instructor notes.
+- Updated the offline deployment source and bundles with the same behavior.
+
+---
+
 ## [2.1.2] - 2026-11-16
 
 ### Added

@@ -20,6 +20,7 @@ from typing import Dict, Any
 
 from .scorer import NetBoxScorer, REDACTED_DEVICES, TARGET_FLOWS, TAMPERED_DEVICES
 from .seeder import run_reset, run_seed
+from .reconcile_apply import run_reconcile
 
 HERE = Path(__file__).parent.resolve()
 ROOT_REPO = HERE.parent.parent
@@ -1117,7 +1118,7 @@ HTML_PAGE = """<!DOCTYPE html>
             <option value="omega">Team Omega Only</option>
           </select>
           <button class="btn btn-primary" onclick="triggerAction('reset')" title="Build only KYE Day 1 items without deleting existing data">Fill KYE Day 1</button>
-          <button class="btn btn-complete" onclick="triggerAction('complete')" title="Delete all challenge objects and rebuild 100% CTF inventory">Complete CTF Inventory</button>
+          <button class="btn btn-complete" onclick="triggerAction('complete')" title="Complete Day 4 inventory while preserving student additions">Complete Day 4 Inventory</button>
           <button class="btn btn-reset" onclick="triggerAction('clean-slate')" title="Delete all NetBox challenge data without re-seeding">Clean Slate</button>
         </div>
         <div class="status-msg" id="adminStatus" style="width:100%; text-align:left; padding:6px 0 0 0; margin:0; font-size:12px;"></div>
@@ -1536,14 +1537,14 @@ HTML_PAGE = """<!DOCTYPE html>
     if (action === 'reset') {
       if (!confirm('Fill KYE Day 1 items on ' + target + '? (Builds only Day 1 items without deleting existing data.)')) return;
     } else if (action === 'complete') {
-      if (!confirm('⚠️ Delete everything and rebuild 100% CTF Master on ' + target + '? All existing challenge objects will be wiped and rebuilt!')) return;
+      if (!confirm('Complete Day 4 inventory on ' + target + '? Correct known inventory fields, remove exercise markings, and preserve student additions. A snapshot and contribution report will be saved.')) return;
     } else if (action === 'clean-slate') {
       if (!confirm('⚠️ CLEAN SLATE: Delete ALL NetBox data on ' + target + '? This removes all devices, IPs, interfaces, prefixes, and dataflows!')) return;
     }
 
     statusEl.style.color = '#ffb300';
     const actionLabel = action === 'reset' ? 'Building KYE Day 1' :
-                        action === 'complete' ? 'Wiping & rebuilding 100% CTF' :
+                        action === 'complete' ? 'Completing Day 4 inventory' :
                         action === 'clean-slate' ? 'Wiping all NetBox data (Clean Slate)' :
                         'Executing ' + action;
     statusEl.innerText = actionLabel + ' on ' + target + '...';
@@ -1651,18 +1652,22 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"message": f"Built KYE Day 1 inventory for {target} (no items deleted)."}).encode("utf-8"))
 
         elif self.path == "/api/admin/complete":
-            # Delete everything and rebuild 100% CTF Master completely
+            results = {}
             for tm in teams:
                 try:
-                    run_reset(apply=True, team=tm, show_progress=False)
-                    run_seed(MASTER_JSON, apply=True, team=tm, show_progress=False)
-                except Exception as e:
-                    print(f"Error rebuilding complete inventory for {tm}: {e}")
+                    results[tm] = run_reconcile(MASTER_JSON, apply=True, team=tm, show_progress=False)
+                except Exception as error:
+                    results[tm] = {"status": "failed", "errors": [str(error)]}
+            has_issues = any(result.get("status") != "applied" for result in results.values())
             threading.Thread(target=refresh_scores, daemon=True).start()
-            self.send_response(200)
+            self.send_response(500 if has_issues else 200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"message": f"Wiped and rebuilt 100% CTF inventory for {target}."}).encode("utf-8"))
+            message = f"Day 4 inventory completed for {target}; student additions preserved."
+            self.wfile.write(json.dumps({"message": message if not has_issues else "Day 4 update needs attention.",
+                "error": "; ".join(str(r.get("errors") or r.get("conflicts") or r.get("status"))
+                                   for r in results.values() if r.get("status") != "applied"),
+                "has_issues": has_issues, "results": results}).encode("utf-8"))
 
         elif self.path == "/api/admin/clean-slate":
             # Delete all NetBox challenge data without re-seeding
